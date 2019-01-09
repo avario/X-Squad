@@ -42,7 +42,19 @@
 		B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4921DE79F900EF79F7 /* CardView.swift */; };
 		B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */; };
 		B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */; };
+		B671C86121E606910034C7C9 /* X_SquadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C86021E606910034C7C9 /* X_SquadUITests.swift */; };
+		B671C86921E6071D0034C7C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B671C86321E606910034C7C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B662FB0221DD4C0000EF79F7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B662FB0921DD4C0000EF79F7;
+			remoteInfo = "X-Squad";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B662FB2B21DE1BED00EF79F7 /* Embed Frameworks */ = {
@@ -95,6 +107,10 @@
 		B662FB4921DE79F900EF79F7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "X-SquadUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B671C86021E606910034C7C9 /* X_SquadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X_SquadUITests.swift; sourceTree = "<group>"; };
+		B671C86221E606910034C7C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +119,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B671C85B21E606900034C7C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0C21DD4C0000EF79F7 /* X-Squad */,
+				B671C85F21E606910034C7C9 /* X-SquadUITests */,
 				B662FB0B21DD4C0000EF79F7 /* Products */,
 				B662FB4021DE657C00EF79F7 /* Frameworks */,
 			);
@@ -240,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0A21DD4C0000EF79F7 /* X-Squad.app */,
+				B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +354,16 @@
 			path = Card;
 			sourceTree = "<group>";
 		};
+		B671C85F21E606910034C7C9 /* X-SquadUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */,
+				B671C86021E606910034C7C9 /* X_SquadUITests.swift */,
+				B671C86221E606910034C7C9 /* Info.plist */,
+			);
+			path = "X-SquadUITests";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -351,6 +386,24 @@
 			productReference = B662FB0A21DD4C0000EF79F7 /* X-Squad.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B671C85D21E606900034C7C9 /* X-SquadUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B671C86521E606910034C7C9 /* Build configuration list for PBXNativeTarget "X-SquadUITests" */;
+			buildPhases = (
+				B671C85A21E606900034C7C9 /* Sources */,
+				B671C85B21E606900034C7C9 /* Frameworks */,
+				B671C85C21E606900034C7C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B671C86421E606910034C7C9 /* PBXTargetDependency */,
+			);
+			name = "X-SquadUITests";
+			productName = "X-SquadUITests";
+			productReference = B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -363,6 +416,10 @@
 				TargetAttributes = {
 					B662FB0921DD4C0000EF79F7 = {
 						CreatedOnToolsVersion = 10.1;
+					};
+					B671C85D21E606900034C7C9 = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = B662FB0921DD4C0000EF79F7;
 					};
 				};
 			};
@@ -380,6 +437,7 @@
 			projectRoot = "";
 			targets = (
 				B662FB0921DD4C0000EF79F7 /* X-Squad */,
+				B671C85D21E606900034C7C9 /* X-SquadUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -399,6 +457,13 @@
 				B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */,
 				B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */,
 				B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B671C85C21E606900034C7C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,7 +524,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B671C85A21E606900034C7C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B671C86121E606910034C7C9 /* X_SquadUITests.swift in Sources */,
+				B671C86921E6071D0034C7C9 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B671C86421E606910034C7C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B662FB0921DD4C0000EF79F7 /* X-Squad */;
+			targetProxy = B671C86321E606910034C7C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */ = {
@@ -633,6 +715,44 @@
 			};
 			name = Release;
 		};
+		B671C86621E606910034C7C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2Z2X63L8Q;
+				INFOPLIST_FILE = "X-SquadUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.avario.X-SquadUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "X-Squad";
+			};
+			name = Debug;
+		};
+		B671C86721E606910034C7C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2Z2X63L8Q;
+				INFOPLIST_FILE = "X-SquadUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.avario.X-SquadUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "X-Squad";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -650,6 +770,15 @@
 			buildConfigurations = (
 				B662FB1D21DD4C0400EF79F7 /* Debug */,
 				B662FB1E21DD4C0400EF79F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B671C86521E606910034C7C9 /* Build configuration list for PBXNativeTarget "X-SquadUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B671C86621E606910034C7C9 /* Debug */,
+				B671C86721E606910034C7C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
