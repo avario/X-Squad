@@ -1,0 +1,660 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */; };
+		B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */; };
+		B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */; };
+		B65BCD2C21E4BDE8005721A7 /* Eurostile-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */; };
+		B65BCD2D21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */; };
+		B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */; };
+		B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */; };
+		B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */; };
+		B65BCD3821E4C388005721A7 /* CardCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3721E4C388005721A7 /* CardCostView.swift */; };
+		B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3921E4C5E2005721A7 /* Fonts.swift */; };
+		B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */; };
+		B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */; };
+		B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */; };
+		B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4321E4EB86005721A7 /* UpgradeButton.swift */; };
+		B65BCD4721E53C5B005721A7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4621E53C5B005721A7 /* SettingsViewController.swift */; };
+		B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4821E53DEE005721A7 /* SettingCell.swift */; };
+		B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */; };
+		B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */; };
+		B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */; };
+		B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5421E561AF005721A7 /* DownloadViewController.swift */; };
+		B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */; };
+		B662FB1021DD4C0000EF79F7 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */; };
+		B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1421DD4C0400EF79F7 /* Assets.xcassets */; };
+		B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */; };
+		B662FB2421DD4CC200EF79F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB2321DD4CC200EF79F7 /* Card.swift */; };
+		B662FB3121DE1DC500EF79F7 /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3021DE1DC500EF79F7 /* CardStore.swift */; };
+		B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3321DE1E3900EF79F7 /* Result.swift */; };
+		B662FB3821DE2EAC00EF79F7 /* UpdateCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3721DE2EAC00EF79F7 /* UpdateCardsViewController.swift */; };
+		B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */; };
+		B662FB3F21DE623400EF79F7 /* CardStoreSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3E21DE623400EF79F7 /* CardStoreSearch.swift */; };
+		B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */; };
+		B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4721DE75EA00EF79F7 /* CardViewController.swift */; };
+		B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4921DE79F900EF79F7 /* CardView.swift */; };
+		B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */; };
+		B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B662FB2B21DE1BED00EF79F7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPresentAnimationController.swift; sourceTree = "<group>"; };
+		B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsDismissAnimationController.swift; sourceTree = "<group>"; };
+		B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-LT-Std.otf"; sourceTree = "<group>"; };
+		B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-Black.ttf"; sourceTree = "<group>"; };
+		B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-LT-Std-Oblique.otf"; sourceTree = "<group>"; };
+		B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kimberley bl.ttf"; sourceTree = "<group>"; };
+		B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BankGothic Bold.ttf"; sourceTree = "<group>"; };
+		B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BankGothic.ttf; sourceTree = "<group>"; };
+		B65BCD3721E4C388005721A7 /* CardCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCostView.swift; sourceTree = "<group>"; };
+		B65BCD3921E4C5E2005721A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures-ships.ttf"; sourceTree = "<group>"; };
+		B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures.ttf"; sourceTree = "<group>"; };
+		B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XwingIcons.swift; sourceTree = "<group>"; };
+		B65BCD4321E4EB86005721A7 /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
+		B65BCD4621E53C5B005721A7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B65BCD4821E53DEE005721A7 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
+		B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
+		B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkNavigationBar.swift; sourceTree = "<group>"; };
+		B65BCD5421E561AF005721A7 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		B662FB0A21DD4C0000EF79F7 /* X-Squad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X-Squad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		B662FB1421DD4C0400EF79F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B662FB1721DD4C0400EF79F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B662FB1921DD4C0400EF79F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B662FB2321DD4CC200EF79F7 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B662FB3021DE1DC500EF79F7 /* CardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStore.swift; sourceTree = "<group>"; usesTabs = 1; };
+		B662FB3321DE1E3900EF79F7 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		B662FB3721DE2EAC00EF79F7 /* UpdateCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateCardsViewController.swift; sourceTree = "<group>"; };
+		B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
+		B662FB3E21DE623400EF79F7 /* CardStoreSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreSearch.swift; sourceTree = "<group>"; };
+		B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewLayout.swift; sourceTree = "<group>"; };
+		B662FB4721DE75EA00EF79F7 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
+		B662FB4921DE79F900EF79F7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B662FB0721DD4C0000EF79F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B65BCC9C21E3BA06005721A7 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */,
+				B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */,
+			);
+			path = Transitions;
+			sourceTree = "<group>";
+		};
+		B65BCCDE21E4BD4E005721A7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD3921E4C5E2005721A7 /* Fonts.swift */,
+				B65BCD3B21E4E754005721A7 /* X-wing */,
+				B65BCD3121E4BE07005721A7 /* Bank Gothic */,
+				B65BCD2E21E4BDF0005721A7 /* Kimberley */,
+				B65BCD2721E4BDD9005721A7 /* Eurostile */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		B65BCD2721E4BDD9005721A7 /* Eurostile */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */,
+				B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */,
+				B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */,
+			);
+			path = Eurostile;
+			sourceTree = "<group>";
+		};
+		B65BCD2E21E4BDF0005721A7 /* Kimberley */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */,
+			);
+			path = Kimberley;
+			sourceTree = "<group>";
+		};
+		B65BCD3121E4BE07005721A7 /* Bank Gothic */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */,
+				B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */,
+			);
+			path = "Bank Gothic";
+			sourceTree = "<group>";
+		};
+		B65BCD3621E4C37E005721A7 /* Cost */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD3721E4C388005721A7 /* CardCostView.swift */,
+			);
+			path = Cost;
+			sourceTree = "<group>";
+		};
+		B65BCD3B21E4E754005721A7 /* X-wing */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */,
+				B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */,
+				B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */,
+			);
+			path = "X-wing";
+			sourceTree = "<group>";
+		};
+		B65BCD4221E4EB77005721A7 /* Upgrade Button */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD4321E4EB86005721A7 /* UpgradeButton.swift */,
+			);
+			path = "Upgrade Button";
+			sourceTree = "<group>";
+		};
+		B65BCD4521E53C4A005721A7 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD4621E53C5B005721A7 /* SettingsViewController.swift */,
+				B65BCD4821E53DEE005721A7 /* SettingCell.swift */,
+				B65BCD4D21E54844005721A7 /* Disclaimer */,
+				B65BCD4A21E543D7005721A7 /* Acknowledgements */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B65BCD4A21E543D7005721A7 /* Acknowledgements */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */,
+			);
+			path = Acknowledgements;
+			sourceTree = "<group>";
+		};
+		B65BCD4D21E54844005721A7 /* Disclaimer */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */,
+			);
+			path = Disclaimer;
+			sourceTree = "<group>";
+		};
+		B65BCD5021E55B2D005721A7 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		B65BCD5321E5619C005721A7 /* Download */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD5421E561AF005721A7 /* DownloadViewController.swift */,
+			);
+			path = Download;
+			sourceTree = "<group>";
+		};
+		B662FB0121DD4C0000EF79F7 = {
+			isa = PBXGroup;
+			children = (
+				B662FB0C21DD4C0000EF79F7 /* X-Squad */,
+				B662FB0B21DD4C0000EF79F7 /* Products */,
+				B662FB4021DE657C00EF79F7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+			usesTabs = 1;
+		};
+		B662FB0B21DD4C0000EF79F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB0A21DD4C0000EF79F7 /* X-Squad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B662FB0C21DD4C0000EF79F7 /* X-Squad */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */,
+				B65BCD5321E5619C005721A7 /* Download */,
+				B65BCD5021E55B2D005721A7 /* Navigation */,
+				B65BCD4521E53C4A005721A7 /* Settings */,
+				B65BCCDE21E4BD4E005721A7 /* Fonts */,
+				B65BCC9C21E3BA06005721A7 /* Transitions */,
+				B662FB3221DE1E2600EF79F7 /* Utilities */,
+				B662FB2F21DE1D8E00EF79F7 /* Services */,
+				B662FB2221DD4CB300EF79F7 /* Models */,
+				B662FB3A21DE5B9100EF79F7 /* Library */,
+				B662FB3921DE5B8A00EF79F7 /* Update */,
+				B662FB4621DE75A400EF79F7 /* Card */,
+				B662FB1421DD4C0400EF79F7 /* Assets.xcassets */,
+				B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */,
+				B662FB1921DD4C0400EF79F7 /* Info.plist */,
+			);
+			path = "X-Squad";
+			sourceTree = "<group>";
+		};
+		B662FB2221DD4CB300EF79F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB2321DD4CC200EF79F7 /* Card.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B662FB2F21DE1D8E00EF79F7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB3021DE1DC500EF79F7 /* CardStore.swift */,
+				B662FB3E21DE623400EF79F7 /* CardStoreSearch.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B662FB3221DE1E2600EF79F7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB3321DE1E3900EF79F7 /* Result.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		B662FB3921DE5B8A00EF79F7 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB3721DE2EAC00EF79F7 /* UpdateCardsViewController.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		B662FB3A21DE5B9100EF79F7 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */,
+				B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */,
+				B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */,
+				B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		B662FB4021DE657C00EF79F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B662FB4621DE75A400EF79F7 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				B65BCD4221E4EB77005721A7 /* Upgrade Button */,
+				B65BCD3621E4C37E005721A7 /* Cost */,
+				B662FB4721DE75EA00EF79F7 /* CardViewController.swift */,
+				B662FB4921DE79F900EF79F7 /* CardView.swift */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B662FB0921DD4C0000EF79F7 /* X-Squad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B662FB1C21DD4C0400EF79F7 /* Build configuration list for PBXNativeTarget "X-Squad" */;
+			buildPhases = (
+				B662FB0621DD4C0000EF79F7 /* Sources */,
+				B662FB0721DD4C0000EF79F7 /* Frameworks */,
+				B662FB0821DD4C0000EF79F7 /* Resources */,
+				B662FB2B21DE1BED00EF79F7 /* Embed Frameworks */,
+				B662FB4321DE658A00EF79F7 /* Copy Carthage Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "X-Squad";
+			productName = "X-Squad";
+			productReference = B662FB0A21DD4C0000EF79F7 /* X-Squad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B662FB0221DD4C0000EF79F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = Avario;
+				TargetAttributes = {
+					B662FB0921DD4C0000EF79F7 = {
+						CreatedOnToolsVersion = 10.1;
+					};
+				};
+			};
+			buildConfigurationList = B662FB0521DD4C0000EF79F7 /* Build configuration list for PBXProject "X-Squad" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B662FB0121DD4C0000EF79F7;
+			productRefGroup = B662FB0B21DD4C0000EF79F7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B662FB0921DD4C0000EF79F7 /* X-Squad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B662FB0821DD4C0000EF79F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */,
+				B65BCD2C21E4BDE8005721A7 /* Eurostile-Black.ttf in Resources */,
+				B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */,
+				B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */,
+				B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */,
+				B65BCD2D21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf in Resources */,
+				B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */,
+				B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */,
+				B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */,
+				B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B662FB4321DE658A00EF79F7 /* Copy Carthage Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+			);
+			name = "Copy Carthage Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B662FB0621DD4C0000EF79F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */,
+				B662FB1021DD4C0000EF79F7 /* LibraryViewController.swift in Sources */,
+				B65BCD3821E4C388005721A7 /* CardCostView.swift in Sources */,
+				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,
+				B662FB3821DE2EAC00EF79F7 /* UpdateCardsViewController.swift in Sources */,
+				B65BCD4721E53C5B005721A7 /* SettingsViewController.swift in Sources */,
+				B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */,
+				B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */,
+				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
+				B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */,
+				B662FB3121DE1DC500EF79F7 /* CardStore.swift in Sources */,
+				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
+				B662FB3F21DE623400EF79F7 /* CardStoreSearch.swift in Sources */,
+				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
+				B662FB2421DD4CC200EF79F7 /* Card.swift in Sources */,
+				B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */,
+				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,
+				B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */,
+				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,
+				B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */,
+				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,
+				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,
+				B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */,
+				B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B662FB1721DD4C0400EF79F7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B662FB1A21DD4C0400EF79F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B662FB1B21DD4C0400EF79F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B662FB1D21DD4C0400EF79F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2Z2X63L8Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "X-Squad/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avario.XSquad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B662FB1E21DD4C0400EF79F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J2Z2X63L8Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = "X-Squad/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.avario.XSquad;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B662FB0521DD4C0000EF79F7 /* Build configuration list for PBXProject "X-Squad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B662FB1A21DD4C0400EF79F7 /* Debug */,
+				B662FB1B21DD4C0400EF79F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B662FB1C21DD4C0400EF79F7 /* Build configuration list for PBXNativeTarget "X-Squad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B662FB1D21DD4C0400EF79F7 /* Debug */,
+				B662FB1E21DD4C0400EF79F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B662FB0221DD4C0000EF79F7 /* Project object */;
+}
