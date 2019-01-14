@@ -19,7 +19,10 @@ class SettingCell: UITableViewCell {
 		contentView.backgroundColor = .clear
 		backgroundColor = UIColor(white: 0.05, alpha: 1.0)
 		textLabel?.textColor = UIColor.white.withAlphaComponent(0.8)
-		selectionStyle = .none
+		
+		let backgroundView = UIView()
+		backgroundView.backgroundColor = UIColor.init(white: 0.20, alpha: 1.0)
+		selectedBackgroundView = backgroundView
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

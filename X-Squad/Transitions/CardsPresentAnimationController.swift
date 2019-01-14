@@ -42,15 +42,19 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let toCardViews = CardView.all(in: toVC.view)
 		
 		for toCardView in toCardViews {
-			if let matchingFromCardView = fromCardViews.first(where: { $0.card == toCardView.card }) {
+			if let matchingFromCardView = fromCardViews.first(where: { $0.id == toCardView.id }) {
 				let fromCardPosition = matchingFromCardView.superview!.convert(matchingFromCardView.center, to: fromVC.view)
 				toCardView.center = fromCardPosition
 				
 				let scale = matchingFromCardView.bounds.width/toCardView.bounds.width
 				toCardView.imageView.transform = CGAffineTransform(scaleX: scale, y: scale)
 				
+				toCardView.alpha = matchingFromCardView.alpha
+				
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
 					toCardView.imageView.transform = CGAffineTransform.identity
+					toCardView.alpha = 1.0
+					
 				}, completion: nil)
 				
 				animator.addBehavior(toCardView.snap)

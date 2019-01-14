@@ -41,7 +41,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let toCardViews = CardView.all(in: toVC.view)
 		
 		for fromCardView in fromCardViews {
-			if let matchingToCardView = toCardViews.first(where: { $0.card == fromCardView.card }) {
+			if let matchingToCardView = toCardViews.first(where: { $0.id == fromCardView.id }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
 				let snap = UISnapBehavior(item: fromCardView, snapTo: cardPosition)
@@ -52,6 +52,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				let scale = matchingToCardView.bounds.width/fromCardView.bounds.width
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
 					fromCardView.imageView.transform = CGAffineTransform(scaleX: scale, y: scale)
+					fromCardView.alpha = matchingToCardView.alpha
 				}, completion: nil)
 				
 				matchingToCardView.isHidden = true

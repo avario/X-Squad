@@ -10,6 +10,18 @@ import Foundation
 
 struct Card: Codable {
 	
+	var defaultID: String {
+		return String(id)
+	}
+	
+	var pointCost: Int {
+		return Int(cost) ?? 0
+	}
+	
+	func pointCost(for pilot: Squad.Pilot) -> Int {
+		return Int(cost) ?? 0
+	}
+	
 	let id: Int
 	let faction: Faction?
 	let cardSetIDs: [Int]
@@ -62,7 +74,7 @@ struct Card: Codable {
 		case shipType = "ship_type"
 	}
 	
-	enum Faction: Int, Codable {
+	enum Faction: Int, CaseIterable, Codable {
 		case rebelAlliance = 1
 		case galacticEmpire = 2
 		case scumAndVillainy = 3
@@ -149,11 +161,11 @@ struct Card: Codable {
 		case missile = 6
 		case crew = 8
 		case astromech = 10
-		case gunner = 12
+		case device = 12
 		case illicit = 13
 		case modification = 14
 		case title = 15
-		case device = 16
+		case gunner = 16
 		case force = 17
 		case configuration = 18
 		case tech = 19
@@ -182,10 +194,10 @@ struct Card: Codable {
 		struct Parameters: Codable {
 			let id: Int?
 			let name: String?
-			let sideEffectName: String?
+			let sideEffectName: SideEffect?
 			let rawName: String?
-			let shipSizeName: String?
-			let forceSideName: String?
+			let shipSizeName: ShipSize?
+			let forceSideName: ForceSide?
 			
 			enum CodingKeys: String, CodingKey {
 				case id = "pk"
@@ -194,6 +206,22 @@ struct Card: Codable {
 				case rawName = "raw_name"
 				case shipSizeName = "ship_size_name"
 				case forceSideName = "force_side_name"
+			}
+			
+			enum SideEffect: String, Codable {
+				case none = "NONE"
+				case stress = "STRESS"
+			}
+			
+			enum ShipSize: String, Codable {
+				case small = "SMALL"
+				case medium = "MEDIUM"
+				case large = "LARGE"
+			}
+			
+			enum ForceSide: String, Codable {
+				case light = "LIGHT"
+				case dark = "DARK"
 			}
 		}
 	}
@@ -267,8 +295,12 @@ struct Card: Codable {
 	}
 }
 
-extension Card: Equatable {
+extension Card: Hashable {
 	static func == (lhs: Card, rhs: Card) -> Bool {
 		return lhs.id == rhs.id
+	}
+	
+	func hash(into hasher: inout Hasher) {
+		id.hash(into: &hasher)
 	}
 }

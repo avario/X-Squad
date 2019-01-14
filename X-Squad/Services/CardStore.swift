@@ -43,6 +43,10 @@ class CardStore {
 		return cards
 	}
 	
+	public static func card(forID id: Int) -> Card? {
+		return cards.first(where: { $0.id == id })
+	}
+	
 	public enum UpdateError: Swift.Error {
 		case networkingError
 		case noData

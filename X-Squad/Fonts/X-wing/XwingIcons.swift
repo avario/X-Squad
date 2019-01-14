@@ -9,7 +9,6 @@
 import Foundation
 
 extension Card.Action.ActionType {
-	
 	var characterCode: String {
 		switch self {
 		case .focus:
@@ -40,11 +39,9 @@ extension Card.Action.ActionType {
 			return "d" // ?
 		}
 	}
-	
 }
 
 extension Card.UpgradeType {
-	
 	var characterCode: String {
 		switch self {
 		case .talent:
@@ -83,5 +80,137 @@ extension Card.UpgradeType {
 			return "ê"
 		}
 	}
-	
 }
+
+extension Card.Faction {
+	var characterCode: String {
+		switch self {
+		case .resistance:
+			return "!"
+		case .rebelAlliance:
+			return "!"
+		case .galacticEmpire:
+			return "@"
+		case .firstOrder:
+			return "+"
+		case .scumAndVillainy:
+			return "#"
+		}
+	}
+}
+
+extension Card.ShipType {
+	var characterCode: String {
+		switch self {
+		case .modifiedYT1300:
+			return "m"
+		case .starViper:
+			return "v"
+		case .scurrgH6Bomber:
+			return "H"
+		case .YT2400:
+			return "o"
+		case .auzituckGunship:
+			return "@"
+		case .kihraxzFighter:
+			return "r"
+		case .sheathipede:
+			return "%"
+		case .quadrijetSpacetug:
+			return "q"
+		case .firespray:
+			return "f"
+		case .TIElnFighter:
+			return "F"
+		case .BTLA4Ywing:
+			return "y"
+		case .TIEAdvancedx1:
+			return "A"
+		case .alphaclassStarWing:
+			return "&"
+		case .UT60DUwing:
+			return "u"
+		case .TIEskStriker:
+			return "T"
+		case .ASF01Bwing:
+			return "b"
+		case .TIEDDefender:
+			return "D"
+		case .TIEsaBomber:
+			return "B"
+		case .TIEcsPunisher:
+			return "N"
+		case .aggressor:
+			return "i"
+		case .G1AStarfighter:
+			return "n"
+		case .VCX100:
+			return "G"
+		case .YV666:
+			return "t"
+		case .TIEAdvancedv1:
+			return "R"
+		case .lambdaShuttle:
+			return "l"
+		case .TIEphPhantom:
+			return "P"
+		case .VT49Decimator:
+			return "d"
+		case .TIEagAggressor:
+			return "`"
+		case .BTLS8Kwing:
+			return "k"
+		case .ARC170Starfighter:
+			return "c"
+		case .attackShuttle:
+			return "g"
+		case .T65Xwing:
+			return "x"
+		case .HWK290:
+			return "h"
+		case .RZ1Awing:
+			return "a"
+		case .fangFighter:
+			return "M"
+		case .Z95AF4Headhunter:
+			return "z"
+		case .M12LKimogila:
+			return "K"
+		case .Ewing:
+			return "e"
+		case .TIEInterceptor:
+			return "I"
+		case .lancerPursuitCraft:
+			return "L"
+		case .TIEReaper:
+			return "V"
+		case .M3AInterceptor:
+			return "s"
+		case .jumpMaster5000:
+			return "p"
+		case .customizedYT1300:
+			return "W"
+		case .escapeCraft:
+			return "X"
+		case .TIEfoFighter:
+			return "O"
+		case .TIEsfFighter:
+			return "S"
+		case .upsilonclassCommandShuttle:
+			return "U"
+		case .TIEvnSilencer:
+			return "$"
+		case .T70Xwing:
+			return "w"
+		case .RZ2Awing:
+			return "a"
+		case .MG100StarFortress:
+			return "Z"
+		case .modifiedTIEln:
+			return "F"
+		case .scavengedYT1300:
+			return "m"
+		}
+	}
+}
+

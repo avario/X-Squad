@@ -15,7 +15,7 @@
 		B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */; };
 		B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */; };
 		B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */; };
-		B65BCD3821E4C388005721A7 /* CardCostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3721E4C388005721A7 /* CardCostView.swift */; };
+		B65BCD3821E4C388005721A7 /* CostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3721E4C388005721A7 /* CostView.swift */; };
 		B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3921E4C5E2005721A7 /* Fonts.swift */; };
 		B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */; };
 		B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */; };
@@ -28,7 +28,7 @@
 		B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */; };
 		B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5421E561AF005721A7 /* DownloadViewController.swift */; };
 		B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */; };
-		B662FB1021DD4C0000EF79F7 /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */; };
+		B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */; };
 		B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1421DD4C0400EF79F7 /* Assets.xcassets */; };
 		B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */; };
 		B662FB2421DD4CC200EF79F7 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB2321DD4CC200EF79F7 /* Card.swift */; };
@@ -42,19 +42,27 @@
 		B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4921DE79F900EF79F7 /* CardView.swift */; };
 		B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */; };
 		B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */; };
-		B671C86121E606910034C7C9 /* X_SquadUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C86021E606910034C7C9 /* X_SquadUITests.swift */; };
-		B671C86921E6071D0034C7C9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */; };
+		B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */; };
+		B671C93521E7589F0034C7C9 /* Squad.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93421E7589F0034C7C9 /* Squad.swift */; };
+		B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93621E767AD0034C7C9 /* SquadStore.swift */; };
+		B671C93A21E76C2D0034C7C9 /* NewSquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93921E76C2D0034C7C9 /* NewSquadViewController.swift */; };
+		B671C93D21E76DC80034C7C9 /* FactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93C21E76DC80034C7C9 /* FactionCell.swift */; };
+		B671C93F21E798410034C7C9 /* SquadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93E21E798410034C7C9 /* SquadCell.swift */; };
+		B671C94221E7BC540034C7C9 /* SquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94121E7BC540034C7C9 /* SquadViewController.swift */; };
+		B671C94621E8BBC80034C7C9 /* SquadPilotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94521E8BBC80034C7C9 /* SquadPilotView.swift */; };
+		B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94821E8E3BC0034C7C9 /* AddPilotViewController.swift */; };
+		B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C97D21E8FED00034C7C9 /* CardsViewController.swift */; };
+		B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */; };
+		B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */; };
+		B671C98D21EBC54E0034C7C9 /* AddUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */; };
+		B671C99621EBCC050034C7C9 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98F21EBCC040034C7C9 /* Dynamic.swift */; };
+		B671C99721EBCC050034C7C9 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99021EBCC040034C7C9 /* Update.swift */; };
+		B671C99821EBCC050034C7C9 /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99121EBCC040034C7C9 /* Codable.swift */; };
+		B671C99921EBCC050034C7C9 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99221EBCC040034C7C9 /* Observation.swift */; };
+		B671C99A21EBCC050034C7C9 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99321EBCC040034C7C9 /* Operators.swift */; };
+		B671C99B21EBCC050034C7C9 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99421EBCC050034C7C9 /* KVO.swift */; };
+		B671C99C21EBCC050034C7C9 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99521EBCC050034C7C9 /* Lifetime.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B671C86321E606910034C7C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B662FB0221DD4C0000EF79F7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B662FB0921DD4C0000EF79F7;
-			remoteInfo = "X-Squad";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B662FB2B21DE1BED00EF79F7 /* Embed Frameworks */ = {
@@ -78,7 +86,7 @@
 		B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kimberley bl.ttf"; sourceTree = "<group>"; };
 		B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BankGothic Bold.ttf"; sourceTree = "<group>"; };
 		B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BankGothic.ttf; sourceTree = "<group>"; };
-		B65BCD3721E4C388005721A7 /* CardCostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCostView.swift; sourceTree = "<group>"; };
+		B65BCD3721E4C388005721A7 /* CostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostView.swift; sourceTree = "<group>"; };
 		B65BCD3921E4C5E2005721A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures-ships.ttf"; sourceTree = "<group>"; };
 		B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures.ttf"; sourceTree = "<group>"; };
@@ -92,7 +100,7 @@
 		B65BCD5421E561AF005721A7 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		B662FB0A21DD4C0000EF79F7 /* X-Squad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X-Squad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
+		B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B662FB1421DD4C0400EF79F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B662FB1721DD4C0400EF79F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B662FB1921DD4C0400EF79F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -107,10 +115,26 @@
 		B662FB4921DE79F900EF79F7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
-		B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "X-SquadUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B671C86021E606910034C7C9 /* X_SquadUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X_SquadUITests.swift; sourceTree = "<group>"; };
-		B671C86221E606910034C7C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadViewController.swift; sourceTree = "<group>"; };
+		B671C93421E7589F0034C7C9 /* Squad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squad.swift; sourceTree = "<group>"; };
+		B671C93621E767AD0034C7C9 /* SquadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadStore.swift; sourceTree = "<group>"; };
+		B671C93921E76C2D0034C7C9 /* NewSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSquadViewController.swift; sourceTree = "<group>"; };
+		B671C93C21E76DC80034C7C9 /* FactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactionCell.swift; sourceTree = "<group>"; };
+		B671C93E21E798410034C7C9 /* SquadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadCell.swift; sourceTree = "<group>"; };
+		B671C94121E7BC540034C7C9 /* SquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadViewController.swift; sourceTree = "<group>"; };
+		B671C94521E8BBC80034C7C9 /* SquadPilotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadPilotView.swift; sourceTree = "<group>"; };
+		B671C94821E8E3BC0034C7C9 /* AddPilotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPilotViewController.swift; sourceTree = "<group>"; };
+		B671C97D21E8FED00034C7C9 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSectionHeaderView.swift; sourceTree = "<group>"; };
+		B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadHeaderView.swift; sourceTree = "<group>"; };
+		B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUpgradeViewController.swift; sourceTree = "<group>"; };
+		B671C98F21EBCC040034C7C9 /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
+		B671C99021EBCC040034C7C9 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		B671C99121EBCC040034C7C9 /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
+		B671C99221EBCC040034C7C9 /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
+		B671C99321EBCC040034C7C9 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		B671C99421EBCC050034C7C9 /* KVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
+		B671C99521EBCC050034C7C9 /* Lifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,13 +143,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B671C85B21E606900034C7C9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +200,7 @@
 		B65BCD3621E4C37E005721A7 /* Cost */ = {
 			isa = PBXGroup;
 			children = (
-				B65BCD3721E4C388005721A7 /* CardCostView.swift */,
+				B65BCD3721E4C388005721A7 /* CostView.swift */,
 			);
 			path = Cost;
 			sourceTree = "<group>";
@@ -191,9 +208,9 @@
 		B65BCD3B21E4E754005721A7 /* X-wing */ = {
 			isa = PBXGroup;
 			children = (
+				B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */,
 				B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */,
 				B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */,
-				B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */,
 			);
 			path = "X-wing";
 			sourceTree = "<group>";
@@ -213,6 +230,7 @@
 				B65BCD4821E53DEE005721A7 /* SettingCell.swift */,
 				B65BCD4D21E54844005721A7 /* Disclaimer */,
 				B65BCD4A21E543D7005721A7 /* Acknowledgements */,
+				B65BCD5321E5619C005721A7 /* Download */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -233,17 +251,11 @@
 			path = Disclaimer;
 			sourceTree = "<group>";
 		};
-		B65BCD5021E55B2D005721A7 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
 		B65BCD5321E5619C005721A7 /* Download */ = {
 			isa = PBXGroup;
 			children = (
+				B671C90F21E6569B0034C7C9 /* Update */,
+				B671C90C21E6519C0034C7C9 /* Image Download */,
 				B65BCD5421E561AF005721A7 /* DownloadViewController.swift */,
 			);
 			path = Download;
@@ -253,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0C21DD4C0000EF79F7 /* X-Squad */,
-				B671C85F21E606910034C7C9 /* X-SquadUITests */,
 				B662FB0B21DD4C0000EF79F7 /* Products */,
 				B662FB4021DE657C00EF79F7 /* Frameworks */,
 			);
@@ -264,7 +275,6 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0A21DD4C0000EF79F7 /* X-Squad.app */,
-				B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,17 +283,17 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */,
-				B65BCD5321E5619C005721A7 /* Download */,
-				B65BCD5021E55B2D005721A7 /* Navigation */,
+				B662FB3A21DE5B9100EF79F7 /* Home */,
+				B671C94021E7BC470034C7C9 /* Squad */,
+				B671C93B21E76C370034C7C9 /* New Squad */,
+				B671C93821E76B950034C7C9 /* SearchResults */,
 				B65BCD4521E53C4A005721A7 /* Settings */,
+				B662FB4621DE75A400EF79F7 /* Cards */,
 				B65BCCDE21E4BD4E005721A7 /* Fonts */,
 				B65BCC9C21E3BA06005721A7 /* Transitions */,
 				B662FB3221DE1E2600EF79F7 /* Utilities */,
 				B662FB2F21DE1D8E00EF79F7 /* Services */,
 				B662FB2221DD4CB300EF79F7 /* Models */,
-				B662FB3A21DE5B9100EF79F7 /* Library */,
-				B662FB3921DE5B8A00EF79F7 /* Update */,
-				B662FB4621DE75A400EF79F7 /* Card */,
 				B662FB1421DD4C0400EF79F7 /* Assets.xcassets */,
 				B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */,
 				B662FB1921DD4C0400EF79F7 /* Info.plist */,
@@ -295,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				B662FB2321DD4CC200EF79F7 /* Card.swift */,
+				B671C93421E7589F0034C7C9 /* Squad.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -302,6 +313,7 @@
 		B662FB2F21DE1D8E00EF79F7 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B671C93621E767AD0034C7C9 /* SquadStore.swift */,
 				B662FB3021DE1DC500EF79F7 /* CardStore.swift */,
 				B662FB3E21DE623400EF79F7 /* CardStoreSearch.swift */,
 			);
@@ -311,28 +323,20 @@
 		B662FB3221DE1E2600EF79F7 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				B671C98E21EBCBEE0034C7C9 /* Dynamic */,
+				B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */,
 				B662FB3321DE1E3900EF79F7 /* Result.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		B662FB3921DE5B8A00EF79F7 /* Update */ = {
+		B662FB3A21DE5B9100EF79F7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				B662FB3721DE2EAC00EF79F7 /* UpdateCardsViewController.swift */,
+				B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */,
+				B671C93E21E798410034C7C9 /* SquadCell.swift */,
 			);
-			path = Update;
-			sourceTree = "<group>";
-		};
-		B662FB3A21DE5B9100EF79F7 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				B662FB0F21DD4C0000EF79F7 /* LibraryViewController.swift */,
-				B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */,
-				B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */,
-				B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */,
-			);
-			path = Library;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		B662FB4021DE657C00EF79F7 /* Frameworks */ = {
@@ -343,7 +347,69 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B662FB4621DE75A400EF79F7 /* Card */ = {
+		B662FB4621DE75A400EF79F7 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				B671C97C21E8FEBF0034C7C9 /* Cards */,
+				B671C97B21E8FEB50034C7C9 /* Single Card */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		B671C90C21E6519C0034C7C9 /* Image Download */ = {
+			isa = PBXGroup;
+			children = (
+				B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */,
+			);
+			path = "Image Download";
+			sourceTree = "<group>";
+		};
+		B671C90F21E6569B0034C7C9 /* Update */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB3721DE2EAC00EF79F7 /* UpdateCardsViewController.swift */,
+			);
+			path = Update;
+			sourceTree = "<group>";
+		};
+		B671C93821E76B950034C7C9 /* SearchResults */ = {
+			isa = PBXGroup;
+			children = (
+				B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */,
+			);
+			path = SearchResults;
+			sourceTree = "<group>";
+		};
+		B671C93B21E76C370034C7C9 /* New Squad */ = {
+			isa = PBXGroup;
+			children = (
+				B671C93921E76C2D0034C7C9 /* NewSquadViewController.swift */,
+				B671C93C21E76DC80034C7C9 /* FactionCell.swift */,
+			);
+			path = "New Squad";
+			sourceTree = "<group>";
+		};
+		B671C94021E7BC470034C7C9 /* Squad */ = {
+			isa = PBXGroup;
+			children = (
+				B671C94121E7BC540034C7C9 /* SquadViewController.swift */,
+				B671C98821EBC0E50034C7C9 /* Header */,
+				B671C98321E9614D0034C7C9 /* Pilot */,
+				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
+				B671C98B21EBC53B0034C7C9 /* Add Upgrade */,
+			);
+			path = Squad;
+			sourceTree = "<group>";
+		};
+		B671C94721E8E3AD0034C7C9 /* Add Pilot */ = {
+			isa = PBXGroup;
+			children = (
+				B671C94821E8E3BC0034C7C9 /* AddPilotViewController.swift */,
+			);
+			path = "Add Pilot";
+			sourceTree = "<group>";
+		};
+		B671C97B21E8FEB50034C7C9 /* Single Card */ = {
 			isa = PBXGroup;
 			children = (
 				B65BCD4221E4EB77005721A7 /* Upgrade Button */,
@@ -351,17 +417,56 @@
 				B662FB4721DE75EA00EF79F7 /* CardViewController.swift */,
 				B662FB4921DE79F900EF79F7 /* CardView.swift */,
 			);
-			path = Card;
+			path = "Single Card";
 			sourceTree = "<group>";
 		};
-		B671C85F21E606910034C7C9 /* X-SquadUITests */ = {
+		B671C97C21E8FEBF0034C7C9 /* Cards */ = {
 			isa = PBXGroup;
 			children = (
-				B671C86821E6071D0034C7C9 /* SnapshotHelper.swift */,
-				B671C86021E606910034C7C9 /* X_SquadUITests.swift */,
-				B671C86221E606910034C7C9 /* Info.plist */,
+				B671C97D21E8FED00034C7C9 /* CardsViewController.swift */,
+				B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */,
+				B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */,
+				B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */,
 			);
-			path = "X-SquadUITests";
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		B671C98321E9614D0034C7C9 /* Pilot */ = {
+			isa = PBXGroup;
+			children = (
+				B671C94521E8BBC80034C7C9 /* SquadPilotView.swift */,
+			);
+			path = Pilot;
+			sourceTree = "<group>";
+		};
+		B671C98821EBC0E50034C7C9 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		B671C98B21EBC53B0034C7C9 /* Add Upgrade */ = {
+			isa = PBXGroup;
+			children = (
+				B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */,
+			);
+			path = "Add Upgrade";
+			sourceTree = "<group>";
+		};
+		B671C98E21EBCBEE0034C7C9 /* Dynamic */ = {
+			isa = PBXGroup;
+			children = (
+				B671C99121EBCC040034C7C9 /* Codable.swift */,
+				B671C98F21EBCC040034C7C9 /* Dynamic.swift */,
+				B671C99421EBCC050034C7C9 /* KVO.swift */,
+				B671C99521EBCC050034C7C9 /* Lifetime.swift */,
+				B671C99221EBCC040034C7C9 /* Observation.swift */,
+				B671C99321EBCC040034C7C9 /* Operators.swift */,
+				B671C99021EBCC040034C7C9 /* Update.swift */,
+			);
+			path = Dynamic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -376,6 +481,7 @@
 				B662FB0821DD4C0000EF79F7 /* Resources */,
 				B662FB2B21DE1BED00EF79F7 /* Embed Frameworks */,
 				B662FB4321DE658A00EF79F7 /* Copy Carthage Frameworks */,
+				B671C98221E95D1F0034C7C9 /* Reveal */,
 			);
 			buildRules = (
 			);
@@ -385,24 +491,6 @@
 			productName = "X-Squad";
 			productReference = B662FB0A21DD4C0000EF79F7 /* X-Squad.app */;
 			productType = "com.apple.product-type.application";
-		};
-		B671C85D21E606900034C7C9 /* X-SquadUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B671C86521E606910034C7C9 /* Build configuration list for PBXNativeTarget "X-SquadUITests" */;
-			buildPhases = (
-				B671C85A21E606900034C7C9 /* Sources */,
-				B671C85B21E606900034C7C9 /* Frameworks */,
-				B671C85C21E606900034C7C9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B671C86421E606910034C7C9 /* PBXTargetDependency */,
-			);
-			name = "X-SquadUITests";
-			productName = "X-SquadUITests";
-			productReference = B671C85E21E606900034C7C9 /* X-SquadUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -416,10 +504,6 @@
 				TargetAttributes = {
 					B662FB0921DD4C0000EF79F7 = {
 						CreatedOnToolsVersion = 10.1;
-					};
-					B671C85D21E606900034C7C9 = {
-						CreatedOnToolsVersion = 10.1;
-						TestTargetID = B662FB0921DD4C0000EF79F7;
 					};
 				};
 			};
@@ -437,7 +521,6 @@
 			projectRoot = "";
 			targets = (
 				B662FB0921DD4C0000EF79F7 /* X-Squad */,
-				B671C85D21E606900034C7C9 /* X-SquadUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -457,13 +540,6 @@
 				B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */,
 				B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */,
 				B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B671C85C21E606900034C7C9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +566,24 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
+		B671C98221E95D1F0034C7C9 /* Reveal */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Reveal;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "REVEAL_APP_PATH=$(mdfind kMDItemCFBundleIdentifier=\"com.ittybittyapps.Reveal2\" | head -n 1)\nBUILD_SCRIPT_PATH=\"${REVEAL_APP_PATH}/Contents/SharedSupport/Scripts/reveal_server_build_phase.sh\"\nif [ \"${REVEAL_APP_PATH}\" -a -e \"${BUILD_SCRIPT_PATH}\" ]; then\n\"${BUILD_SCRIPT_PATH}\"\nelse\necho \"Reveal Server not loaded: Cannot find a compatible Reveal app.\"\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -497,51 +591,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B671C93521E7589F0034C7C9 /* Squad.swift in Sources */,
 				B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */,
-				B662FB1021DD4C0000EF79F7 /* LibraryViewController.swift in Sources */,
-				B65BCD3821E4C388005721A7 /* CardCostView.swift in Sources */,
+				B671C93A21E76C2D0034C7C9 /* NewSquadViewController.swift in Sources */,
+				B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */,
+				B671C99921EBCC050034C7C9 /* Observation.swift in Sources */,
+				B671C93D21E76DC80034C7C9 /* FactionCell.swift in Sources */,
+				B65BCD3821E4C388005721A7 /* CostView.swift in Sources */,
 				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,
 				B662FB3821DE2EAC00EF79F7 /* UpdateCardsViewController.swift in Sources */,
+				B671C93F21E798410034C7C9 /* SquadCell.swift in Sources */,
 				B65BCD4721E53C5B005721A7 /* SettingsViewController.swift in Sources */,
+				B671C94621E8BBC80034C7C9 /* SquadPilotView.swift in Sources */,
+				B671C99621EBCC050034C7C9 /* Dynamic.swift in Sources */,
 				B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */,
 				B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */,
 				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
+				B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */,
 				B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */,
 				B662FB3121DE1DC500EF79F7 /* CardStore.swift in Sources */,
+				B671C99821EBCC050034C7C9 /* Codable.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
 				B662FB3F21DE623400EF79F7 /* CardStoreSearch.swift in Sources */,
 				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
+				B671C99A21EBCC050034C7C9 /* Operators.swift in Sources */,
+				B671C99721EBCC050034C7C9 /* Update.swift in Sources */,
 				B662FB2421DD4CC200EF79F7 /* Card.swift in Sources */,
+				B671C99B21EBCC050034C7C9 /* KVO.swift in Sources */,
 				B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */,
+				B671C99C21EBCC050034C7C9 /* Lifetime.swift in Sources */,
+				B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */,
+				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,
+				B671C98D21EBC54E0034C7C9 /* AddUpgradeViewController.swift in Sources */,
+				B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */,
 				B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */,
 				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,
 				B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */,
 				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,
+				B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */,
 				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,
+				B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */,
 				B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */,
 				B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B671C85A21E606900034C7C9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B671C86121E606910034C7C9 /* X_SquadUITests.swift in Sources */,
-				B671C86921E6071D0034C7C9 /* SnapshotHelper.swift in Sources */,
+				B671C94221E7BC540034C7C9 /* SquadViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B671C86421E606910034C7C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B662FB0921DD4C0000EF79F7 /* X-Squad */;
-			targetProxy = B671C86321E606910034C7C9 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */ = {
@@ -715,44 +812,6 @@
 			};
 			name = Release;
 		};
-		B671C86621E606910034C7C9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J2Z2X63L8Q;
-				INFOPLIST_FILE = "X-SquadUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.avario.X-SquadUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "X-Squad";
-			};
-			name = Debug;
-		};
-		B671C86721E606910034C7C9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J2Z2X63L8Q;
-				INFOPLIST_FILE = "X-SquadUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.avario.X-SquadUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "X-Squad";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -770,15 +829,6 @@
 			buildConfigurations = (
 				B662FB1D21DD4C0400EF79F7 /* Debug */,
 				B662FB1E21DD4C0400EF79F7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B671C86521E606910034C7C9 /* Build configuration list for PBXNativeTarget "X-SquadUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B671C86621E606910034C7C9 /* Debug */,
-				B671C86721E606910034C7C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

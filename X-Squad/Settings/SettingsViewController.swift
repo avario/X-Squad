@@ -27,10 +27,17 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	init() {
 		super.init(style: .grouped)
 		title = "Settings"
+		
+		let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
+		navigationItem.rightBarButtonItem = closeButton
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
+	}
+	
+	@objc func close() {
+		dismiss(animated: true, completion: nil)
 	}
 	
 	override func viewDidLoad() {
@@ -96,20 +103,28 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		switch Section(rawValue: indexPath.section)! {
 		case .updateCards:
 			let updateCardsViewController = UpdateCardsViewController()
-			navigationController?.pushViewController(updateCardsViewController, animated: true)
+			
+			let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
+			navigationController.viewControllers = [updateCardsViewController]
+			present(navigationController, animated: true, completion: nil)
+			
 			updateCardsViewController.update(dismissOnCompletion: true)
+			
 		case .downloadImages:
 			let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-			navigationController.viewControllers = [DownloadViewController()]
+			navigationController.viewControllers = [ImageDownloadViewController()]
 			present(navigationController, animated: true, completion: nil)
+			
 		case .developer:
 			switch DeveloperCell(rawValue: indexPath.row)! {
 			case .acknowledgements:
 				let acknowledgementsViewController = AcknowledgementsViewController()
 				navigationController?.pushViewController(acknowledgementsViewController, animated: true)
+				
 			case .disclaimer:
 				let disclaimerViewController = DisclaimerViewController()
 				navigationController?.pushViewController(disclaimerViewController, animated: true)
+				
 			case .feedback:
 				let composeVC = MFMailComposeViewController()
 				composeVC.mailComposeDelegate = self

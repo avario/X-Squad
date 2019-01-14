@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			updateCardsViewController.update(dismissOnCompletion: false)
 		} else {
 			let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-			darkNavigation.viewControllers = [LibraryViewController()]
+			darkNavigation.viewControllers = [_HomeViewController()]
 			window?.rootViewController = darkNavigation
 		}
 		

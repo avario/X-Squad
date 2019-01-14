@@ -33,6 +33,10 @@ extension CardStore {
 		}
 		
 		for index in searchIndices {
+			guard results.firstIndex(of: index.card) == nil else {
+				continue
+			}
+			
 			for typeTerm in index.typeTerms {
 				if typeTerm.hasPrefix(validSearchTerm) {
 					results.append(index.card)
@@ -168,7 +172,7 @@ extension Card.ShipType {
 		case .firespray:
 			return ["firespray"]
 		case .TIElnFighter:
-			return ["tielnfighter", "tie fighter"]
+			return ["tieln fighter", "tie fighter"]
 		case .BTLA4Ywing:
 			return ["btla4 ywing", "ywing"]
 		case .TIEAdvancedx1:
