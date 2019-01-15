@@ -18,7 +18,6 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	init(animator: UIDynamicAnimator) {
 		self.animator = animator
 		super.init()
-		animator.delegate = self
 	}
 	
 	let transitionTime: TimeInterval = 0.5
@@ -41,13 +40,14 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let toCardViews = CardView.all(in: toVC.view)
 		
 		for fromCardView in fromCardViews {
+			animator.addBehavior(fromCardView.behaviour)
+			
 			if let matchingToCardView = toCardViews.first(where: { $0.id == fromCardView.id }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
 				let snap = UISnapBehavior(item: fromCardView, snapTo: cardPosition)
 				snap.damping = 0.5
 				animator.addBehavior(snap)
-				animator.addBehavior(fromCardView.behaviour)
 				
 				let scale = matchingToCardView.bounds.width/fromCardView.bounds.width
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
@@ -59,16 +59,16 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				matchedToCardViews.append(matchingToCardView)
 				
 			} else {
-				// Maybe just fall or something?
+				let snap = UISnapBehavior(item: fromCardView, snapTo: CGPoint(x: CGFloat.random(in: -100...(UIScreen.main.bounds.width + 100)), y: UIScreen.main.bounds.height + fromCardView.bounds.height))
+				snap.damping = 0.5
+				animator.addBehavior(snap)
 			}
 		}
 		
+		let viewsToFade = fromVC.view.allHUDViews()
 		UIView.animate(withDuration: transitionTime/2) {
-			for subview in fromVC.view.subviews {
-				guard subview is CardView == false else {
-					continue
-				}
-				subview.alpha = 0
+			for view in viewsToFade {
+				view.alpha = 0
 			}
 		}
 		
@@ -81,16 +81,4 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			}
 		}
 	}
-}
-
-extension CardsDismissAnimationController: UIDynamicAnimatorDelegate {
-	
-	func dynamicAnimatorDidPause(_ animator: UIDynamicAnimator) {
-//		transitionContext?.completeTransition(true)
-//
-//		for matchingToCardView in matchedToCardViews {
-//			matchingToCardView.isHidden = false
-//		}
-	}
-	
 }

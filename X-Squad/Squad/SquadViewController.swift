@@ -15,9 +15,16 @@ class SquadViewController: UIViewController {
 	
 	static let pilotCardWidth = UIScreen.main.bounds.width * 0.5
 	
+	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
+	
+	var squadPilotViews: [SquadPilotView] = []
+	
 	init(for squad: Squad) {
 		self.squad = squad
 		super.init(nibName: nil, bundle: nil)
+		
+		transitioningDelegate = self
+		modalPresentationStyle = .overCurrentContext
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -30,6 +37,8 @@ class SquadViewController: UIViewController {
 	
 	let scrollView = UIScrollView()
 	let stackView = UIStackView()
+	
+	var pullToDismissController: PullToDismissController!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -58,11 +67,6 @@ class SquadViewController: UIViewController {
 		stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
 		stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
 		
-		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panSquad(recognizer:)))
-		panGesture.maximumNumberOfTouches = 1
-		panGesture.delegate = self
-		scrollView.addGestureRecognizer(panGesture)
-		
 		let header = SquadHeaderView(squad: squad)
 		stackView.addArrangedSubview(header)
 		
@@ -75,55 +79,20 @@ class SquadViewController: UIViewController {
 		
 		for pilot in squad.pilots.value {
 			let squadPilotView = SquadPilotView(pilot: pilot)
-			stackView.insertArrangedSubview(squadPilotView, at: 1)
+			stackView.insertArrangedSubview(squadPilotView, at: stackView.arrangedSubviews.count - 1)
 			
 			squadPilotView.delegate = self
-		}
-	}
-	
-	@objc func panSquad(recognizer: UIPanGestureRecognizer) {
-		switch recognizer.state {
-		case .began:
-			break
 			
-		case .changed:
-			break
-			
-		case .cancelled, .ended, .failed:
-			let velocity = recognizer.velocity(in: view)
-			if velocity.y > 500 {
-				dismiss(animated: true, completion: nil)
-			}
-		case.possible:
-			break
+			squadPilotViews.append(squadPilotView)
 		}
+		
+		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView, animator: animator)
+		pullToDismissController.delegate = self
 	}
 	
 	@objc func addPilot() {
 		let addPilotViewController = AddPilotViewController(squad: squad)
 		present(addPilotViewController, animated: true, completion: nil)
-	}
-	
-}
-
-extension SquadViewController: UIGestureRecognizerDelegate {
-	
-	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-			return true
-		}
-		
-		if scrollView.contentOffset.y <= -scrollView.adjustedContentInset.top,
-			panGesture.velocity(in: nil).y >= 0 {
-			return true
-		}
-		
-		// Scroll as normal
-		return false
-	}
-	
-	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		return otherGestureRecognizer == scrollView.panGestureRecognizer
 	}
 	
 }
@@ -150,5 +119,35 @@ extension SquadViewController: SquadPilotViewDelegate {
 	func squadPilotView(_ squadPilotView: SquadPilotView, didPressButtonFor upgradeType: Card.UpgradeType) {
 		let addUpgradeViewController = AddUpgradeViewController(squad: squad, pilot: squadPilotView.pilot, upgradeType: upgradeType)
 		present(addUpgradeViewController, animated: true, completion: nil)
+	}
+}
+
+extension SquadViewController: UIViewControllerTransitioningDelegate {
+	
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsPresentAnimationController(animator: animator)
+	}
+	
+	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsDismissAnimationController(animator: animator)
+	}
+	
+	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+		return nil
+	}
+}
+
+extension SquadViewController: PullToDismissControllerDelegate {
+	func pullToDismissControllerWillBeginPullGesture(_ pullToDismissController: PullToDismissController) {
+		for squadPilotView in squadPilotViews {
+			squadPilotView.scrollView.panGestureRecognizer.isEnabled = false
+		}
+	}
+	
+	func pullToDismissControllerWillCancelPullGesture(_ pullToDismissController: PullToDismissController) {
+		for squadPilotView in squadPilotViews {
+			squadPilotView.scrollView.panGestureRecognizer.isEnabled = true
+			squadPilotView.scrollView.contentOffset = .zero
+		}
 	}
 }

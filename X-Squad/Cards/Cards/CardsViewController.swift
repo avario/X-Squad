@@ -55,6 +55,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		collectionView.keyboardDismissMode = .onDrag
 		collectionView.alwaysBounceVertical = true
 		collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 30, right: 10)
+		collectionView.backgroundColor = .clear
 	}
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {

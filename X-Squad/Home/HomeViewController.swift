@@ -92,7 +92,9 @@ class _HomeViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let squad = SquadStore.squads[indexPath.row]
 		let squadViewController = SquadViewController(for: squad)
-		present(squadViewController, animated: true, completion: nil)
+		navigationController!.present(squadViewController, animated: true, completion: nil)
+		
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 }

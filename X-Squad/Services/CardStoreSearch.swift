@@ -182,15 +182,15 @@ extension Card.ShipType {
 		case .UT60DUwing:
 			return ["ut60d uwing", "uwing"]
 		case .TIEskStriker:
-			return ["tiesk striker", "tie striker"]
+			return ["tiesk striker", "tie striker", "striker"]
 		case .ASF01Bwing:
 			return ["asf01 bwing", "bwing"]
 		case .TIEDDefender:
-			return ["tied defender", "tie defender"]
+			return ["tied defender", "tie defender", "defender"]
 		case .TIEsaBomber:
-			return ["tiesa bomber", "tie bomber"]
+			return ["tiesa bomber", "tie bomber", "bomber"]
 		case .TIEcsPunisher:
-			return ["tiecs punisher", "tie punisher"]
+			return ["tiecs punisher", "tie punisher", "punisher"]
 		case .G1AStarfighter:
 			return ["g1a starfighter"]
 		case .VCX100:
@@ -202,11 +202,11 @@ extension Card.ShipType {
 		case .lambdaShuttle:
 			return ["lambda shuttle"]
 		case .TIEphPhantom:
-			return ["tieph phantom", "tie phantom"]
+			return ["tieph phantom", "tie phantom", "phantom"]
 		case .VT49Decimator:
 			return ["vt49 decimator", "decimator"]
 		case .TIEagAggressor:
-			return ["tieag aggressor", "tie aggressor"]
+			return ["tieag aggressor", "tie aggressor", "aggressor"]
 		case .BTLS8Kwing:
 			return ["btls8 kwing", "kwing"]
 		case .ARC170Starfighter:
@@ -228,15 +228,15 @@ extension Card.ShipType {
 		case .Ewing:
 			return ["ewing"]
 		case .TIEInterceptor:
-			return ["tie interceptor"]
+			return ["tie interceptor", "interceptor"]
 		case .lancerPursuitCraft:
 			return ["lancer pursuit craft"]
 		case .TIEReaper:
-			return ["tie reaper"]
+			return ["tie reaper", "reaper"]
 		case .M3AInterceptor:
 			return ["m3a interceptor"]
 		case .jumpMaster5000:
-			return ["jump master 5000"]
+			return ["jumpmaster 5000"]
 		case .customizedYT1300:
 			return ["customized yt1300", "yt1300"]
 		case .escapeCraft:
@@ -248,7 +248,7 @@ extension Card.ShipType {
 		case .upsilonclassCommandShuttle:
 			return ["upsilonclass command shuttle"]
 		case .TIEvnSilencer:
-			return ["tievn silencer", "tie silencer"]
+			return ["tievn silencer", "tie silencer", "silencer"]
 		case .T70Xwing:
 			return ["t70 xwing", "xwing"]
 		case .RZ2Awing:

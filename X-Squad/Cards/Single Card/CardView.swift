@@ -53,6 +53,8 @@ class CardView: UIView {
 		return behaviour
 	}()
 	
+	var attachment: UIAttachmentBehavior?
+	
 	let costView = CostView()
 	
 	init() {
@@ -62,6 +64,10 @@ class CardView: UIView {
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFit
 		imageView.clipsToBounds = true
+		
+		#warning("Does this actually improve performance?")
+		imageView.layer.shouldRasterize = true
+		imageView.layer.rasterizationScale = UIScreen.main.scale
 		imageView.kf.indicatorType = .activity
 		
 		imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -77,7 +83,7 @@ class CardView: UIView {
 	static func all(in view: UIView) -> [CardView] {
 		var cardViews: [CardView] = []
 		for subview in view.subviews {
-			if let cardView = subview as? CardView, cardView.isVisible  {
+			if let cardView = subview as? CardView {//, cardView.isVisible  {
 				cardViews.append(cardView)
 			}
 			cardViews.append(contentsOf: CardView.all(in: subview))

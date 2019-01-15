@@ -36,9 +36,11 @@ class SquadPilotView: UIView {
 		self.translatesAutoresizingMaskIntoConstraints = false
 		self.heightAnchor.constraint(equalToConstant: height).isActive = true
 		
+		clipsToBounds = false
+		scrollView.clipsToBounds = false
+		
 		addSubview(scrollView)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		scrollView.delegate = self
 		scrollView.alwaysBounceHorizontal = true
 		
 		scrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -68,28 +70,11 @@ class SquadPilotView: UIView {
 			
 			upgradeTag += 1
 		}
-		
-		updateSquad()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
-	
-//	func updateScrollViewContentSize() {
-//		var contentWidth = bounds.width/2 + pilotCardView.bounds.width/2
-//
-//		let rightPadding: CGFloat = 44
-//		contentWidth += rightPadding
-//
-//		if let card = pilot.card {
-//			for upgrade in card.availableUpgrades {
-//				contentWidth += 44
-//			}
-//		}
-//
-//		scrollView.contentSize = CGSize(width: contentWidth, height: 0)
-//	}
 	
 	@objc func addUpgrade(button: UpgradeButton) {
 		delegate?.squadPilotView(self, didPressButtonFor: button.upgrade!)
@@ -110,6 +95,12 @@ class SquadPilotView: UIView {
 			}
 			delegate?.squadPilotView(self, didSelect: upgrade)
 		}
+	}
+	
+	override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		
+		updateSquad()
 	}
 	
 	func updateSquad() {
@@ -133,7 +124,8 @@ class SquadPilotView: UIView {
 				origin: CGPoint(x: leadingEdge, y: 20),
 				size: CGSize(width: cardLength, height: cardWidth))
 			
-			scrollView.insertSubview(configurationCardView, at: 0)
+			scrollView.insertSubview(configurationCardView, belowSubview: pilotCardView)
+			configurationCardView.snap.snapPoint = scrollView.convert(configurationCardView.center, to: nil)
 			
 			leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
 			
@@ -150,8 +142,11 @@ class SquadPilotView: UIView {
 		pilotCardView.frame = CGRect(
 			origin: CGPoint(x: leadingEdge, y: 10),
 			size: CGSize(width: cardWidth, height: cardLength))
+		pilotCardView.snap.snapPoint = scrollView.convert(pilotCardView.center, to: nil)
 		
 		leadingEdge = pilotCardView.frame.maxX
+		
+		var previousCardView = pilotCardView
 		
 		for upgrade in pilot.upgrades.value {
 			guard upgrade.card?.upgradeTypes.contains(.configuration) == false else {
@@ -169,7 +164,8 @@ class SquadPilotView: UIView {
 				origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: 20),
 				size: CGSize(width: cardLength, height: cardWidth))
 			
-			scrollView.insertSubview(upgradeCardView, at: 0)
+			scrollView.insertSubview(upgradeCardView, belowSubview: previousCardView)
+			upgradeCardView.snap.snapPoint = scrollView.convert(upgradeCardView.center, to: nil)
 			
 			var upgradeButtons: [UpgradeButton] = []
 			for upgradeType in upgrade.card!.upgradeTypes {
@@ -189,6 +185,7 @@ class SquadPilotView: UIView {
 			}
 			
 			leadingEdge = upgradeCardView.frame.maxX
+			previousCardView = upgradeCardView
 		}
 		
 		for upgradeButton in availableUpgradeButtons {
@@ -201,29 +198,4 @@ class SquadPilotView: UIView {
 		scrollView.contentSize = CGSize(width: leadingEdge + 30, height: scrollView.bounds.height)
 	}
 	
-}
-
-extension SquadPilotView: UIScrollViewDelegate {
-	func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//		for cardView in cardViews {
-//			guard let card = cardView.card else {
-//				continue
-//			}
-//
-//			var position = cardPositions[card]!
-//			position.x -= scrollView.contentOffset.x
-//
-////			cardView.snap.snapPoint = position
-//			cardView.center = position
-//
-//			for upgradeButton in upgradeButtons {
-//				guard var position = upgradeButtonsPositions[upgradeButton.tag] else {
-//					continue
-//				}
-//				position.x -= scrollView.contentOffset.x
-//
-//				upgradeButton.center = position
-//			}
-//		}
-	}
 }

@@ -58,7 +58,7 @@ class UpdateCardsViewController: DownloadViewController {
 	
 	func showHome() {
 		let window = UIApplication.shared.keyWindow!
-		window.rootViewController = MainTabBarController()
+		window.rootViewController = _HomeViewController()
 	}
 	
 	func showUpdateError(_ updateError: String, dismissOnCompletion: Bool) {

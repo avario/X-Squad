@@ -62,6 +62,7 @@
 		B671C99A21EBCC050034C7C9 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99321EBCC040034C7C9 /* Operators.swift */; };
 		B671C99B21EBCC050034C7C9 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99421EBCC050034C7C9 /* KVO.swift */; };
 		B671C99C21EBCC050034C7C9 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99521EBCC050034C7C9 /* Lifetime.swift */; };
+		B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9C821EE11740034C7C9 /* PullToDismissController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -135,6 +136,7 @@
 		B671C99321EBCC040034C7C9 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		B671C99421EBCC050034C7C9 /* KVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
 		B671C99521EBCC050034C7C9 /* Lifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
+		B671C9C821EE11740034C7C9 /* PullToDismissController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		B65BCC9C21E3BA06005721A7 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
+				B671C9C721EE11420034C7C9 /* Pull Down to Dismiss */,
 				B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */,
 				B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */,
 			);
@@ -469,6 +472,14 @@
 			path = Dynamic;
 			sourceTree = "<group>";
 		};
+		B671C9C721EE11420034C7C9 /* Pull Down to Dismiss */ = {
+			isa = PBXGroup;
+			children = (
+				B671C9C821EE11740034C7C9 /* PullToDismissController.swift */,
+			);
+			path = "Pull Down to Dismiss";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -596,6 +607,7 @@
 				B671C93A21E76C2D0034C7C9 /* NewSquadViewController.swift in Sources */,
 				B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */,
 				B671C99921EBCC050034C7C9 /* Observation.swift in Sources */,
+				B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */,
 				B671C93D21E76DC80034C7C9 /* FactionCell.swift in Sources */,
 				B65BCD3821E4C388005721A7 /* CostView.swift in Sources */,
 				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,

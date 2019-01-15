@@ -33,12 +33,6 @@ class CardCollectionViewCell: UICollectionViewCell {
 		super.init(frame: frame)
 		
 		addSubview(cardView)
-		cardView.translatesAutoresizingMaskIntoConstraints = false
-		
-		cardView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		cardView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-		cardView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-		cardView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -48,6 +42,12 @@ class CardCollectionViewCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		card = nil
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		cardView.frame = bounds
 	}
 	
 }

@@ -15,12 +15,18 @@ class AddUpgradeViewController: CardsViewController {
 	let pilot: Squad.Pilot
 	let upgradeType: Card.UpgradeType
 	
+	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
+	var pullToDismissController: PullToDismissController!
+	
 	init(squad: Squad, pilot: Squad.Pilot, upgradeType: Card.UpgradeType) {
 		self.squad = squad
 		self.pilot = pilot
 		self.upgradeType = upgradeType
 		
 		super.init(numberOfColumns: 3)
+		
+		transitioningDelegate = self
+		modalPresentationStyle = .overCurrentContext
 		
 		var upgrades: [Card] = []
 		var invalidUpgrades: [Card] = []
@@ -81,28 +87,7 @@ class AddUpgradeViewController: CardsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCards(recognizer:)))
-		panGesture.maximumNumberOfTouches = 1
-		panGesture.delegate = self
-		collectionView.addGestureRecognizer(panGesture)
-	}
-	
-	@objc func panCards(recognizer: UIPanGestureRecognizer) {
-		switch recognizer.state {
-		case .began:
-			break
-			
-		case .changed:
-			break
-			
-		case .cancelled, .ended, .failed:
-			let velocity = recognizer.velocity(in: view)
-			if velocity.y > 500 {
-				dismiss(animated: true, completion: nil)
-			}
-		case.possible:
-			break
-		}
+		pullToDismissController = PullToDismissController(viewController: self, scrollView: collectionView, animator: animator)
 	}
 	
 	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
@@ -125,28 +110,6 @@ class AddUpgradeViewController: CardsViewController {
 			}
 		}
 		
-		return true
-	}
-	
-}
-
-extension AddUpgradeViewController: UIGestureRecognizerDelegate {
-	
-	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-			return true
-		}
-		
-		if collectionView.contentOffset.y <= -collectionView.adjustedContentInset.top,
-			panGesture.velocity(in: nil).y >= 0 {
-			return true
-		}
-		
-		// Scroll as normal
-		return false
-	}
-	
-	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
 	}
 	
@@ -253,4 +216,19 @@ extension Card {
 		return true
 	}
 	
+}
+
+extension AddUpgradeViewController: UIViewControllerTransitioningDelegate {
+	
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsPresentAnimationController(animator: animator)
+	}
+	
+	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsDismissAnimationController(animator: animator)
+	}
+	
+	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+		return nil
+	}
 }
