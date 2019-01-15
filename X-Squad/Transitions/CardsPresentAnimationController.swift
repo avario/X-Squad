@@ -11,11 +11,13 @@ import UIKit
 
 class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 	
-	
 	let animator: UIDynamicAnimator
 	var transitionContext: UIViewControllerContextTransitioning?
 	
-	init(animator: UIDynamicAnimator) {
+	let transitionPoint: CGPoint
+	
+	init(animator: UIDynamicAnimator, transitionPoint: CGPoint = .zero) {
+		self.transitionPoint = transitionPoint
 		self.animator = animator
 		super.init()
 	}
@@ -44,8 +46,10 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 		
 		for toCardView in toCardViews {
 			
+			toCardView.snap.snapPoint = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
+			let targetAlpha = toCardView.alpha
+			
 			if let matchingFromCardView = fromCardViews.first(where: { $0.id == toCardView.id }) {
-				toCardView.snap.snapPoint = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
 				
 				let fromCardPosition = matchingFromCardView.superview!.convert(matchingFromCardView.center, to: fromVC.view)
 				toCardView.center = toVC.view.convert(fromCardPosition, to: toCardView.superview)
@@ -56,23 +60,25 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				toCardView.alpha = matchingFromCardView.alpha
 				
 				matchingFromCardView.isHidden = true
+			
+				animator.addBehavior(toCardView.snap)
+				animator.addBehavior(toCardView.behaviour)
+				
+				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+					toCardView.imageView.transform = CGAffineTransform.identity
+					toCardView.alpha = targetAlpha
+				}, completion: nil)
 				
 			} else {
-//				toCardView.center = CGPoint(
-//					x: toCardView.center.x + CGFloat.random(in: -100...100),
-//					y: toCardView.center.y + CGFloat.random(in: -100...100))
-//
-//				toCardView.alpha = 0
-			}
-			
-			animator.addBehavior(toCardView.snap)
-			animator.addBehavior(toCardView.behaviour)
-			
-			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
-				toCardView.imageView.transform = CGAffineTransform.identity
-				toCardView.alpha = 1.0
+				let targetLocation = toCardView.center
+				toCardView.center = CGPoint(
+					x: targetLocation.x,
+					y: targetLocation.y + UIScreen.main.bounds.height)
 				
-			}, completion: nil)
+				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+					toCardView.center = targetLocation
+				}, completion: nil)
+			}
 		}
 		
 		let viewsToFade = toVC.view.allHUDViews()

@@ -1,5 +1,5 @@
 //
-//  AddUpgradeViewController.swift
+//  SelectUpgradeViewController.swift
 //  X-Squad
 //
 //  Created by Avario on 13/01/2019.
@@ -9,19 +9,25 @@
 import Foundation
 import UIKit
 
-class AddUpgradeViewController: CardsViewController {
+class SelectUpgradeViewController: CardsViewController {
 	
 	let squad: Squad
 	let pilot: Squad.Pilot
+	let currentUpgrade: Squad.Pilot.Upgrade?
 	let upgradeType: Card.UpgradeType
 	
 	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
 	var pullToDismissController: PullToDismissController!
 	
-	init(squad: Squad, pilot: Squad.Pilot, upgradeType: Card.UpgradeType) {
+	let transitionPoint: CGPoint
+	
+	init(squad: Squad, pilot: Squad.Pilot, currentUpgrade: Squad.Pilot.Upgrade?, upgradeType: Card.UpgradeType, upgradeButton: UpgradeButton) {
 		self.squad = squad
 		self.pilot = pilot
+		self.currentUpgrade = currentUpgrade
 		self.upgradeType = upgradeType
+		
+		self.transitionPoint = upgradeButton.superview!.convert(upgradeButton.center, to: nil)
 		
 		super.init(numberOfColumns: 3)
 		
@@ -97,20 +103,25 @@ class AddUpgradeViewController: CardsViewController {
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
-	override func isCardAvailable(_ card: Card, at index: IndexPath) -> Bool {
+	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
 		if index.section > 0 {
-			return false
+			return .unavailable
+		}
+		
+		if let currentUpgrade = currentUpgrade,
+			card.id == currentUpgrade.cardID {
+			return .selected
 		}
 		
 		if card.isUnique {
 			for pilot in squad.pilots.value {
 				if pilot.card?.name == card.name || pilot.upgrades.value.contains(where: { $0.card?.name == card.name }) {
-					return false
+					return .unavailable
 				}
 			}
 		}
 		
-		return true
+		return .default
 	}
 	
 }
@@ -218,14 +229,14 @@ extension Card {
 	
 }
 
-extension AddUpgradeViewController: UIViewControllerTransitioningDelegate {
+extension SelectUpgradeViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsPresentAnimationController(animator: animator)
+		return CardsPresentAnimationController(animator: animator, transitionPoint: transitionPoint)
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController(animator: animator)
+		return CardsDismissAnimationController(animator: animator, transitionPoint: transitionPoint)
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

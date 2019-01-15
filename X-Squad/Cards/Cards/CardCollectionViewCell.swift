@@ -21,9 +21,15 @@ class CardCollectionViewCell: UICollectionViewCell {
 		}
 	}
 	
-	var isCardAvailable: Bool = true {
+	enum Status {
+		case `default`
+		case unavailable
+		case selected
+	}
+	
+	var status: Status = .default {
 		didSet {
-			cardView.alpha = isCardAvailable ? 1.0 : 0.5
+			cardView.alpha = status == .unavailable ? 0.5 : 1.0
 		}
 	}
 	

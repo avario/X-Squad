@@ -54,7 +54,7 @@
 		B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C97D21E8FED00034C7C9 /* CardsViewController.swift */; };
 		B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */; };
 		B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */; };
-		B671C98D21EBC54E0034C7C9 /* AddUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */; };
+		B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */; };
 		B671C99621EBCC050034C7C9 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98F21EBCC040034C7C9 /* Dynamic.swift */; };
 		B671C99721EBCC050034C7C9 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99021EBCC040034C7C9 /* Update.swift */; };
 		B671C99821EBCC050034C7C9 /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99121EBCC040034C7C9 /* Codable.swift */; };
@@ -128,7 +128,7 @@
 		B671C97D21E8FED00034C7C9 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSectionHeaderView.swift; sourceTree = "<group>"; };
 		B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadHeaderView.swift; sourceTree = "<group>"; };
-		B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUpgradeViewController.swift; sourceTree = "<group>"; };
+		B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUpgradeViewController.swift; sourceTree = "<group>"; };
 		B671C98F21EBCC040034C7C9 /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		B671C99021EBCC040034C7C9 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
 		B671C99121EBCC040034C7C9 /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
@@ -453,7 +453,7 @@
 		B671C98B21EBC53B0034C7C9 /* Add Upgrade */ = {
 			isa = PBXGroup;
 			children = (
-				B671C98C21EBC54E0034C7C9 /* AddUpgradeViewController.swift */,
+				B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */,
 			);
 			path = "Add Upgrade";
 			sourceTree = "<group>";
@@ -635,7 +635,7 @@
 				B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */,
 				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,
-				B671C98D21EBC54E0034C7C9 /* AddUpgradeViewController.swift in Sources */,
+				B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */,
 				B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */,
 				B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */,
 				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,

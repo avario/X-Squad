@@ -83,7 +83,7 @@ class CardView: UIView {
 	static func all(in view: UIView) -> [CardView] {
 		var cardViews: [CardView] = []
 		for subview in view.subviews {
-			if let cardView = subview as? CardView {//, cardView.isVisible  {
+			if let cardView = subview as? CardView, cardView.isVisible  {
 				cardViews.append(cardView)
 			}
 			cardViews.append(contentsOf: CardView.all(in: subview))

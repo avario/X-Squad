@@ -114,8 +114,8 @@ class AddPilotViewController: CardsViewController {
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
-	override func isCardAvailable(_ card: Card, at index: IndexPath) -> Bool {
-		return !(card.isUnique && squad.pilots.value.contains(where: { $0.card?.name == card.name }))
+	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
+		return card.isUnique && squad.pilots.value.contains(where: { $0.card?.name == card.name }) ? .unavailable : .default
 	}
 	
 }

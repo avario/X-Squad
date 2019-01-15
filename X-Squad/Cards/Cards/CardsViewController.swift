@@ -30,7 +30,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	
 	var cardSections: [CardSection] = []
 	
-	init(numberOfColumns: Int) {
+	init(numberOfColumns: Int) {		
 		let layout = CardCollectionViewLayout(numberOfColumns: numberOfColumns)
 		super.init(collectionViewLayout: layout)
 		
@@ -71,7 +71,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
-		cardCell.isCardAvailable = isCardAvailable(card, at: indexPath)
+		cardCell.status = status(for: card, at: indexPath)
 		
 		return cardCell
 	}
@@ -122,8 +122,8 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		
 	}
 	
-	open func isCardAvailable(_ card: Card, at index: IndexPath) -> Bool {
-		return true
+	open func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
+		return .default
 	}
 	
 }

@@ -15,7 +15,10 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	var transitionContext: UIViewControllerContextTransitioning?
 	var matchedToCardViews: [CardView] = []
 	
-	init(animator: UIDynamicAnimator) {
+	let transitionPoint: CGPoint
+	
+	init(animator: UIDynamicAnimator, transitionPoint: CGPoint = .zero) {
+		self.transitionPoint = transitionPoint
 		self.animator = animator
 		super.init()
 	}
@@ -40,7 +43,8 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let toCardViews = CardView.all(in: toVC.view)
 		
 		for fromCardView in fromCardViews {
-			animator.addBehavior(fromCardView.behaviour)
+			var targetAlpha: CGFloat = 1.0
+			var targetScale: CGFloat = 0.001
 			
 			if let matchingToCardView = toCardViews.first(where: { $0.id == fromCardView.id }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
@@ -48,20 +52,24 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				let snap = UISnapBehavior(item: fromCardView, snapTo: cardPosition)
 				snap.damping = 0.5
 				animator.addBehavior(snap)
+				animator.addBehavior(fromCardView.behaviour)
 				
-				let scale = matchingToCardView.bounds.width/fromCardView.bounds.width
-				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
-					fromCardView.imageView.transform = CGAffineTransform(scaleX: scale, y: scale)
-					fromCardView.alpha = matchingToCardView.alpha
-				}, completion: nil)
+				targetScale = matchingToCardView.bounds.width/fromCardView.bounds.width
+				targetAlpha = matchingToCardView.alpha
 				
 				matchingToCardView.isHidden = true
 				matchedToCardViews.append(matchingToCardView)
-				
+			
+				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+					fromCardView.imageView.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
+					fromCardView.alpha = targetAlpha
+				}, completion: nil)
 			} else {
-				let snap = UISnapBehavior(item: fromCardView, snapTo: CGPoint(x: CGFloat.random(in: -100...(UIScreen.main.bounds.width + 100)), y: UIScreen.main.bounds.height + fromCardView.bounds.height))
-				snap.damping = 0.5
-				animator.addBehavior(snap)
+				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+					fromCardView.center = CGPoint(
+						x: fromCardView.center.x,
+						y: fromCardView.center.y + UIScreen.main.bounds.height)
+				}, completion: nil)
 			}
 		}
 		

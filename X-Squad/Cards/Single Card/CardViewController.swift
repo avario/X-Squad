@@ -93,7 +93,7 @@ class CardViewController: UIViewController {
 		for upgrade in card.availableUpgrades {
 			let upgradeButton = UpgradeButton()
 			upgradeButton.isUserInteractionEnabled = false
-			upgradeButton.upgrade = upgrade
+			upgradeButton.upgradeType = upgrade
 			
 			upgradeBar.addArrangedSubview(upgradeButton)
 		}

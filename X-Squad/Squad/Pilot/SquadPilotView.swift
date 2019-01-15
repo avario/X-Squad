@@ -12,7 +12,7 @@ import UIKit
 protocol SquadPilotViewDelegate: AnyObject {
 	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect pilot: Squad.Pilot)
 	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect upgrade: Squad.Pilot.Upgrade)
-	func squadPilotView(_ squadPilotView: SquadPilotView, didPressButtonFor upgradeType: Card.UpgradeType)
+	func squadPilotView(_ squadPilotView: SquadPilotView, didPress button: UpgradeButton)
 }
 
 class SquadPilotView: UIView {
@@ -55,20 +55,14 @@ class SquadPilotView: UIView {
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
 		
-		var upgradeTag = 0
 		for upgrade in pilot.card?.availableUpgrades ?? [] {
 			let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-			upgradeButton.upgrade = upgrade
-			upgradeButton.tag = upgradeTag
+			upgradeButton.upgradeType = upgrade
 			
 			scrollView.insertSubview(upgradeButton, at: 0)
-			upgradeButton.center = CGPoint(x: pilotCardView.frame.maxX + 44 * CGFloat(upgradeTag + 1), y: height/2)
-			
 			upgradeButtons.append(upgradeButton)
 			
 			upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
-			
-			upgradeTag += 1
 		}
 	}
 	
@@ -77,7 +71,7 @@ class SquadPilotView: UIView {
 	}
 	
 	@objc func addUpgrade(button: UpgradeButton) {
-		delegate?.squadPilotView(self, didPressButtonFor: button.upgrade!)
+		delegate?.squadPilotView(self, didPress: button)
 	}
 	
 	@objc func selectCard(tapGesture: UITapGestureRecognizer) {
@@ -129,13 +123,14 @@ class SquadPilotView: UIView {
 			
 			leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
 			
-			if let configurationButton = availableUpgradeButtons.first(where: { $0.upgrade == Card.UpgradeType.configuration }) {
+			if let configurationButton = availableUpgradeButtons.first(where: { $0.upgradeType == Card.UpgradeType.configuration }) {
 				configurationButton.frame = CGRect(
 					origin: CGPoint(x: leadingEdge - 10 - configurationButton.bounds.width, y: configurationCardView.frame.maxY),
 					size: configurationButton.bounds.size)
 				
 				let index = availableUpgradeButtons.firstIndex(of: configurationButton)!
 				availableUpgradeButtons.remove(at: index)
+				configurationButton.associatedUpgrade = configuration
 			}
 		}
 		
@@ -169,13 +164,14 @@ class SquadPilotView: UIView {
 			
 			var upgradeButtons: [UpgradeButton] = []
 			for upgradeType in upgrade.card!.upgradeTypes {
-				guard let upgradeButton = availableUpgradeButtons.first(where: { $0.upgrade == upgradeType }) else {
+				guard let upgradeButton = availableUpgradeButtons.first(where: { $0.upgradeType == upgradeType }) else {
 					continue
 				}
 				upgradeButtons.append(upgradeButton)
 				
 				let index = availableUpgradeButtons.firstIndex(of: upgradeButton)!
 				availableUpgradeButtons.remove(at: index)
+				upgradeButton.associatedUpgrade = upgrade
 			}
 			
 			for (index, upgradeButton) in upgradeButtons.enumerated() {
@@ -193,6 +189,8 @@ class SquadPilotView: UIView {
 				origin: CGPoint(x: leadingEdge, y: 20 + cardWidth + 5),
 				size: upgradeButton.bounds.size)
 			leadingEdge = upgradeButton.frame.maxX
+			
+			upgradeButton.associatedUpgrade = nil
 		}
 		
 		scrollView.contentSize = CGSize(width: leadingEdge + 30, height: scrollView.bounds.height)

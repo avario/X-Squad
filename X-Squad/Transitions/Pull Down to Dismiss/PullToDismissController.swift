@@ -31,13 +31,15 @@ class PullToDismissController: NSObject {
 		self.viewController = viewController
 		self.scrollView = scrollView
 		self.animator = animator
-		
+
 		super.init()
+
+		scrollView.delegate = self
 		
-		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(recognizer:)))
-		panGesture.maximumNumberOfTouches = 1
-		panGesture.delegate = self
-		scrollView.addGestureRecognizer(panGesture)
+//		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(pan(recognizer:)))
+//		panGesture.maximumNumberOfTouches = 1
+//		panGesture.delegate = self
+//		scrollView.addGestureRecognizer(panGesture)
 	}
 	
 	@objc func pan(recognizer: UIPanGestureRecognizer) {
@@ -50,23 +52,24 @@ class PullToDismissController: NSObject {
 		
 		switch recognizer.state {
 		case .began:
-			for cardView in CardView.all(in: viewController.view) {
-				cardView.snap.snapPoint = cardView.superview!.convert(cardView.center, to: nil)
-				
-				cardView.attachment = UIAttachmentBehavior(
-					item: cardView,
-					offsetFromCenter: UIOffset(horizontal: CGFloat.random(in: -10...10), vertical: CGFloat.random(in: -10...10)),
-					attachedToAnchor: cardView.snap.snapPoint)
-				
-				animator.addBehavior(cardView.attachment!)
-				animator.addBehavior(cardView.behaviour)
-			}
+			break
+//			for cardView in CardView.all(in: viewController.view) {
+//				cardView.snap.snapPoint = cardView.superview!.convert(cardView.center, to: nil)
+//
+//				cardView.attachment = UIAttachmentBehavior(
+//					item: cardView,
+//					offsetFromCenter: UIOffset(horizontal: CGFloat.random(in: -10...10), vertical: CGFloat.random(in: -10...10)),
+//					attachedToAnchor: cardView.snap.snapPoint)
+//
+//				animator.addBehavior(cardView.attachment!)
+//				animator.addBehavior(cardView.behaviour)
+//			}
 			
 		case .changed:
 			
-			for cardView in CardView.all(in: viewController.view) {
-				cardView.attachment?.anchorPoint = CGPoint(x: cardView.snap.snapPoint.x + translation.x, y: cardView.snap.snapPoint.y + translation.y)
-			}
+//			for cardView in CardView.all(in: viewController.view) {
+//				cardView.attachment?.anchorPoint = CGPoint(x: cardView.snap.snapPoint.x + translation.x, y: cardView.snap.snapPoint.y + translation.y)
+//			}
 			
 			let backgroundPercent = 1 - distance/500
 			viewController.view.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
@@ -94,10 +97,10 @@ class PullToDismissController: NSObject {
 					}
 				}
 				
-				for cardView in CardView.all(in: viewController.view) {
-					animator.addBehavior(cardView.snap)
-					animator.addBehavior(cardView.behaviour)
-				}
+//				for cardView in CardView.all(in: viewController.view) {
+//					animator.addBehavior(cardView.snap)
+//					animator.addBehavior(cardView.behaviour)
+//				}
 				
 				self.delegate?.pullToDismissControllerWillCancelPullGesture(self)
 			}
@@ -105,6 +108,12 @@ class PullToDismissController: NSObject {
 			break
 		}
 	}
+	
+}
+
+extension PullToDismissController: UIScrollViewDelegate {
+	
+	
 	
 }
 
@@ -123,8 +132,8 @@ extension PullToDismissController: UIGestureRecognizerDelegate {
 			panGesture.velocity(in: nil).y >= 0,
 			verticality > 1.0 {
 			// Start drag to dismiss gesture
-			scrollView.alwaysBounceVertical = false
-			scrollView.panGestureRecognizer.isEnabled = false
+//			scrollView.alwaysBounceVertical = false
+//			scrollView.panGestureRecognizer.isEnabled = false
 			
 			self.delegate?.pullToDismissControllerWillBeginPullGesture(self)
 			

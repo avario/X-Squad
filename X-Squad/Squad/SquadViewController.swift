@@ -116,9 +116,9 @@ extension SquadViewController: SquadPilotViewDelegate {
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
-	func squadPilotView(_ squadPilotView: SquadPilotView, didPressButtonFor upgradeType: Card.UpgradeType) {
-		let addUpgradeViewController = AddUpgradeViewController(squad: squad, pilot: squadPilotView.pilot, upgradeType: upgradeType)
-		present(addUpgradeViewController, animated: true, completion: nil)
+	func squadPilotView(_ squadPilotView: SquadPilotView, didPress button: UpgradeButton) {
+		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, pilot: squadPilotView.pilot, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!, upgradeButton: button)
+		present(selectUpgradeViewController, animated: true, completion: nil)
 	}
 }
 
