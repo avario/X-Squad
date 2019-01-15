@@ -41,15 +41,12 @@ class CardView: UIView {
 	
 	lazy var snap: UISnapBehavior = {
 		let snap = UISnapBehavior(item: self, snapTo: self.center)
-		snap.damping = 1.0
 		return snap
 	}()
 	
 	lazy var behaviour: UIDynamicItemBehavior = {
 		let behaviour = UIDynamicItemBehavior(items: [self])
-		behaviour.resistance = 2.0
-		behaviour.density = 2.0
-		behaviour.angularResistance = 2.0
+		behaviour.resistance = 10.0
 		return behaviour
 	}()
 	
@@ -63,11 +60,10 @@ class CardView: UIView {
 		addSubview(imageView)
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFit
-		imageView.clipsToBounds = true
+//		imageView.clipsToBounds = true
 		
-		#warning("Does this actually improve performance?")
-		imageView.layer.shouldRasterize = true
-		imageView.layer.rasterizationScale = UIScreen.main.scale
+//		imageView.layer.shouldRasterize = true
+//		imageView.layer.rasterizationScale = UIScreen.main.scale
 		imageView.kf.indicatorType = .activity
 		
 		imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -104,13 +100,13 @@ class CardView: UIView {
 		return nil
 	}
 	
-	override func layoutSubviews() {
-		super.layoutSubviews()
-		
-		imageView.layer.cornerRadius = frame.width * 0.038
-		imageView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-		imageView.layer.borderWidth = frame.width * 0.0025
-	}
+//	override func layoutSubviews() {
+//		super.layoutSubviews()
+//
+//		imageView.layer.cornerRadius = frame.width * 0.038
+//		imageView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
+//		imageView.layer.borderWidth = frame.width * 0.0025
+//	}
 	
 }
 

@@ -86,13 +86,18 @@ class SquadViewController: UIViewController {
 			squadPilotViews.append(squadPilotView)
 		}
 		
-		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView, animator: animator)
-		pullToDismissController.delegate = self
+		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
 	}
 	
 	@objc func addPilot() {
 		let addPilotViewController = AddPilotViewController(squad: squad)
 		present(addPilotViewController, animated: true, completion: nil)
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		animator.removeAllBehaviors()
 	}
 	
 }
@@ -125,29 +130,14 @@ extension SquadViewController: SquadPilotViewDelegate {
 extension SquadViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsPresentAnimationController(animator: animator)
+		return CardsPresentAnimationController()
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController(animator: animator)
+		return CardsDismissAnimationController()
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
 		return nil
-	}
-}
-
-extension SquadViewController: PullToDismissControllerDelegate {
-	func pullToDismissControllerWillBeginPullGesture(_ pullToDismissController: PullToDismissController) {
-		for squadPilotView in squadPilotViews {
-			squadPilotView.scrollView.panGestureRecognizer.isEnabled = false
-		}
-	}
-	
-	func pullToDismissControllerWillCancelPullGesture(_ pullToDismissController: PullToDismissController) {
-		for squadPilotView in squadPilotViews {
-			squadPilotView.scrollView.panGestureRecognizer.isEnabled = true
-			squadPilotView.scrollView.contentOffset = .zero
-		}
 	}
 }

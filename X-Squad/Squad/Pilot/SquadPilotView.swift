@@ -99,6 +99,7 @@ class SquadPilotView: UIView {
 	
 	func updateSquad() {
 		let scrollViewHorizontalPadding: CGFloat = 16
+		let upgradeCardTopPadding: CGFloat = 30
 		
 		let cardWidth: CGFloat = UIScreen.main.bounds.width * 0.5
 		let cardLength: CGFloat = cardWidth * CardView.sizeRatio
@@ -115,7 +116,7 @@ class SquadPilotView: UIView {
 			configurationCardView.addGestureRecognizer(cardTapGesture)
 			
 			configurationCardView.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: 20),
+				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding),
 				size: CGSize(width: cardLength, height: cardWidth))
 			
 			scrollView.insertSubview(configurationCardView, belowSubview: pilotCardView)
@@ -156,7 +157,7 @@ class SquadPilotView: UIView {
 			upgradeCardView.addGestureRecognizer(cardTapGesture)
 			
 			upgradeCardView.frame = CGRect(
-				origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: 20),
+				origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: upgradeCardTopPadding),
 				size: CGSize(width: cardLength, height: cardWidth))
 			
 			scrollView.insertSubview(upgradeCardView, belowSubview: previousCardView)
@@ -186,14 +187,14 @@ class SquadPilotView: UIView {
 		
 		for upgradeButton in availableUpgradeButtons {
 			upgradeButton.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: 20 + cardWidth + 5),
+				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding + cardWidth + 5),
 				size: upgradeButton.bounds.size)
 			leadingEdge = upgradeButton.frame.maxX
 			
 			upgradeButton.associatedUpgrade = nil
 		}
 		
-		scrollView.contentSize = CGSize(width: leadingEdge + 30, height: scrollView.bounds.height)
+		scrollView.contentSize = CGSize(width: leadingEdge + scrollViewHorizontalPadding, height: scrollView.bounds.height)
 	}
 	
 }

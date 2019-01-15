@@ -119,6 +119,7 @@ class CardViewController: UIViewController {
 				attachedToAnchor: locationInView)
 			
 			animator.addBehavior(attach!)
+			animator.addBehavior(cardView.behaviour)
 			
 		case .changed:
 			let anchor = recognizer.location(in: view)
@@ -144,6 +145,7 @@ class CardViewController: UIViewController {
 				dismiss(animated: true, completion: nil)
 			} else {
 				animator.addBehavior(cardView.snap)
+				animator.addBehavior(cardView.behaviour)
 				
 				UIView.animate(withDuration: 0.2) {
 					self.view.backgroundColor = .black
@@ -165,11 +167,11 @@ class CardViewController: UIViewController {
 extension CardViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsPresentAnimationController(animator: animator)
+		return CardsPresentAnimationController()
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController(animator: animator)
+		return CardsDismissAnimationController()
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

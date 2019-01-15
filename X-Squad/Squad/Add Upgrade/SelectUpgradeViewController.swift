@@ -17,7 +17,7 @@ class SelectUpgradeViewController: CardsViewController {
 	let upgradeType: Card.UpgradeType
 	
 	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
-	var pullToDismissController: PullToDismissController!
+	var pullToDismissController: PullToDismissController?
 	
 	let transitionPoint: CGPoint
 	
@@ -30,6 +30,8 @@ class SelectUpgradeViewController: CardsViewController {
 		self.transitionPoint = upgradeButton.superview!.convert(upgradeButton.center, to: nil)
 		
 		super.init(numberOfColumns: 3)
+		
+		pullToDismissController = PullToDismissController(viewController: self)
 		
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
@@ -89,11 +91,38 @@ class SelectUpgradeViewController: CardsViewController {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
+
+	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		pullToDismissController?.scrollViewWillBeginDragging(scrollView)
+	}
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		pullToDismissController = PullToDismissController(viewController: self, scrollView: collectionView, animator: animator)
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		pullToDismissController?.scrollViewDidScroll(scrollView)
+	}
+	
+	override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		pullToDismissController?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
+	}
+	
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cardCell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.identifier, for: indexPath) as! CardCollectionViewCell
+
+		let card = cardSections[indexPath.section].cards[indexPath.row]
+		cardCell.card = card
+		cardCell.status = status(for: card, at: indexPath)
+
+		if card.id == currentUpgrade?.cardID {
+			cardCell.cardView.id = currentUpgrade?.uuid.uuidString
+		}
+
+		return cardCell
+	}
+	
+	override func id(for card: Card) -> String {
+		if let currentUpgrade = currentUpgrade, card.id == currentUpgrade.cardID {
+			return currentUpgrade.uuid.uuidString
+		}
+		return super.id(for: card)
 	}
 	
 	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
@@ -107,12 +136,12 @@ class SelectUpgradeViewController: CardsViewController {
 		if index.section > 0 {
 			return .unavailable
 		}
-		
+
 		if let currentUpgrade = currentUpgrade,
 			card.id == currentUpgrade.cardID {
 			return .selected
 		}
-		
+
 		if card.isUnique {
 			for pilot in squad.pilots.value {
 				if pilot.card?.name == card.name || pilot.upgrades.value.contains(where: { $0.card?.name == card.name }) {
@@ -120,7 +149,7 @@ class SelectUpgradeViewController: CardsViewController {
 				}
 			}
 		}
-		
+
 		return .default
 	}
 	
@@ -232,11 +261,11 @@ extension Card {
 extension SelectUpgradeViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsPresentAnimationController(animator: animator, transitionPoint: transitionPoint)
+		return CardsPresentAnimationController()
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController(animator: animator, transitionPoint: transitionPoint)
+		return CardsDismissAnimationController()
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

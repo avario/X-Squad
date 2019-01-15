@@ -11,16 +11,8 @@ import UIKit
 
 class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 	
-	let animator: UIDynamicAnimator
+	let animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
 	var transitionContext: UIViewControllerContextTransitioning?
-	
-	let transitionPoint: CGPoint
-	
-	init(animator: UIDynamicAnimator, transitionPoint: CGPoint = .zero) {
-		self.transitionPoint = transitionPoint
-		self.animator = animator
-		super.init()
-	}
 	
 	let transitionTime: TimeInterval = 0.5
 	
@@ -93,6 +85,7 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				view.alpha = 1.0
 			}
 		}) { (_) in
+//			self.animator.removeAllBehaviors()
 			transitionContext.completeTransition(true)
 		}
 	}

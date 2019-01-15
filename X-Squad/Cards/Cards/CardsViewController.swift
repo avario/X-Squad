@@ -78,7 +78,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let card = cardSections[indexPath.section].cards[indexPath.row]
-		let cardViewController = CardViewController(card: card, id: card.defaultID)
+		let cardViewController = CardViewController(card: card, id: id(for: card))
 		cardViewController.delegate = self
 		if let topViewController = self.presentingViewController?.navigationController {
 			topViewController.present(cardViewController, animated: true, completion: nil)
@@ -116,6 +116,10 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		}
 		
 		return sectionHeader
+	}
+	
+	open func id(for card: Card) -> String {
+		return card.defaultID
 	}
 	
 	open func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {

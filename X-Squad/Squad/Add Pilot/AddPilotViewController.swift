@@ -13,9 +13,16 @@ class AddPilotViewController: CardsViewController {
 	
 	let squad: Squad
 	
+	var pullToDismissController: PullToDismissController?
+	
 	init(squad: Squad) {
 		self.squad = squad
 		super.init(numberOfColumns: 4)
+		
+		pullToDismissController = PullToDismissController(viewController: self)
+		
+		transitioningDelegate = self
+		modalPresentationStyle = .overCurrentContext
 		
 		var pilots: [Card.ShipType: [Card]] = [:]
 		
@@ -80,32 +87,17 @@ class AddPilotViewController: CardsViewController {
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		
-		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCards(recognizer:)))
-		panGesture.maximumNumberOfTouches = 1
-		panGesture.delegate = self
-		collectionView.addGestureRecognizer(panGesture)
+
+	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+		pullToDismissController?.scrollViewWillBeginDragging(scrollView)
 	}
 	
-	@objc func panCards(recognizer: UIPanGestureRecognizer) {
-		switch recognizer.state {
-		case .began:
-			break
-			
-		case .changed:
-			break
-			
-		case .cancelled, .ended, .failed:
-			let velocity = recognizer.velocity(in: view)
-			if velocity.y > 500 {
-				dismiss(animated: true, completion: nil)
-			}
-		case.possible:
-			break
-		}
+	override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		pullToDismissController?.scrollViewDidScroll(scrollView)
+	}
+	
+	override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+		pullToDismissController?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
 	}
 	
 	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
@@ -256,3 +248,19 @@ extension Card.ShipType {
 		}
 	}
 }
+
+extension AddPilotViewController: UIViewControllerTransitioningDelegate {
+	
+	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsPresentAnimationController()
+	}
+	
+	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		return CardsDismissAnimationController()
+	}
+	
+	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+		return nil
+	}
+}
+

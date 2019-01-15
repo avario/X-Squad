@@ -11,17 +11,9 @@ import UIKit
 
 class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 	
-	let animator: UIDynamicAnimator
+	let animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
 	var transitionContext: UIViewControllerContextTransitioning?
 	var matchedToCardViews: [CardView] = []
-	
-	let transitionPoint: CGPoint
-	
-	init(animator: UIDynamicAnimator, transitionPoint: CGPoint = .zero) {
-		self.transitionPoint = transitionPoint
-		self.animator = animator
-		super.init()
-	}
 	
 	let transitionTime: TimeInterval = 0.5
 	
@@ -49,9 +41,8 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			if let matchingToCardView = toCardViews.first(where: { $0.id == fromCardView.id }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
-				let snap = UISnapBehavior(item: fromCardView, snapTo: cardPosition)
-				snap.damping = 0.5
-				animator.addBehavior(snap)
+				fromCardView.snap.snapPoint = cardPosition
+				animator.addBehavior(fromCardView.snap)
 				animator.addBehavior(fromCardView.behaviour)
 				
 				targetScale = matchingToCardView.bounds.width/fromCardView.bounds.width
