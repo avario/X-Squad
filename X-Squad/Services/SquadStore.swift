@@ -9,7 +9,16 @@
 import Foundation
 
 extension Notification.Name {
-	static let squadStoreDidChange = Notification.Name("squadStoreDidChange")
+	static let squadStoreDidAddSquad = Notification.Name("squadStoreDidAddSquad")
+	static let squadStoreDidDeleteSquad = Notification.Name("squadStoreDidDeleteSquad")
+	
+	static let squadStoreDidAddPilotToSquad = Notification.Name("squadStoreDidAddPilotToSquad")
+	static let squadStoreDidRemovePilotFromSquad = Notification.Name("squadStoreDidRemovePilotFromSquad")
+	
+	static let squadStoreDidUpdateSquad = Notification.Name("squadStoreDidUpdateSquad")
+	
+	static let squadStoreDidAddUpgradeToPilot = Notification.Name("squadStoreDidAddUpgradeToPilot")
+	static let squadStoreDidRemoveUpgradeFromPilot = Notification.Name("squadStoreDidRemoveUpgradeFromPilot")
 }
 
 class SquadStore {
@@ -40,7 +49,7 @@ class SquadStore {
 	public static func add(squad: Squad) {
 		squads.append(squad)
 		save()
-		NotificationCenter.default.post(name: .squadStoreDidChange, object: nil)
+		NotificationCenter.default.post(name: .squadStoreDidAddSquad, object: squad)
 	}
 	
 	public static func delete(squad: Squad) {
@@ -49,6 +58,7 @@ class SquadStore {
 		}
 		squads.remove(at: index)
 		save()
+		NotificationCenter.default.post(name: .squadStoreDidDeleteSquad, object: squad)
 	}
 	
 }

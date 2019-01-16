@@ -45,16 +45,35 @@ class _HomeViewController: UITableViewController {
 		navigationItem.rightBarButtonItem = addSquadButton
 		
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
-		tableView.rowHeight = 80
+		tableView.rowHeight = SquadCell.rowHeight
 		tableView.tableFooterView = UIView()
 		
 		tableView.register(SquadCell.self, forCellReuseIdentifier: SquadCell.reuseIdentifier)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updateSquadList), name: .squadStoreDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(squadAdded), name: .squadStoreDidAddSquad, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(squadDeleted), name: .squadStoreDidDeleteSquad, object: nil)
 	}
 	
-	@objc func updateSquadList() {
-		tableView.reloadData()
+	var squads = SquadStore.squads
+	
+	@objc func squadAdded(notification: Notification) {
+		guard let squad = notification.object as? Squad,
+			let squadIndex = SquadStore.squads.firstIndex(of: squad) else {
+			return
+		}
+		
+		squads = SquadStore.squads
+		tableView.insertRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
+	}
+	
+	@objc func squadDeleted(notification: Notification) {
+		guard let squad = notification.object as? Squad,
+			let squadIndex = squads.firstIndex(of: squad) else {
+				return
+		}
+		
+		squads = SquadStore.squads
+		tableView.deleteRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -79,18 +98,18 @@ class _HomeViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return SquadStore.squads.count
+		return squads.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let squadCell = tableView.dequeueReusableCell(withIdentifier: SquadCell.reuseIdentifier) as! SquadCell
-		squadCell.squad = SquadStore.squads[indexPath.row]
+		squadCell.squad = squads[indexPath.row]
 		
 		return squadCell
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let squad = SquadStore.squads[indexPath.row]
+		let squad = squads[indexPath.row]
 		let squadViewController = SquadViewController(for: squad)
 		navigationController!.present(squadViewController, animated: true, completion: nil)
 		

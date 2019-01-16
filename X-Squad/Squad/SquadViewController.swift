@@ -17,7 +17,7 @@ class SquadViewController: UIViewController {
 	
 	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
 	
-	var squadPilotViews: [SquadPilotView] = []
+	var pilotViews: [ScrollableSquadPilotView] = []
 	
 	init(for squad: Squad) {
 		self.squad = squad
@@ -49,6 +49,7 @@ class SquadViewController: UIViewController {
 		scrollView.contentInsetAdjustmentBehavior = .always
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		scrollView.alwaysBounceVertical = true
+		scrollView.showsVerticalScrollIndicator = false
 		
 		scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 		scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -77,16 +78,41 @@ class SquadViewController: UIViewController {
 		
 		stackView.addArrangedSubview(addPilotButton)
 		
-		for pilot in squad.pilots.value {
-			let squadPilotView = SquadPilotView(pilot: pilot)
-			stackView.insertArrangedSubview(squadPilotView, at: stackView.arrangedSubviews.count - 1)
-			
-			squadPilotView.delegate = self
-			
-			squadPilotViews.append(squadPilotView)
+		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
+		
+		updatePilotViews()
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidAddPilotToSquad, object: squad)
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
+	}
+	
+	@objc func updatePilotViews() {
+		func pilotView(for pilot: Squad.Pilot) -> ScrollableSquadPilotView {
+			if let existingPilotView = pilotViews.first(where: { $0.squadPilotView.pilot.uuid == pilot.uuid }) {
+				return existingPilotView
+			} else {
+				let squadPilotView = ScrollableSquadPilotView(pilot: pilot)
+				squadPilotView.squadPilotView.delegate = self
+				pilotViews.append(squadPilotView)
+				
+				return squadPilotView
+			}
 		}
 		
-		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
+		// Remove any pilots that are no longer in the squad
+		for pilotView in pilotViews {
+			if !squad.pilots.contains(where: { $0.uuid == pilotView.squadPilotView.pilot.uuid }) {
+				pilotView.removeFromSuperview()
+			}
+		}
+		pilotViews = pilotViews.filter({ $0.superview != nil })
+		
+		for (index, pilot) in squad.pilots.enumerated() {
+			let squadPilotView = pilotView(for: pilot)
+			
+			// +1 for header view
+			stackView.insertArrangedSubview(squadPilotView, at: index + 1)
+		}
 	}
 	
 	@objc func addPilot() {
@@ -104,20 +130,12 @@ class SquadViewController: UIViewController {
 
 extension SquadViewController: SquadPilotViewDelegate {
 	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect pilot: Squad.Pilot) {
-		guard let card = pilot.card else {
-			return
-		}
-		
-		let cardViewController = CardViewController(card: card, id: pilot.uuid.uuidString)
+		let cardViewController = CardViewController(card: pilot.card, id: pilot.uuid.uuidString)
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
 	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect upgrade: Squad.Pilot.Upgrade) {
-		guard let card = upgrade.card else {
-			return
-		}
-		
-		let cardViewController = CardViewController(card: card, id: upgrade.uuid.uuidString)
+		let cardViewController = CardViewController(card: upgrade.card, id: upgrade.uuid.uuidString)
 		present(cardViewController, animated: true, completion: nil)
 	}
 	

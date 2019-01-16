@@ -19,55 +19,54 @@ class SquadPilotView: UIView {
 	
 	weak var delegate: SquadPilotViewDelegate?
 	
-	let scrollView = UIScrollView()
-	
 	let pilot: Squad.Pilot
-	let pilotCardView = CardView()
+	private let pilotCardView = CardView()
 	
-	var upgradeButtons: [UpgradeButton] = []
+	private var upgradeButtons: [UpgradeButton] = []
+	private var cardViews: [CardView] = []
 	
-	init(pilot: Squad.Pilot) {
+	let isEditing: Bool
+	
+	private var widthConstraint: NSLayoutConstraint! = nil
+	
+	init(pilot: Squad.Pilot, height: CGFloat, isEditing: Bool = true) {
 		self.pilot = pilot
+		self.isEditing = isEditing
 		
-		let width = UIScreen.main.bounds.width
-		let height = width * 0.75
-		
-		super.init(frame: CGRect(origin: .zero, size: CGSize(width: width, height: height)))
+		super.init(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: height)))
 		self.translatesAutoresizingMaskIntoConstraints = false
 		self.heightAnchor.constraint(equalToConstant: height).isActive = true
 		
+		widthConstraint = self.widthAnchor.constraint(equalToConstant: 0)
+		widthConstraint.isActive = true
+		
 		clipsToBounds = false
-		scrollView.clipsToBounds = false
-		
-		addSubview(scrollView)
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		scrollView.alwaysBounceHorizontal = true
-		
-		scrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		scrollView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-		scrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-		scrollView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
 		
 		pilotCardView.card = pilot.card
 		pilotCardView.id = pilot.uuid.uuidString
-		scrollView.addSubview(pilotCardView)
+		addSubview(pilotCardView)
 		
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
 		
-		for upgrade in pilot.card?.availableUpgrades ?? [] {
-			let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-			upgradeButton.upgradeType = upgrade
-			
-			scrollView.insertSubview(upgradeButton, at: 0)
-			upgradeButtons.append(upgradeButton)
-			
-			upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
+		if isEditing {
+			for upgrade in pilot.card.availableUpgrades {
+				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+				upgradeButton.upgradeType = upgrade
+				
+				insertSubview(upgradeButton, at: 0)
+				upgradeButtons.append(upgradeButton)
+				
+				upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
+			}
 		}
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidAddUpgradeToPilot, object: pilot)
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidRemoveUpgradeFromPilot, object: pilot)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
-		fatalError()
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	@objc func addUpgrade(button: UpgradeButton) {
@@ -84,7 +83,7 @@ class SquadPilotView: UIView {
 		case .pilot:
 			delegate?.squadPilotView(self, didSelect: pilot)
 		case .upgrade:
-			guard let upgrade = pilot.upgrades.value.first(where: { $0.uuid.uuidString == cardView.id }) else {
+			guard let upgrade = pilot.upgrades.first(where: { $0.uuid.uuidString == cardView.id }) else {
 				return
 			}
 			delegate?.squadPilotView(self, didSelect: upgrade)
@@ -94,77 +93,35 @@ class SquadPilotView: UIView {
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		
-		updateSquad()
+		updatePilot()
 	}
 	
-	func updateSquad() {
-		let scrollViewHorizontalPadding: CGFloat = 16
-		let upgradeCardTopPadding: CGFloat = 30
+	@objc func updatePilot() {
+		// Constants
+		let pilotCardTopPadding: CGFloat = 10
+		let cardLength: CGFloat = bounds.height - pilotCardTopPadding * 2
+		let cardWidth: CGFloat = cardLength / CardView.sizeRatio
+		let upgradeCardTopPadding: CGFloat = pilotCardTopPadding + cardLength * 0.08
 		
-		let cardWidth: CGFloat = UIScreen.main.bounds.width * 0.5
-		let cardLength: CGFloat = cardWidth * CardView.sizeRatio
-		var leadingEdge: CGFloat = scrollViewHorizontalPadding
+		var leadingEdge: CGFloat = 0
 		
-		var availableUpgradeButtons = upgradeButtons
-		
-		if let configuration = pilot.upgrades.value.first(where: { $0.card?.upgradeTypes.contains(Card.UpgradeType.configuration) ?? false }) {
-			let configurationCardView = CardView()
-			configurationCardView.card = configuration.card
-			configurationCardView.id = configuration.uuid.uuidString
-			
-			let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
-			configurationCardView.addGestureRecognizer(cardTapGesture)
-			
-			configurationCardView.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding),
-				size: CGSize(width: cardLength, height: cardWidth))
-			
-			scrollView.insertSubview(configurationCardView, belowSubview: pilotCardView)
-			configurationCardView.snap.snapPoint = scrollView.convert(configurationCardView.center, to: nil)
-			
-			leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
-			
-			if let configurationButton = availableUpgradeButtons.first(where: { $0.upgradeType == Card.UpgradeType.configuration }) {
-				configurationButton.frame = CGRect(
-					origin: CGPoint(x: leadingEdge - 10 - configurationButton.bounds.width, y: configurationCardView.frame.maxY),
-					size: configurationButton.bounds.size)
-				
-				let index = availableUpgradeButtons.firstIndex(of: configurationButton)!
-				availableUpgradeButtons.remove(at: index)
-				configurationButton.associatedUpgrade = configuration
+		// Remove any card views for upgrades that are no longer equipped
+		for cardView in cardViews {
+			if let card = cardView.card,
+				card.type == .upgrade,
+				!pilot.upgrades.contains(where: { $0.card == card }) {
+				cardView.removeFromSuperview()
 			}
 		}
+		cardViews = cardViews.filter({ $0.superview != nil })
 		
-		pilotCardView.frame = CGRect(
-			origin: CGPoint(x: leadingEdge, y: 10),
-			size: CGSize(width: cardWidth, height: cardLength))
-		pilotCardView.snap.snapPoint = scrollView.convert(pilotCardView.center, to: nil)
+		// Keep track of which buttons are not associated with an equipped upgrade
+		var availableUpgradeButtons = self.upgradeButtons
 		
-		leadingEdge = pilotCardView.frame.maxX
-		
-		var previousCardView = pilotCardView
-		
-		for upgrade in pilot.upgrades.value {
-			guard upgrade.card?.upgradeTypes.contains(.configuration) == false else {
-				continue
-			}
-			
-			let upgradeCardView = CardView()
-			upgradeCardView.card = upgrade.card
-			upgradeCardView.id = upgrade.uuid.uuidString
-			
-			let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
-			upgradeCardView.addGestureRecognizer(cardTapGesture)
-			
-			upgradeCardView.frame = CGRect(
-				origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: upgradeCardTopPadding),
-				size: CGSize(width: cardLength, height: cardWidth))
-			
-			scrollView.insertSubview(upgradeCardView, belowSubview: previousCardView)
-			upgradeCardView.snap.snapPoint = scrollView.convert(upgradeCardView.center, to: nil)
-			
+		// Return the upgrade button for the upgrade and remove it from the available upgrade buttons
+		func upgradeButtons(for upgrade: Squad.Pilot.Upgrade) -> [UpgradeButton] {
 			var upgradeButtons: [UpgradeButton] = []
-			for upgradeType in upgrade.card!.upgradeTypes {
+			for upgradeType in upgrade.card.upgradeTypes {
 				guard let upgradeButton = availableUpgradeButtons.first(where: { $0.upgradeType == upgradeType }) else {
 					continue
 				}
@@ -175,7 +132,69 @@ class SquadPilotView: UIView {
 				upgradeButton.associatedUpgrade = upgrade
 			}
 			
-			for (index, upgradeButton) in upgradeButtons.enumerated() {
+			return upgradeButtons
+		}
+		
+		// Return the existing card view for the upgrade or create a new card view
+		func cardView(for upgrade: Squad.Pilot.Upgrade) -> CardView {
+			if let existingCardView = cardViews.first(where: { $0.id == upgrade.uuid.uuidString }) {
+				return existingCardView
+			} else {
+				let cardView = CardView()
+				cardView.card = upgrade.card
+				cardView.id = upgrade.uuid.uuidString
+				
+				let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
+				cardView.addGestureRecognizer(cardTapGesture)
+				
+				insertSubview(cardView, belowSubview: pilotCardView)
+				cardViews.append(cardView)
+				
+				return cardView
+			}
+		}
+		
+		// Position the configuration card to the left of the pilot
+		if let configuration = pilot.upgrades.first(where: { $0.card.upgradeTypes.contains(Card.UpgradeType.configuration) }) {
+			let configurationCardView = cardView(for: configuration)
+			
+			configurationCardView.frame = CGRect(
+				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding),
+				size: CGSize(width: cardLength, height: cardWidth))
+			
+			leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
+			
+			if let upgradeButton = upgradeButtons(for: configuration).first {
+				upgradeButton.frame = CGRect(
+					origin: CGPoint(x: leadingEdge - 10 - upgradeButton.bounds.width, y: configurationCardView.frame.maxY),
+					size: upgradeButton.bounds.size)
+			}
+		}
+		
+		// Position the pilot card
+		pilotCardView.frame = CGRect(
+			origin: CGPoint(x: leadingEdge, y: pilotCardTopPadding),
+			size: CGSize(width: cardWidth, height: cardLength))
+
+		leadingEdge = pilotCardView.frame.maxX
+		
+		// Keep track of the previous card view so that following cards can be placed below it
+		var previousCardView = pilotCardView
+		
+		for upgrade in pilot.upgrades {
+			guard upgrade.card.upgradeTypes.contains(.configuration) == false else {
+				continue
+			}
+			
+			let upgradeCardView = cardView(for: upgrade)
+			
+			upgradeCardView.frame = CGRect(
+				origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: upgradeCardTopPadding),
+				size: CGSize(width: cardLength, height: cardWidth))
+			
+			insertSubview(upgradeCardView, belowSubview: previousCardView)
+			
+			for (index, upgradeButton) in upgradeButtons(for: upgrade).enumerated() {
 				upgradeButton.frame = CGRect(
 					origin: CGPoint(x: leadingEdge + 10 + CGFloat(index) * (upgradeButton.bounds.width), y: upgradeCardView.frame.maxY),
 					size: upgradeButton.bounds.size)
@@ -185,16 +204,17 @@ class SquadPilotView: UIView {
 			previousCardView = upgradeCardView
 		}
 		
+		// Any buttons that weren't used by an upgrade should be positioned at the end of the list
 		for upgradeButton in availableUpgradeButtons {
 			upgradeButton.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding + cardWidth + 5),
+				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding + cardWidth),
 				size: upgradeButton.bounds.size)
 			leadingEdge = upgradeButton.frame.maxX
 			
 			upgradeButton.associatedUpgrade = nil
 		}
 		
-		scrollView.contentSize = CGSize(width: leadingEdge + scrollViewHorizontalPadding, height: scrollView.bounds.height)
+		widthConstraint.constant = leadingEdge
 	}
 	
 }

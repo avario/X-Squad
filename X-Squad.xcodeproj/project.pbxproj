@@ -55,14 +55,8 @@
 		B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */; };
 		B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */; };
 		B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */; };
-		B671C99621EBCC050034C7C9 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98F21EBCC040034C7C9 /* Dynamic.swift */; };
-		B671C99721EBCC050034C7C9 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99021EBCC040034C7C9 /* Update.swift */; };
-		B671C99821EBCC050034C7C9 /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99121EBCC040034C7C9 /* Codable.swift */; };
-		B671C99921EBCC050034C7C9 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99221EBCC040034C7C9 /* Observation.swift */; };
-		B671C99A21EBCC050034C7C9 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99321EBCC040034C7C9 /* Operators.swift */; };
-		B671C99B21EBCC050034C7C9 /* KVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99421EBCC050034C7C9 /* KVO.swift */; };
-		B671C99C21EBCC050034C7C9 /* Lifetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C99521EBCC050034C7C9 /* Lifetime.swift */; };
 		B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9C821EE11740034C7C9 /* PullToDismissController.swift */; };
+		B671C9CC21EFEF400034C7C9 /* ScrollableSquadPilotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9CB21EFEF400034C7C9 /* ScrollableSquadPilotView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -129,14 +123,8 @@
 		B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSectionHeaderView.swift; sourceTree = "<group>"; };
 		B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadHeaderView.swift; sourceTree = "<group>"; };
 		B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUpgradeViewController.swift; sourceTree = "<group>"; };
-		B671C98F21EBCC040034C7C9 /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
-		B671C99021EBCC040034C7C9 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
-		B671C99121EBCC040034C7C9 /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
-		B671C99221EBCC040034C7C9 /* Observation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
-		B671C99321EBCC040034C7C9 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		B671C99421EBCC050034C7C9 /* KVO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVO.swift; sourceTree = "<group>"; };
-		B671C99521EBCC050034C7C9 /* Lifetime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lifetime.swift; sourceTree = "<group>"; };
 		B671C9C821EE11740034C7C9 /* PullToDismissController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissController.swift; sourceTree = "<group>"; };
+		B671C9CB21EFEF400034C7C9 /* ScrollableSquadPilotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableSquadPilotView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,7 +314,6 @@
 		B662FB3221DE1E2600EF79F7 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				B671C98E21EBCBEE0034C7C9 /* Dynamic */,
 				B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */,
 				B662FB3321DE1E3900EF79F7 /* Result.swift */,
 			);
@@ -438,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				B671C94521E8BBC80034C7C9 /* SquadPilotView.swift */,
+				B671C9CB21EFEF400034C7C9 /* ScrollableSquadPilotView.swift */,
 			);
 			path = Pilot;
 			sourceTree = "<group>";
@@ -456,20 +444,6 @@
 				B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */,
 			);
 			path = "Add Upgrade";
-			sourceTree = "<group>";
-		};
-		B671C98E21EBCBEE0034C7C9 /* Dynamic */ = {
-			isa = PBXGroup;
-			children = (
-				B671C99121EBCC040034C7C9 /* Codable.swift */,
-				B671C98F21EBCC040034C7C9 /* Dynamic.swift */,
-				B671C99421EBCC050034C7C9 /* KVO.swift */,
-				B671C99521EBCC050034C7C9 /* Lifetime.swift */,
-				B671C99221EBCC040034C7C9 /* Observation.swift */,
-				B671C99321EBCC040034C7C9 /* Operators.swift */,
-				B671C99021EBCC040034C7C9 /* Update.swift */,
-			);
-			path = Dynamic;
 			sourceTree = "<group>";
 		};
 		B671C9C721EE11420034C7C9 /* Pull Down to Dismiss */ = {
@@ -606,32 +580,26 @@
 				B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */,
 				B671C93A21E76C2D0034C7C9 /* NewSquadViewController.swift in Sources */,
 				B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */,
-				B671C99921EBCC050034C7C9 /* Observation.swift in Sources */,
 				B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */,
 				B671C93D21E76DC80034C7C9 /* FactionCell.swift in Sources */,
 				B65BCD3821E4C388005721A7 /* CostView.swift in Sources */,
 				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,
+				B671C9CC21EFEF400034C7C9 /* ScrollableSquadPilotView.swift in Sources */,
 				B662FB3821DE2EAC00EF79F7 /* UpdateCardsViewController.swift in Sources */,
 				B671C93F21E798410034C7C9 /* SquadCell.swift in Sources */,
 				B65BCD4721E53C5B005721A7 /* SettingsViewController.swift in Sources */,
 				B671C94621E8BBC80034C7C9 /* SquadPilotView.swift in Sources */,
-				B671C99621EBCC050034C7C9 /* Dynamic.swift in Sources */,
 				B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */,
 				B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */,
 				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
 				B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */,
 				B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */,
 				B662FB3121DE1DC500EF79F7 /* CardStore.swift in Sources */,
-				B671C99821EBCC050034C7C9 /* Codable.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
 				B662FB3F21DE623400EF79F7 /* CardStoreSearch.swift in Sources */,
 				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
-				B671C99A21EBCC050034C7C9 /* Operators.swift in Sources */,
-				B671C99721EBCC050034C7C9 /* Update.swift in Sources */,
 				B662FB2421DD4CC200EF79F7 /* Card.swift in Sources */,
-				B671C99B21EBCC050034C7C9 /* KVO.swift in Sources */,
 				B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */,
-				B671C99C21EBCC050034C7C9 /* Lifetime.swift in Sources */,
 				B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */,
 				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,

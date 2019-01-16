@@ -111,7 +111,7 @@ class SelectUpgradeViewController: CardsViewController {
 		cardCell.card = card
 		cardCell.status = status(for: card, at: indexPath)
 
-		if card.id == currentUpgrade?.cardID {
+		if card == currentUpgrade?.card {
 			cardCell.cardView.id = currentUpgrade?.uuid.uuidString
 		}
 
@@ -119,16 +119,14 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func id(for card: Card) -> String {
-		if let currentUpgrade = currentUpgrade, card.id == currentUpgrade.cardID {
+		if let currentUpgrade = currentUpgrade, card == currentUpgrade.card {
 			return currentUpgrade.uuid.uuidString
 		}
 		return super.id(for: card)
 	}
 	
 	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
-		let upgrade = Squad.Pilot.Upgrade(card: card)
-		pilot.upgrades.value.append(upgrade)
-		SquadStore.save()
+		pilot.addUpgrade(for: card)
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
@@ -138,15 +136,23 @@ class SelectUpgradeViewController: CardsViewController {
 		}
 
 		if let currentUpgrade = currentUpgrade,
-			card.id == currentUpgrade.cardID {
+			card == currentUpgrade.card {
 			return .selected
 		}
 
+		// Unique cards can only be in a squad once
 		if card.isUnique {
-			for pilot in squad.pilots.value {
-				if pilot.card?.name == card.name || pilot.upgrades.value.contains(where: { $0.card?.name == card.name }) {
+			for pilot in squad.pilots {
+				if pilot.card.name == card.name || pilot.upgrades.contains(where: { $0.card.name == card.name }) {
 					return .unavailable
 				}
+			}
+		}
+		
+		// A pilot can never have two of the same upgrade
+		for upgrade in pilot.upgrades {
+			if upgrade.card == card {
+				return .unavailable
 			}
 		}
 
@@ -158,10 +164,6 @@ class SelectUpgradeViewController: CardsViewController {
 extension Card {
 	
 	func isValid(in squad: Squad, for pilot: Squad.Pilot) -> Bool {
-		guard let pilotCard = pilot.card else {
-			return false
-		}
-		
 		for restrictionSet in restrictions {
 			var passedSet = false
 			
@@ -175,7 +177,7 @@ extension Card {
 					
 				case .action:
 					if let actionID = restriction.parameters.id,
-						let action = pilotCard.availableActions.first(where: { $0.baseType.rawValue == actionID }) {
+						let action = pilot.card.availableActions.first(where: { $0.baseType.rawValue == actionID }) {
 						if let sideEffect = restriction.parameters.sideEffectName {
 							switch sideEffect {
 							case .stress:
@@ -194,7 +196,7 @@ extension Card {
 					
 				case .shipType:
 					if let shipID = restriction.parameters.id,
-						pilotCard.shipType?.rawValue == shipID {
+						pilot.card.shipType?.rawValue == shipID {
 						passedSet = true
 					}
 					
@@ -202,15 +204,15 @@ extension Card {
 					if let shipSize = restriction.parameters.shipSizeName {
 						switch shipSize {
 						case .small:
-							if pilotCard.shipSize == .small {
+							if pilot.card.shipSize == .small {
 								passedSet = true
 							}
 						case .medium:
-							if pilotCard.shipSize == .medium {
+							if pilot.card.shipSize == .medium {
 								passedSet = true
 							}
 						case .large:
-							if pilotCard.shipSize == .large {
+							if pilot.card.shipSize == .large {
 								passedSet = true
 							}
 						}
@@ -218,9 +220,9 @@ extension Card {
 					
 				case .cardIncluded:
 					if let cardID = restriction.parameters.id {
-						for pilot in squad.pilots.value {
-							if pilot.cardID == cardID ||
-								pilot.upgrades.value.contains(where: { $0.cardID == cardID }) {
+						for pilot in squad.pilots {
+							if pilot.card.id == cardID ||
+								pilot.upgrades.contains(where: { $0.card.id == cardID }) {
 								passedSet = true
 								break
 							}
@@ -229,7 +231,7 @@ extension Card {
 					
 				case .arc:
 					if let arcID = restriction.parameters.id,
-						pilotCard.statistics.contains(where: { $0.type.rawValue == arcID }) {
+						pilot.card.statistics.contains(where: { $0.type.rawValue == arcID }) {
 						passedSet = true
 					}
 					
@@ -237,11 +239,11 @@ extension Card {
 					if let forceSide = restriction.parameters.forceSideName {
 						switch forceSide {
 						case .light:
-							if pilotCard.forceSide == .light {
+							if pilot.card.forceSide == .light {
 								passedSet = true
 							}
 						case .dark:
-							if pilotCard.forceSide == .dark {
+							if pilot.card.forceSide == .dark {
 								passedSet = true
 							}
 						}

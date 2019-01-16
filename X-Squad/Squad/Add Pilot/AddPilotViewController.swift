@@ -42,23 +42,7 @@ class AddPilotViewController: CardsViewController {
 		for (shipType, pilots) in pilots {
 			
 			// Sort the pilots by pilot skill, then by cost, then by name
-			let sortedPilots = pilots.sorted {
-				guard let initiative0 = $0.initiative else {
-					return false
-				}
-				
-				guard let initiative1 = $1.initiative else {
-					return true
-				}
-				
-				if initiative0 == initiative1 {
-					if $0.pointCost == $1.pointCost {
-						return $0.name < $1.name
-					}
-					return $0.pointCost > $1.pointCost
-				}
-				return initiative0 > initiative1
-			}
+			let sortedPilots = pilots.sorted(by: Squad.rankPilots)
 			
 			cardSections.append(
 				CardSection(
@@ -101,13 +85,12 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
-		squad.pilots.value.append(Squad.Pilot(card: card))
-		SquadStore.save()
+		squad.addPilot(for: card)
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	
 	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
-		return card.isUnique && squad.pilots.value.contains(where: { $0.card?.name == card.name }) ? .unavailable : .default
+		return card.isUnique && squad.pilots.contains(where: { $0.card.name == card.name }) ? .unavailable : .default
 	}
 	
 }

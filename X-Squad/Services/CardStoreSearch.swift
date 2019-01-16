@@ -62,9 +62,23 @@ extension CardStore {
 		init(card: Card) {
 			self.card = card
 			
+			let invalidWords = [
+				"undefined",
+				"<italic>",
+				"</italic>"]
+			
 			var titleTerms: [String] = []
 			
-			let title = card.name.components(separatedBy: SearchIndex.invalidSearchCharacters).joined().lowercased()
+			var title = card.name
+				
+			for invalidWord in invalidWords {
+				title = title.replacingOccurrences(of: invalidWord, with: "")
+			}
+				
+			title = title.components(separatedBy: SearchIndex.invalidSearchCharacters)
+				.joined()
+				.lowercased()
+						
 			titleTerms.append(title)
 			
 			var titleComponents = title.components(separatedBy: CharacterSet.whitespaces)

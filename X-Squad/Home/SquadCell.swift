@@ -12,21 +12,27 @@ import UIKit
 class SquadCell: UITableViewCell {
 	
 	static let reuseIdentifier = "SquadCell"
+	static let rowHeight: CGFloat = 80
 	
 	var squad: Squad? {
 		didSet {
+			NotificationCenter.default.removeObserver(self)
+			
 			guard let squad = squad else {
 				return
 			}
 			
 			iconLabel.text = squad.faction.characterCode
+			updatePilotViews()
 			
-			layoutSquadCards()
+			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidAddPilotToSquad, object: squad)
+			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
 		}
 	}
 	
 	let iconLabel = UILabel()
 	let scrollView = UIScrollView()
+	let stackView = UIStackView()
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,78 +65,51 @@ class SquadCell: UITableViewCell {
 		iconLabel.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
 		iconLabel.widthAnchor.constraint(equalToConstant: 44).isActive = true
 		iconLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
+		
+		scrollView.addSubview(stackView)
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		stackView.axis = .horizontal
+		stackView.spacing = 10
+		
+		stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+		stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -16).isActive = true
+		stackView.leftAnchor.constraint(equalTo: iconLabel.rightAnchor).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
 	
-	var squadCardViews: [CardView] = []
+	var pilotViews: [SquadPilotView] = []
 	
-	func layoutSquadCards() {
-		for squadCardView in squadCardViews {
-			squadCardView.removeFromSuperview()
-		}
-		
-		squadCardViews.removeAll()
-		
+	@objc func updatePilotViews() {
 		guard let squad = squad else {
 			return
 		}
 		
-		let cardLength: CGFloat = 60
-		let cardWidth: CGFloat = cardLength/CardView.sizeRatio
-		var leadingEdge: CGFloat = 44
-		
-		for pilot in squad.pilots.value {
-			if let configuration = pilot.upgrades.value.first(where: { $0.card?.upgradeTypes.contains(Card.UpgradeType.configuration) ?? false }) {
-				let configurationCardView = CardView()
-				configurationCardView.card = configuration.card
-				configurationCardView.id = configuration.uuid.uuidString
+		func pilotView(for pilot: Squad.Pilot) -> SquadPilotView {
+			if let existingPilotView = pilotViews.first(where: { $0.pilot.uuid == pilot.uuid }) {
+				return existingPilotView
+			} else {
+				let squadPilotView = SquadPilotView(pilot: pilot, height: SquadCell.rowHeight, isEditing: false)
+				pilotViews.append(squadPilotView)
 				
-				configurationCardView.frame = CGRect(
-					origin: CGPoint(x: leadingEdge, y: 15),
-					size: CGSize(width: cardLength, height: cardWidth))
-				
-				scrollView.insertSubview(configurationCardView, at: 0)
-				
-				leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
+				return squadPilotView
 			}
-			
-			let pilotCardView = CardView()
-			pilotCardView.card = pilot.card
-			pilotCardView.id = pilot.uuid.uuidString
-			
-			pilotCardView.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: 10),
-				size: CGSize(width: cardWidth, height: cardLength))
-			
-			scrollView.addSubview(pilotCardView)
-			
-			leadingEdge = pilotCardView.frame.maxX
-			
-			for upgrade in pilot.upgrades.value {
-				guard upgrade.card?.upgradeTypes.contains(.configuration) == false else {
-					continue
-				}
-				
-				let upgradeCardView = CardView()
-				upgradeCardView.card = upgrade.card
-				upgradeCardView.id = upgrade.uuid.uuidString
-				
-				upgradeCardView.frame = CGRect(
-					origin: CGPoint(x: leadingEdge - cardLength * CardView.upgradeHiddenRatio, y: 15),
-					size: CGSize(width: cardLength, height: cardWidth))
-		
-				scrollView.insertSubview(upgradeCardView, at: 0)
-				
-				leadingEdge = upgradeCardView.frame.maxX
-			}
-			
-			leadingEdge += 10
 		}
 		
-		scrollView.contentSize = CGSize(width: leadingEdge, height: scrollView.bounds.height)
+		// Remove any pilots that are no longer in the squad
+		for pilotView in pilotViews {
+			if !squad.pilots.contains(where: { $0.uuid == pilotView.pilot.uuid }) {
+				pilotView.removeFromSuperview()
+			}
+		}
+		pilotViews = pilotViews.filter({ $0.superview != nil })
+		
+		for (index, pilot) in squad.pilots.enumerated() {
+			let squadPilotView = pilotView(for: pilot)
+			stackView.insertArrangedSubview(squadPilotView, at: index)
+		}
 	}
 	
 }
