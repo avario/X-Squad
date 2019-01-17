@@ -138,11 +138,23 @@ class SelectUpgradeViewController: CardsViewController {
 		}
 		
 		if cardViewController.card != currentUpgrade?.card {
-			pilot.addUpgrade(for: cardViewController.card)
+			let upgrade = pilot.addUpgrade(for: cardViewController.card)
+			
+			cardViewController.cardView.id = upgrade.uuid.uuidString
 		}
 		
-		dismiss(animated: false, completion: nil)
-		presentingViewController?.dismiss(animated: true, completion: nil)
+		let window = UIApplication.shared.keyWindow!
+		let snapshot = cardViewController.view.snapshotView(afterScreenUpdates: false)!
+		window.addSubview(snapshot)
+		
+		let baseViewController = self.presentingViewController!
+		
+		baseViewController.dismiss(animated: false) {
+			baseViewController.present(cardViewController, animated: false) {
+				snapshot.removeFromSuperview()
+				baseViewController.dismiss(animated: true, completion: nil)
+			}
+		}
 	}
 	
 	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {

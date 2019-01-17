@@ -15,7 +15,7 @@ class CardView: UIView {
 	var imageView = UIImageView()
 	var isVisible = true
 	
-	static var upgradeHiddenRatio: CGFloat = 0.39
+	static var upgradeHiddenRatio: CGFloat = 0.395
 	static var sizeRatio: CGFloat = 1.39
 	static func heightMultiplier(for card: Card) -> CGFloat {
 		switch card.type {
