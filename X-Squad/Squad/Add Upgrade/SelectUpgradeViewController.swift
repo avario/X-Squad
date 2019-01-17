@@ -16,7 +16,6 @@ class SelectUpgradeViewController: CardsViewController {
 	let currentUpgrade: Squad.Pilot.Upgrade?
 	let upgradeType: Card.UpgradeType
 	
-	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
 	var pullToDismissController: PullToDismissController?
 	
 	let transitionPoint: CGPoint

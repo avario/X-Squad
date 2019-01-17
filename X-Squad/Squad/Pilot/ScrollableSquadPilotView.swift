@@ -20,12 +20,12 @@ class ScrollableSquadPilotView: UIScrollView {
 		translatesAutoresizingMaskIntoConstraints = false
 		clipsToBounds = false
 		alwaysBounceHorizontal = true
+		alwaysBounceVertical = false
 		showsHorizontalScrollIndicator = false
 		addSubview(squadPilotView)
 		
 		squadPilotView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor).isActive = true
 		squadPilotView.rightAnchor.constraint(equalTo: contentLayoutGuide.rightAnchor, constant: -16).isActive = true
-		squadPilotView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor).isActive = true
 		squadPilotView.leftAnchor.constraint(equalTo: contentLayoutGuide.leftAnchor, constant: 16).isActive = true
 		
 		frameLayoutGuide.heightAnchor.constraint(equalTo: squadPilotView.heightAnchor).isActive = true

@@ -15,8 +15,6 @@ class SquadViewController: UIViewController {
 	
 	static let pilotCardWidth = UIScreen.main.bounds.width * 0.5
 	
-	private var animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
-	
 	var pilotViews: [ScrollableSquadPilotView] = []
 	
 	init(for squad: Squad) {
@@ -118,12 +116,6 @@ class SquadViewController: UIViewController {
 	@objc func addPilot() {
 		let addPilotViewController = AddPilotViewController(squad: squad)
 		present(addPilotViewController, animated: true, completion: nil)
-	}
-	
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
-		
-		animator.removeAllBehaviors()
 	}
 	
 }

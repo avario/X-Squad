@@ -29,6 +29,8 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				return
 		}
 		
+//		animator.setValue(true, forKey: "debugEnabled")
+		
 		fromVC.view.isUserInteractionEnabled = false
 		
 		let fromCardViews = CardView.all(in: fromVC.view)

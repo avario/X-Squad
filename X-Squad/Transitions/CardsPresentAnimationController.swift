@@ -28,6 +28,8 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				return
 		}
 		
+//		animator.setValue(true, forKey: "debugEnabled")
+		
 		let containerView = transitionContext.containerView
 		containerView.addSubview(toVC.view)
 		

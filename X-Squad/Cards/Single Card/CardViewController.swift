@@ -58,8 +58,8 @@ class CardViewController: UIViewController {
 		cardView.card = card
 		cardView.id = cardID
 		cardView.snap.snapPoint = cardView.center
-		animator.addBehavior(cardView.snap)
-		animator.addBehavior(cardView.behaviour)
+		
+//		animator.setValue(true, forKey: "debugEnabled")
 		
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCard(recognizer:)))
 		panGesture.maximumNumberOfTouches = 1
