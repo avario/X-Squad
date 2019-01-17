@@ -80,18 +80,18 @@ class SquadCell: UITableViewCell {
 		fatalError()
 	}
 	
-	var pilotViews: [SquadPilotView] = []
+	var pilotViews: [PilotView] = []
 	
 	@objc func updatePilotViews() {
 		guard let squad = squad else {
 			return
 		}
 		
-		func pilotView(for pilot: Squad.Pilot) -> SquadPilotView {
+		func pilotView(for pilot: Squad.Pilot) -> PilotView {
 			if let existingPilotView = pilotViews.first(where: { $0.pilot.uuid == pilot.uuid }) {
 				return existingPilotView
 			} else {
-				let squadPilotView = SquadPilotView(pilot: pilot, height: SquadCell.rowHeight, isEditing: false)
+				let squadPilotView = PilotView(pilot: pilot, height: SquadCell.rowHeight, isEditing: false)
 				pilotViews.append(squadPilotView)
 				
 				return squadPilotView

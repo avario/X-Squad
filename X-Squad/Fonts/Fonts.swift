@@ -27,7 +27,7 @@ extension UIFont {
 	}
 	
 	static func bankGothicBold(_ size: CGFloat) -> UIFont {
-		return UIFont(name: "BankGothic-Bold", size: size)!
+		return UIFont(name: "BankGothicBold", size: size)!
 	}
 	
 	static func eurostile(_ size: CGFloat) -> UIFont {

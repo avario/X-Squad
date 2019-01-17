@@ -122,7 +122,11 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		return card.defaultID
 	}
 	
-	open func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
+	open func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
+		return nil
+	}
+	
+	open func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
 		
 	}
 	

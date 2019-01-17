@@ -124,8 +124,24 @@ class SelectUpgradeViewController: CardsViewController {
 		return super.id(for: card)
 	}
 	
-	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
-		pilot.addUpgrade(for: card)
+	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
+		if cardViewController.card == currentUpgrade?.card {
+			return .remove
+		} else {
+			return .add
+		}
+	}
+	
+	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
+		if let currentUpgrade = currentUpgrade {
+			pilot.remove(upgrade: currentUpgrade)
+		}
+		
+		if cardViewController.card != currentUpgrade?.card {
+			pilot.addUpgrade(for: cardViewController.card)
+		}
+		
+		dismiss(animated: false, completion: nil)
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	

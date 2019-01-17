@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 protocol CardViewControllerDelegate: AnyObject {
-	func cardViewController(_ cardViewController: CardViewController, didSelect card: Card)
+	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action?
+	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController)
 }
 
 class CardViewController: UIViewController {
@@ -25,6 +26,8 @@ class CardViewController: UIViewController {
 	
 	private lazy var animator: UIDynamicAnimator = UIDynamicAnimator(referenceView: view)
 	private var attach: UIAttachmentBehavior?
+	
+	let squadButton = SquadButton()
 	
 	init(card: Card, id: String) {
 		self.card = card
@@ -66,9 +69,7 @@ class CardViewController: UIViewController {
 		cardView.addGestureRecognizer(panGesture)
 		cardView.isUserInteractionEnabled = true
 		
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(recognizer:)))
-		cardView.addGestureRecognizer(tapGesture)
-		
+		// Layout guide for the card's resting position
 		let cardLayoutGuide = UILayoutGuide()
 		view.addLayoutGuide(cardLayoutGuide)
 		cardLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor, constant: cardView.frame.minY).isActive = true
@@ -76,6 +77,17 @@ class CardViewController: UIViewController {
 		cardLayoutGuide.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
 		cardLayoutGuide.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
 		
+		// Squad button
+		if let action = delegate?.squadActionForCardViewController(self) {
+			view.insertSubview(squadButton, belowSubview: cardView)
+			squadButton.action = action
+			squadButton.addTarget(self, action: #selector(squadButtonPressed), for: .touchUpInside)
+			
+			squadButton.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 50).isActive = true
+			squadButton.centerXAnchor.constraint(equalTo: cardLayoutGuide.centerXAnchor).isActive = true
+		}
+		
+		// Cost view
 		view.insertSubview(costView, belowSubview: cardView)
 		costView.translatesAutoresizingMaskIntoConstraints = false
 		costView.cost = card.cost
@@ -83,6 +95,7 @@ class CardViewController: UIViewController {
 		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
 		costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 		
+		// Upgrades
 		upgradeBar.translatesAutoresizingMaskIntoConstraints = false
 		upgradeBar.axis = .horizontal
 		view.insertSubview(upgradeBar, belowSubview: cardView)
@@ -97,6 +110,10 @@ class CardViewController: UIViewController {
 			
 			upgradeBar.addArrangedSubview(upgradeButton)
 		}
+	}
+	
+	@objc func squadButtonPressed() {
+		delegate?.cardViewControllerDidPressSquadButton(self)
 	}
 	
 	@objc func panCard(recognizer: UIPanGestureRecognizer) {
@@ -129,8 +146,9 @@ class CardViewController: UIViewController {
 			view.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
 			
 			let HUDPercent = 1 - distance/200
-			costView.alpha = HUDPercent
-			upgradeBar.alpha = HUDPercent
+			for hudView in view.allHUDViews() {
+				hudView.alpha = HUDPercent
+			}
 			
 		case .cancelled, .ended, .failed:
 			if let attach = attach {
@@ -149,17 +167,14 @@ class CardViewController: UIViewController {
 				
 				UIView.animate(withDuration: 0.2) {
 					self.view.backgroundColor = .black
-					self.costView.alpha = 1.0
-					self.upgradeBar.alpha = 1.0
+					for hudView in self.view.allHUDViews() {
+						hudView.alpha = 1.0
+					}
 				}
 			}
 		case.possible:
 			break
 		}
-	}
-	
-	@objc func selectCard(recognizer: UIPanGestureRecognizer) {
-		delegate?.cardViewController(self, didSelect: card)
 	}
 	
 }

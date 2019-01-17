@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-protocol SquadPilotViewDelegate: AnyObject {
-	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect pilot: Squad.Pilot)
-	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect upgrade: Squad.Pilot.Upgrade)
-	func squadPilotView(_ squadPilotView: SquadPilotView, didPress button: UpgradeButton)
+protocol PilotViewDelegate: AnyObject {
+	func pilotView(_ pilotView: PilotView, didSelect pilot: Squad.Pilot)
+	func pilotView(_ pilotView: PilotView, didSelect upgrade: Squad.Pilot.Upgrade)
+	func pilotView(_ pilotView: PilotView, didPress button: UpgradeButton)
 }
 
-class SquadPilotView: UIView {
+class PilotView: UIView {
 	
-	weak var delegate: SquadPilotViewDelegate?
+	weak var delegate: PilotViewDelegate?
 	
 	let pilot: Squad.Pilot
 	private let pilotCardView = CardView()
@@ -70,7 +70,7 @@ class SquadPilotView: UIView {
 	}
 	
 	@objc func addUpgrade(button: UpgradeButton) {
-		delegate?.squadPilotView(self, didPress: button)
+		delegate?.pilotView(self, didPress: button)
 	}
 	
 	@objc func selectCard(tapGesture: UITapGestureRecognizer) {
@@ -81,12 +81,12 @@ class SquadPilotView: UIView {
 		
 		switch card.type {
 		case .pilot:
-			delegate?.squadPilotView(self, didSelect: pilot)
+			delegate?.pilotView(self, didSelect: pilot)
 		case .upgrade:
 			guard let upgrade = pilot.upgrades.first(where: { $0.uuid.uuidString == cardView.id }) else {
 				return
 			}
-			delegate?.squadPilotView(self, didSelect: upgrade)
+			delegate?.pilotView(self, didSelect: upgrade)
 		}
 	}
 	

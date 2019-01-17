@@ -38,6 +38,10 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let fromCardViews = CardView.all(in: fromVC.view)
 		let toCardViews = CardView.all(in: toVC.view)
 		
+		var viewsToAnimateIn: [UIView] = []
+		
+		var snappedCardViews: [CardView] = []
+		
 		for toCardView in toCardViews {
 			
 			toCardView.snap.snapPoint = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
@@ -63,32 +67,46 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 					toCardView.alpha = targetAlpha
 				}, completion: nil)
 				
-			} else {
-				let targetLocation = toCardView.center
-				toCardView.center = CGPoint(
-					x: targetLocation.x,
-					y: targetLocation.y + UIScreen.main.bounds.height)
+				snappedCardViews.append(toCardView)
 				
-				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
-					toCardView.center = targetLocation
-				}, completion: nil)
+			} else {
+				viewsToAnimateIn.append(toCardView)
 			}
 		}
 		
-		let viewsToFade = toVC.view.allHUDViews()
-		for view in viewsToFade {
+//		viewsToAnimateIn.append(contentsOf: toVC.view.allHUDViews())
+		
+		for view in viewsToAnimateIn {
+			let targetLocation = view.center
+			view.center = CGPoint(
+				x: targetLocation.x,
+				y: targetLocation.y + UIScreen.main.bounds.height)
+			
+			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+				view.center = targetLocation
+			}, completion: nil)
+		}
+		
+		for view in toVC.view.allHUDViews() {
 			view.alpha = 0
+			
+			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+				view.alpha = 1.0
+			}, completion: nil)
 		}
 		
 		toVC.view.backgroundColor = UIColor.black.withAlphaComponent(0)
 		UIView.animate(withDuration: transitionTime, animations: {
 			toVC.view.backgroundColor = .black
-			for view in viewsToFade {
-				view.alpha = 1.0
-			}
 		}) { (_) in
-//			self.animator.removeAllBehaviors()
 			transitionContext.completeTransition(true)
+			
+			UIView.animate(withDuration: 0.1, animations: {
+				for cardView in snappedCardViews {
+					cardView.center = self.animator.referenceView!.convert(cardView.snap.snapPoint, to: cardView.superview!)
+					cardView.transform = .identity
+				}
+			})
 		}
 	}
 }

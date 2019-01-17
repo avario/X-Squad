@@ -36,6 +36,8 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let fromCardViews = CardView.all(in: fromVC.view)
 		let toCardViews = CardView.all(in: toVC.view)
 		
+		var viewsToAnimateOut: [UIView] = []
+		
 		for fromCardView in fromCardViews {
 			var targetAlpha: CGFloat = 1.0
 			var targetScale: CGFloat = 0.001
@@ -58,19 +60,26 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 					fromCardView.alpha = targetAlpha
 				}, completion: nil)
 			} else {
-				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
-					fromCardView.center = CGPoint(
-						x: fromCardView.center.x,
-						y: fromCardView.center.y + UIScreen.main.bounds.height)
-				}, completion: nil)
+				viewsToAnimateOut.append(fromCardView)
+				
+				
 			}
 		}
 		
-		let viewsToFade = fromVC.view.allHUDViews()
-		UIView.animate(withDuration: transitionTime/2) {
-			for view in viewsToFade {
+//		viewsToAnimateOut.append(contentsOf: fromVC.view.allHUDViews())
+		
+		for view in viewsToAnimateOut {
+			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+				view.center = CGPoint(
+					x: view.center.x,
+					y: view.center.y + UIScreen.main.bounds.height)
+			}, completion: nil)
+		}
+		
+		for view in fromVC.view.allHUDViews() {
+			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
 				view.alpha = 0
-			}
+			}, completion: nil)
 		}
 		
 		UIView.animate(withDuration: transitionTime, animations: {

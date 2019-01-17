@@ -15,7 +15,7 @@ class SquadViewController: UIViewController {
 	
 	static let pilotCardWidth = UIScreen.main.bounds.width * 0.5
 	
-	var pilotViews: [ScrollableSquadPilotView] = []
+	var pilotViews: [SquadPilotView] = []
 	
 	init(for squad: Squad) {
 		self.squad = squad
@@ -69,10 +69,8 @@ class SquadViewController: UIViewController {
 		let header = SquadHeaderView(squad: squad)
 		stackView.addArrangedSubview(header)
 		
-		let addPilotButton = UIButton(type: .contactAdd)
+		let addPilotButton = SquadButton(height: 80)
 		addPilotButton.addTarget(self, action: #selector(addPilot), for: .touchUpInside)
-		addPilotButton.translatesAutoresizingMaskIntoConstraints = false
-		addPilotButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
 		
 		stackView.addArrangedSubview(addPilotButton)
 		
@@ -85,12 +83,12 @@ class SquadViewController: UIViewController {
 	}
 	
 	@objc func updatePilotViews() {
-		func pilotView(for pilot: Squad.Pilot) -> ScrollableSquadPilotView {
-			if let existingPilotView = pilotViews.first(where: { $0.squadPilotView.pilot.uuid == pilot.uuid }) {
+		func pilotView(for pilot: Squad.Pilot) -> SquadPilotView {
+			if let existingPilotView = pilotViews.first(where: { $0.pilotView.pilot.uuid == pilot.uuid }) {
 				return existingPilotView
 			} else {
-				let squadPilotView = ScrollableSquadPilotView(pilot: pilot)
-				squadPilotView.squadPilotView.delegate = self
+				let squadPilotView = SquadPilotView(pilot: pilot)
+				squadPilotView.pilotView.delegate = self
 				pilotViews.append(squadPilotView)
 				
 				return squadPilotView
@@ -99,7 +97,7 @@ class SquadViewController: UIViewController {
 		
 		// Remove any pilots that are no longer in the squad
 		for pilotView in pilotViews {
-			if !squad.pilots.contains(where: { $0.uuid == pilotView.squadPilotView.pilot.uuid }) {
+			if !squad.pilots.contains(where: { $0.uuid == pilotView.pilotView.pilot.uuid }) {
 				pilotView.removeFromSuperview()
 			}
 		}
@@ -120,20 +118,47 @@ class SquadViewController: UIViewController {
 	
 }
 
-extension SquadViewController: SquadPilotViewDelegate {
-	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect pilot: Squad.Pilot) {
+extension SquadViewController: PilotViewDelegate {
+	func pilotView(_ pilotView: PilotView, didSelect pilot: Squad.Pilot) {
 		let cardViewController = CardViewController(card: pilot.card, id: pilot.uuid.uuidString)
+		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
-	func squadPilotView(_ squadPilotView: SquadPilotView, didSelect upgrade: Squad.Pilot.Upgrade) {
+	func pilotView(_ pilotView: PilotView, didSelect upgrade: Squad.Pilot.Upgrade) {
 		let cardViewController = CardViewController(card: upgrade.card, id: upgrade.uuid.uuidString)
+		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
-	func squadPilotView(_ squadPilotView: SquadPilotView, didPress button: UpgradeButton) {
-		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, pilot: squadPilotView.pilot, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!, upgradeButton: button)
+	func pilotView(_ pilotView: PilotView, didPress button: UpgradeButton) {
+		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, pilot: pilotView.pilot, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!, upgradeButton: button)
 		present(selectUpgradeViewController, animated: true, completion: nil)
+	}
+}
+
+extension SquadViewController: CardViewControllerDelegate {
+	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
+		return .remove
+	}
+	
+	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
+		switch cardViewController.card.type {
+		case .pilot:
+			guard let pilot = squad.pilots.first(where: { $0.card == cardViewController.card }) else {
+				return
+			}
+			squad.remove(pilot: pilot)
+		case .upgrade:
+			guard let pilot = squad.pilots.first(where: { $0.upgrades.contains(where: { $0.card == cardViewController.card }) }),
+			 	let upgrade = pilot.upgrades.first(where: { $0.card == cardViewController.card }) else {
+				return
+			}
+			
+			pilot.remove(upgrade: upgrade)
+		}
+		
+		dismiss(animated: true, completion: nil)
 	}
 }
 

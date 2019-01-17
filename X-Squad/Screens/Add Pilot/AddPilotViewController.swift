@@ -84,8 +84,12 @@ class AddPilotViewController: CardsViewController {
 		pullToDismissController?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
 	}
 	
-	override func cardViewController(_ cardViewController: CardViewController, didSelect card: Card) {
-		squad.addPilot(for: card)
+	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
+		return .add
+	}
+	
+	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
+		squad.addPilot(for: cardViewController.card)
 		presentingViewController?.dismiss(animated: true, completion: nil)
 	}
 	

@@ -83,8 +83,8 @@ class Squad: Codable {
 			return SquadStore.squads.first(where: { $0.pilots.contains(where: { $0.uuid == uuid }) })
 		}
 		
-		func addUpgrade(for card: Card) {
-			upgrades.append(Upgrade(card: card))
+		func addUpgrade(for upgradeCard: Card) {
+			upgrades.append(Upgrade(card: upgradeCard))
 			upgrades.sort { (lhs, rhs) -> Bool in
 				guard let lhsType = lhs.card.upgradeTypes.first,
 					let lhsIndex = card.availableUpgrades.firstIndex(of: lhsType),
