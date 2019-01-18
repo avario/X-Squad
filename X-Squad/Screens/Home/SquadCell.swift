@@ -34,6 +34,8 @@ class SquadCell: UITableViewCell {
 	let scrollView = UIScrollView()
 	let stackView = UIStackView()
 	
+	var emptyLabel: UILabel?
+	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		
@@ -80,12 +82,35 @@ class SquadCell: UITableViewCell {
 		fatalError()
 	}
 	
+	func updateEmptyLabel() {
+		if let squad = squad, squad.pilots.isEmpty, emptyLabel == nil {
+			emptyLabel = UILabel()
+			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
+			emptyLabel?.textAlignment = .center
+			emptyLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
+			emptyLabel?.font = UIFont.systemFont(ofSize: 14)
+			emptyLabel?.numberOfLines = 0
+			emptyLabel?.text = "This squad is empty.\nTap here to edit."
+			
+			contentView.addSubview(emptyLabel!)
+			emptyLabel?.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+			emptyLabel?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+			emptyLabel?.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -44).isActive = true
+			emptyLabel?.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 44).isActive = true
+		} else if let emptyLabel = emptyLabel {
+			emptyLabel.removeFromSuperview()
+			self.emptyLabel = nil
+		}
+	}
+	
 	var pilotViews: [PilotView] = []
 	
 	@objc func updatePilotViews() {
 		guard let squad = squad else {
 			return
 		}
+		
+		updateEmptyLabel()
 		
 		func pilotView(for pilot: Squad.Pilot) -> PilotView {
 			if let existingPilotView = pilotViews.first(where: { $0.pilot.uuid == pilot.uuid }) {

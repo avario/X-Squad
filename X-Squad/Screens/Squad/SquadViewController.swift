@@ -83,7 +83,29 @@ class SquadViewController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
 	}
 	
+	var emptyLabel: UILabel?
+	
+	func updateEmptyView() {
+		if squad.pilots.isEmpty, emptyLabel == nil {
+			emptyLabel = UILabel()
+			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
+			emptyLabel?.textAlignment = .center
+			emptyLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
+			emptyLabel?.font = UIFont.systemFont(ofSize: 16)
+			emptyLabel?.numberOfLines = 0
+			emptyLabel?.text = "This squad is empty.\nUse this + button to add a pilot to this squad.\n\nSwipe down to dimiss."
+			
+			stackView.insertArrangedSubview(emptyLabel!, at: 1)
+			emptyLabel?.heightAnchor.constraint(equalToConstant: 100).isActive = true
+		} else if let emptyLabel = emptyLabel {
+			emptyLabel.removeFromSuperview()
+			self.emptyLabel = nil
+		}
+	}
+	
 	@objc func updatePilotViews() {
+		updateEmptyView()
+		
 		func pilotView(for pilot: Squad.Pilot) -> SquadPilotView {
 			if let existingPilotView = pilotViews.first(where: { $0.pilotView.pilot.uuid == pilot.uuid }) {
 				return existingPilotView
@@ -183,10 +205,18 @@ extension SquadViewController: CardViewControllerDelegate {
 extension SquadViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		if squad.pilots.isEmpty {
+			return nil
+		}
+		
 		return CardsPresentAnimationController()
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		if squad.pilots.isEmpty {
+			return nil
+		}
+		
 		return CardsDismissAnimationController()
 	}
 	

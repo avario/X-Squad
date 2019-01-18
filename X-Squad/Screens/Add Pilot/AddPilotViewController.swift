@@ -85,7 +85,7 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		return .add
+		return status(for: cardViewController.card) == .default ? .add : nil
 	}
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
@@ -108,7 +108,10 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		return card.isUnique && squad.pilots.contains(where: { $0.card.name == card.name }) ? .unavailable : .default
+		return card.isUnique && squad.pilots.contains(where: {
+			$0.card.name == card.name ||
+				$0.upgrades.contains(where: {
+					$0.card.name == card.name }) }) ? .unavailable : .default
 	}
 	
 }

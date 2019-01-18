@@ -85,10 +85,26 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		UIView.animate(withDuration: transitionTime, animations: {
 			fromVC.view.backgroundColor = UIColor.black.withAlphaComponent(0)
 		}) { (_) in
-			self.transitionContext?.completeTransition(true)
 			for matchingToCardView in self.matchedToCardViews {
 				matchingToCardView.isHidden = false
 			}
+			
+			if toVC is SquadViewController,
+				let matchedCardView = self.matchedToCardViews.first,
+				matchedCardView.card?.type == .upgrade,
+				let snapshot = matchedCardView.snapshotView(afterScreenUpdates: true) {
+				matchedCardView.superview?.addSubview(snapshot)
+				snapshot.center = matchedCardView.center
+				snapshot.isUserInteractionEnabled = false
+				
+				UIView.animate(withDuration: 0.2, animations: {
+					snapshot.alpha = 0
+				}, completion: { (_) in
+					snapshot.removeFromSuperview()
+				})
+			}
+			
+			self.transitionContext?.completeTransition(true)
 		}
 	}
 }
