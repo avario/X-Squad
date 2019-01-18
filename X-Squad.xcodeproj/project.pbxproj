@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B60E895121F14A4C00A58579 /* SquadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */; };
 		B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */; };
 		B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */; };
 		B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */; };
@@ -74,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadsEmptyView.swift; sourceTree = "<group>"; };
 		B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPresentAnimationController.swift; sourceTree = "<group>"; };
 		B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsDismissAnimationController.swift; sourceTree = "<group>"; };
 		B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-LT-Std.otf"; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 			children = (
 				B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */,
 				B671C93E21E798410034C7C9 /* SquadCell.swift */,
+				B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */,
 				B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */,
 				B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */,
+				B60E895121F14A4C00A58579 /* SquadsEmptyView.swift in Sources */,
 				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,
 				B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */,
 				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,

@@ -67,6 +67,7 @@ class SquadViewController: UIViewController {
 		stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
 		
 		let header = SquadHeaderView(squad: squad)
+		header.infoButton.addTarget(self, action: #selector(showSquadInfo), for: .touchUpInside)
 		stackView.addArrangedSubview(header)
 		
 		let addPilotButton = SquadButton(height: 80)
@@ -114,6 +115,23 @@ class SquadViewController: UIViewController {
 	@objc func addPilot() {
 		let addPilotViewController = AddPilotViewController(squad: squad)
 		present(addPilotViewController, animated: true, completion: nil)
+	}
+	
+	@objc func showSquadInfo() {
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Delete Squad", style: .destructive, handler: { _ in
+			SquadStore.delete(squad: self.squad)
+			
+			for cardView in CardView.all(in: self.view) {
+				cardView.id = cardView.card?.defaultID
+			}
+			
+			self.dismiss(animated: true, completion: nil)
+		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+			
+		}))
+		self.present(alert, animated: true, completion: nil)
 	}
 	
 }

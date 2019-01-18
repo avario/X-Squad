@@ -12,6 +12,7 @@ import UIKit
 class SquadHeaderView: UIView {
 	
 	let squad: Squad
+	let infoButton = UIButton(type: .infoDark)
 	let costView = CostView()
 	
 	init(squad: Squad) {
@@ -21,7 +22,6 @@ class SquadHeaderView: UIView {
 		translatesAutoresizingMaskIntoConstraints = false
 		heightAnchor.constraint(equalToConstant: 24).isActive = true
 		
-		let infoButton = UIButton(type: .infoDark)
 		infoButton.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(infoButton)
 		

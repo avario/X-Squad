@@ -18,6 +18,7 @@ class CardViewController: UIViewController {
 	
 	let card: Card
 	let cardID: String
+	let pilot: Squad.Pilot?
 	let cardView = CardView()
 	let costView = CostView()
 	let upgradeBar = UIStackView()
@@ -29,9 +30,10 @@ class CardViewController: UIViewController {
 	
 	let squadButton = SquadButton()
 	
-	init(card: Card, id: String) {
+	init(card: Card, id: String, pilot: Squad.Pilot? = nil) {
 		self.card = card
 		self.cardID = id
+		self.pilot = pilot
 		
 		super.init(nibName: nil, bundle: nil)
 		
@@ -90,7 +92,12 @@ class CardViewController: UIViewController {
 		// Cost view
 		view.insertSubview(costView, belowSubview: cardView)
 		costView.translatesAutoresizingMaskIntoConstraints = false
-		costView.cost = card.cost
+		
+		if let pilot = pilot {
+			costView.cost = String(card.pointCost(for: pilot))
+		} else {
+			costView.cost = card.cost
+		}
 		
 		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
 		costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true

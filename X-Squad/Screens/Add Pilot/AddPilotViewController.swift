@@ -89,11 +89,25 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		squad.addPilot(for: cardViewController.card)
-		presentingViewController?.dismiss(animated: true, completion: nil)
+		let pilot = squad.addPilot(for: cardViewController.card)
+		
+		cardViewController.cardView.id = pilot.uuid.uuidString
+		
+		let window = UIApplication.shared.keyWindow!
+		let snapshot = cardViewController.view.snapshotView(afterScreenUpdates: false)!
+		window.addSubview(snapshot)
+		
+		let baseViewController = self.presentingViewController!
+		
+		baseViewController.dismiss(animated: false) {
+			baseViewController.present(cardViewController, animated: false) {
+				snapshot.removeFromSuperview()
+				baseViewController.dismiss(animated: true, completion: nil)
+			}
+		}
 	}
 	
-	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
+	override func status(for card: Card) -> CardCollectionViewCell.Status {
 		return card.isUnique && squad.pilots.contains(where: { $0.card.name == card.name }) ? .unavailable : .default
 	}
 	

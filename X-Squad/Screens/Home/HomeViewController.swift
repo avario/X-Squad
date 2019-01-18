@@ -50,6 +50,8 @@ class _HomeViewController: UITableViewController {
 		
 		tableView.register(SquadCell.self, forCellReuseIdentifier: SquadCell.reuseIdentifier)
 		
+		updateEmptyView()
+		
 		NotificationCenter.default.addObserver(self, selector: #selector(squadAdded), name: .squadStoreDidAddSquad, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(squadDeleted), name: .squadStoreDidDeleteSquad, object: nil)
 	}
@@ -64,6 +66,8 @@ class _HomeViewController: UITableViewController {
 		
 		squads = SquadStore.squads
 		tableView.insertRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
+		
+		updateEmptyView()
 	}
 	
 	@objc func squadDeleted(notification: Notification) {
@@ -74,6 +78,12 @@ class _HomeViewController: UITableViewController {
 		
 		squads = SquadStore.squads
 		tableView.deleteRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
+		
+		updateEmptyView()
+	}
+	
+	func updateEmptyView() {
+		tableView.backgroundView = squads.isEmpty ? SquadsEmptyView() : nil
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {

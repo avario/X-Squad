@@ -71,14 +71,14 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
-		cardCell.status = status(for: card, at: indexPath)
+		cardCell.status = status(for: card)
 		
 		return cardCell
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let card = cardSections[indexPath.section].cards[indexPath.row]
-		let cardViewController = CardViewController(card: card, id: id(for: card))
+		let cardViewController = self.cardViewController(for: card)
 		cardViewController.delegate = self
 		if let topViewController = self.presentingViewController?.navigationController {
 			topViewController.present(cardViewController, animated: true, completion: nil)
@@ -88,6 +88,10 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		
 		let cellFrame = collectionView.layoutAttributesForItem(at: indexPath)!.frame
 		collectionView.scrollRectToVisible(cellFrame, animated: true)
+	}
+	
+	open func cardViewController(for card: Card) -> CardViewController {
+		return CardViewController(card: card, id: id(for: card))
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -130,7 +134,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		
 	}
 	
-	open func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
+	open func status(for card: Card) -> CardCollectionViewCell.Status {
 		return .default
 	}
 	

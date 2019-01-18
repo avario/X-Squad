@@ -36,18 +36,25 @@ class SelectUpgradeViewController: CardsViewController {
 		modalPresentationStyle = .overCurrentContext
 		
 		var upgrades: [Card] = []
-		var invalidUpgrades: [Card] = []
+		var restrictedUpgrades: [Card] = []
 		for card in CardStore.cards {
 			guard card.type == .upgrade,
 				card.upgradeTypes.contains(upgradeType) else {
 					continue
 			}
 			
-			if card.isValid(in: squad, for: pilot) {
-				upgrades.append(card)
+			if card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .restrictionsNotMet {
+				restrictedUpgrades.append(card)
 			} else {
-				invalidUpgrades.append(card)
+				upgrades.append(card)
 			}
+		}
+		
+		let upgradeSort: (Card, Card) -> Bool = {
+			if $0.pointCost == $1.pointCost {
+				return $0.name < $1.name
+			}
+			return $0.pointCost > $1.pointCost
 		}
 		
 		cardSections.append(
@@ -59,12 +66,7 @@ class SelectUpgradeViewController: CardsViewController {
 						iconFont: UIFont.xWingIcon(32)
 					)
 				),
-				cards: upgrades.sorted {
-					if $0.pointCost == $1.pointCost {
-						return $0.name < $1.name
-					}
-					return $0.pointCost > $1.pointCost
-				}
+				cards: upgrades.sorted(by: upgradeSort)
 			)
 		)
 		
@@ -77,12 +79,7 @@ class SelectUpgradeViewController: CardsViewController {
 						iconFont: UIFont.xWingIcon(32)
 					)
 				),
-				cards: invalidUpgrades.sorted {
-					if $0.pointCost == $1.pointCost {
-						return $0.name < $1.name
-					}
-					return $0.pointCost > $1.pointCost
-				}
+				cards: restrictedUpgrades.sorted(by: upgradeSort)
 			)
 		)
 	}
@@ -108,13 +105,17 @@ class SelectUpgradeViewController: CardsViewController {
 
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
-		cardCell.status = status(for: card, at: indexPath)
+		cardCell.status = status(for: card)
 
 		if card == currentUpgrade?.card {
 			cardCell.cardView.id = currentUpgrade?.uuid.uuidString
 		}
 
 		return cardCell
+	}
+	
+	override func cardViewController(for card: Card) -> CardViewController {
+		return CardViewController(card: card, id: id(for: card), pilot: pilot)
 	}
 	
 	override func id(for card: Card) -> String {
@@ -127,9 +128,13 @@ class SelectUpgradeViewController: CardsViewController {
 	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
 		if cardViewController.card == currentUpgrade?.card {
 			return .remove
-		} else {
+		}
+		
+		if cardViewController.card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid {
 			return .add
 		}
+		
+		return nil
 	}
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
@@ -157,30 +162,14 @@ class SelectUpgradeViewController: CardsViewController {
 		}
 	}
 	
-	override func status(for card: Card, at index: IndexPath) -> CardCollectionViewCell.Status {
-		if index.section > 0 {
+	override func status(for card: Card) -> CardCollectionViewCell.Status {
+		guard card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid else {
 			return .unavailable
 		}
 
 		if let currentUpgrade = currentUpgrade,
 			card == currentUpgrade.card {
 			return .selected
-		}
-
-		// Unique cards can only be in a squad once
-		if card.isUnique {
-			for pilot in squad.pilots {
-				if pilot.card.name == card.name || pilot.upgrades.contains(where: { $0.card.name == card.name }) {
-					return .unavailable
-				}
-			}
-		}
-		
-		// A pilot can never have two of the same upgrade
-		for upgrade in pilot.upgrades {
-			if upgrade.card == card {
-				return .unavailable
-			}
 		}
 
 		return .default
@@ -190,7 +179,16 @@ class SelectUpgradeViewController: CardsViewController {
 
 extension Card {
 	
-	func isValid(in squad: Squad, for pilot: Squad.Pilot) -> Bool {
+	enum PilotValidity {
+		case valid
+		case alreadyEquipped
+		case slotsNotAvailable
+		case uniqueInUse
+		case restrictionsNotMet
+	}
+	
+	func validity(in squad: Squad, for pilot: Squad.Pilot, replacing currentUpgrade: Squad.Pilot.Upgrade?) -> PilotValidity {
+		// Ensure the any restrictions of the upgrade are met
 		for restrictionSet in restrictions {
 			var passedSet = false
 			
@@ -280,9 +278,51 @@ extension Card {
 				if passedSet { break }
 			}
 			
-			guard passedSet else { return false }
+			guard passedSet else { return .restrictionsNotMet }
 		}
-		return true
+		
+		// Ensure the the pilot has the correct upgrade slots available for the upgrade
+		var availableUpgradeSlots = pilot.upgrades.reduce(pilot.card.availableUpgrades) { availableUpgrades, upgrade in
+			if upgrade.uuid == currentUpgrade?.uuid {
+				return availableUpgrades
+			}
+			
+			var availableUpgrades = availableUpgrades
+			for upgradeType in upgrade.card.upgradeTypes {
+				if let index = availableUpgrades.index(of: upgradeType) {
+					availableUpgrades.remove(at: index)
+				}
+			}
+			return availableUpgrades
+		}
+		
+		for upgradeType in upgradeTypes {
+			guard let index = availableUpgradeSlots.index(of: upgradeType) else {
+				return .slotsNotAvailable
+			}
+			availableUpgradeSlots.remove(at: index)
+		}
+		
+		// Unique cards can only be in a squad once
+		if isUnique {
+			for pilot in squad.pilots {
+				if pilot.card.name == name {
+					return .uniqueInUse
+				}
+				if let uniqueUpgrade = pilot.upgrades.first(where: { $0.card.name == name }), uniqueUpgrade.uuid != currentUpgrade?.uuid {
+					return .uniqueInUse
+				}
+			}
+		}
+		
+		// A pilot can never have two of the same upgrade
+		for upgrade in pilot.upgrades {
+			if upgrade.card == self, upgrade.uuid != currentUpgrade?.uuid {
+				return .alreadyEquipped
+			}
+		}
+		
+		return .valid
 	}
 	
 }

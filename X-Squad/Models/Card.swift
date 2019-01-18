@@ -19,7 +19,78 @@ struct Card: Codable {
 	}
 	
 	func pointCost(for pilot: Squad.Pilot) -> Int {
-		return Int(cost) ?? 0
+		if let cost = Int(cost) {
+			return cost
+		}
+		
+		// A bit of custom logic for upgrades with variable costs
+		if let agility = Int(pilot.card.statistics.first(where: { $0.type == .agility })?.value ?? "0") {
+			switch id {
+			case 297:
+				// Hull Upgrade
+				switch agility {
+				case 0:
+					return 2
+				case 1:
+					return 3
+				case 2:
+					return 5
+				case 3:
+					return 7
+				default:
+					break
+				}
+				
+			case 301, 299:
+				// Stealth Device, Shield Upgrade
+				switch agility {
+				case 0:
+					return 3
+				case 1:
+					return 4
+				case 2:
+					return 6
+				case 3:
+					return 8
+				default:
+					break
+				}
+				
+			default:
+				break
+			}
+		}
+		
+		if let shipSize = pilot.card.shipSize {
+			switch id {
+			case 234:
+				// Expert Handling
+				switch shipSize {
+				case .small:
+					return 2
+				case .medium:
+					return 4
+				case .large:
+					return 6
+				}
+				
+			case 296:
+				// Engine Upgrade
+				switch shipSize {
+				case .small:
+					return 3
+				case .medium:
+					return 6
+				case .large:
+					return 9
+				}
+				
+			default:
+				break
+			}
+		}
+		
+		return 0
 	}
 	
 	let id: Int

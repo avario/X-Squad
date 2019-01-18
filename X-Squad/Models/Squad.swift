@@ -31,13 +31,16 @@ class Squad: Codable {
 		return total
 	}
 	
-	func addPilot(for card: Card) {
-		pilots.append(Pilot(card: card))
+	@discardableResult func addPilot(for card: Card) -> Pilot {
+		let pilot = Pilot(card: card)
+		pilots.append(pilot)
 		pilots.sort(by: { Squad.rankPilots($0.card, $1.card) })
 		
 		SquadStore.save()
 		NotificationCenter.default.post(name: .squadStoreDidAddPilotToSquad, object: self)
 		NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+		
+		return pilot
 	}
 	
 	func remove(pilot: Pilot) {
