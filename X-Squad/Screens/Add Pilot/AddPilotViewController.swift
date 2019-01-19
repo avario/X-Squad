@@ -114,6 +114,20 @@ class AddPilotViewController: CardsViewController {
 					$0.card.name == card.name }) }) ? .unavailable : .default
 	}
 	
+	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
+		guard let card = cardView.card, status(for: card) == .default else {
+			return
+		}
+		
+		cardView.touchesCancelled(touches, with: event)
+		
+		let pilot = squad.addPilot(for: card)
+		cardView.id = pilot.uuid.uuidString
+		
+		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+		
+		dismiss(animated: true, completion: nil)
+	}
 }
 
 extension AddPilotViewController: UIGestureRecognizerDelegate {

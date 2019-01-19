@@ -56,7 +56,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				matchedToCardViews.append(matchingToCardView)
 			
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
-					fromCardView.imageView.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
+					fromCardView.cardContainer.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
 					fromCardView.alpha = targetAlpha
 				}, completion: nil)
 			} else {

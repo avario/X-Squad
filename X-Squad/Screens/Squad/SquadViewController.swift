@@ -166,7 +166,7 @@ extension SquadViewController: PilotViewDelegate {
 	}
 	
 	func pilotView(_ pilotView: PilotView, didSelect upgrade: Squad.Pilot.Upgrade) {
-		let cardViewController = CardViewController(card: upgrade.card, id: upgrade.uuid.uuidString)
+		let cardViewController = CardViewController(card: upgrade.card, id: upgrade.uuid.uuidString, pilot: pilotView.pilot)
 		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}

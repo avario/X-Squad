@@ -10,6 +10,33 @@ import Foundation
 
 struct Card: Codable {
 	
+	let id: Int
+	let faction: Faction?
+	let cardSetIDs: [Int]
+	let type: CardType
+	let availableActions: [Action]
+	let statistics: [Statistic]
+	let availableUpgrades: [UpgradeType]
+	let restrictions: [[Restriction]]
+	let upgradeTypes: [UpgradeType]
+	let weaponRange: String?
+	let displayImageURL: URL
+	let cardImageURL: URL
+	let name: String
+	let subtitle: String?
+	let abilityText: String
+	let cost: String
+	let shipAbilityText: String?
+	let shipSize: ShipSize?
+	let forceSide: ForceSide?
+	let initiative: Int?
+	let weaponNoBonus: Bool
+	let FFGID: String
+	let isUnique: Bool
+	let shipType: ShipType?
+	
+	
+	
 	var defaultID: String {
 		return String(id)
 	}
@@ -92,31 +119,6 @@ struct Card: Codable {
 		
 		return 0
 	}
-	
-	let id: Int
-	let faction: Faction?
-	let cardSetIDs: [Int]
-	let type: CardType
-	let availableActions: [Action]
-	let statistics: [Statistic]
-	let availableUpgrades: [UpgradeType]
-	let restrictions: [[Restriction]]
-	let upgradeTypes: [UpgradeType]
-	let weaponRange: String?
-	let displayImageURL: URL
-	let cardImageURL: URL
-	let name: String
-	let subtitle: String?
-	let abilityText: String
-	let cost: String
-	let shipAbilityText: String?
-	let shipSize: ShipSize?
-	let forceSide: ForceSide?
-	let initiative: Int?
-	let weaponNoBonus: Bool
-	let FFGID: String
-	let isUnique: Bool
-	let shipType: ShipType?
 	
 	enum CodingKeys: String, CodingKey {
 		case id

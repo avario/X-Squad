@@ -106,6 +106,7 @@ class SelectUpgradeViewController: CardsViewController {
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
 		cardCell.status = status(for: card)
+		cardCell.cardView.delegate = self
 
 		if card == currentUpgrade?.card {
 			cardCell.cardView.id = currentUpgrade?.uuid.uuidString
@@ -175,6 +176,26 @@ class SelectUpgradeViewController: CardsViewController {
 		return .default
 	}
 	
+	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
+		guard let card = cardView.card, card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid else {
+			return
+		}
+		
+		cardView.touchesCancelled(touches, with: event)
+		
+		if card != currentUpgrade?.card {
+			if let currentUpgrade = currentUpgrade {
+				pilot.remove(upgrade: currentUpgrade)
+			}
+			
+			let upgrade = pilot.addUpgrade(for: card)
+			cardView.id = upgrade.uuid.uuidString
+		}
+		
+		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+		
+		dismiss(animated: true, completion: nil)
+	}
 }
 
 extension Card {

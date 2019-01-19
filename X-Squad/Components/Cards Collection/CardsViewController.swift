@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CardsViewController: UICollectionViewController, CardViewControllerDelegate {
+class CardsViewController: UICollectionViewController, CardViewControllerDelegate, CardViewDelegate {
 	
 	struct CardSection {
 		
@@ -68,6 +68,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cardCell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.identifier, for: indexPath) as! CardCollectionViewCell
+		cardCell.cardView.delegate = self
 		
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
@@ -138,6 +139,9 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		return .default
 	}
 	
+	open func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
+		
+	}
 }
 
 extension CardsViewController: CardCollectionViewLayoutDelegate {

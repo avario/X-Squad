@@ -10,9 +10,16 @@ import Foundation
 import UIKit
 import Kingfisher
 
+protocol CardViewDelegate: AnyObject {
+	func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?)
+}
+
 class CardView: UIView {
 	
-	var imageView = UIImageView()
+	weak var delegate: CardViewDelegate?
+	
+	let cardContainer = UIView()
+	private var imageView = UIImageView()
 	var isVisible = true
 	
 	static var upgradeHiddenRatio: CGFloat = 0.395
@@ -57,23 +64,39 @@ class CardView: UIView {
 	init() {
 		super.init(frame: .zero)
 		
-		addSubview(imageView)
+		addSubview(cardContainer)
+		cardContainer.translatesAutoresizingMaskIntoConstraints = false
+		cardContainer.clipsToBounds = true
+		cardContainer.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
+		
+		cardContainer.topAnchor.constraint(equalTo: topAnchor).isActive = true
+		cardContainer.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+		cardContainer.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		cardContainer.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+		
+		cardContainer.addSubview(imageView)
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFit
-//		imageView.clipsToBounds = true
-		
-//		imageView.layer.shouldRasterize = true
-//		imageView.layer.rasterizationScale = UIScreen.main.scale
 		imageView.kf.indicatorType = .activity
 		
-		imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-		imageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-		imageView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+		imageView.centerXAnchor.constraint(equalTo: cardContainer.centerXAnchor).isActive = true
+		imageView.centerYAnchor.constraint(equalTo: cardContainer.centerYAnchor).isActive = true
+		imageView.widthAnchor.constraint(equalTo: cardContainer.widthAnchor, multiplier: 1.008).isActive = true
+		imageView.heightAnchor.constraint(equalTo: cardContainer.heightAnchor, multiplier: 1.008).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
+	}
+	
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+		guard let touch = touches.first else {
+			return
+		}
+		let percent = touch.force / touch.maximumPossibleForce
+		if percent >= 0.7 {
+			delegate?.cardViewDidForcePress(self, touches: touches, with: event)
+		}
 	}
 	
 	static func all(in view: UIView) -> [CardView] {
@@ -100,13 +123,12 @@ class CardView: UIView {
 		return nil
 	}
 	
-//	override func layoutSubviews() {
-//		super.layoutSubviews()
-//
-//		imageView.layer.cornerRadius = frame.width * 0.038
-//		imageView.layer.borderColor = UIColor.white.withAlphaComponent(0.15).cgColor
-//		imageView.layer.borderWidth = frame.width * 0.0025
-//	}
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
+		cardContainer.layer.cornerRadius = bounds.width * 0.038
+		cardContainer.layer.borderWidth = bounds.width * 0.0025
+	}
 	
 }
 
