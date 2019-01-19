@@ -303,7 +303,7 @@ extension Card {
 		}
 		
 		// Ensure the the pilot has the correct upgrade slots available for the upgrade
-		var availableUpgradeSlots = pilot.upgrades.reduce(pilot.card.availableUpgrades) { availableUpgrades, upgrade in
+		var availableUpgradeSlots = pilot.upgrades.reduce(pilot.allUpgradeSlots) { availableUpgrades, upgrade in
 			if upgrade.uuid == currentUpgrade?.uuid {
 				return availableUpgrades
 			}

@@ -86,9 +86,26 @@ class Squad: Codable {
 			return SquadStore.squads.first(where: { $0.pilots.contains(where: { $0.uuid == uuid }) })
 		}
 		
+		var allUpgradeSlots: [Card.UpgradeType] {
+			return upgrades.reduce(card.availableUpgrades, { availableUpgrades, upgrade in
+				var upgrades = availableUpgrades + upgrade.card.addedUpgradeSlots
+				
+				for removedUpgrade in upgrade.card.removedUpgradeSlots {
+					if let index = upgrades.firstIndex(of: removedUpgrade) {
+						upgrades.remove(at: index)
+					}
+				}
+				
+				return upgrades
+			})
+		}
+		
 		@discardableResult func addUpgrade(for upgradeCard: Card) -> Upgrade {
 			let upgrade = Upgrade(card: upgradeCard)
 			upgrades.append(upgrade)
+			
+			removeUpgradesThatNoLongerHaveSlots()
+			
 			upgrades.sort { (lhs, rhs) -> Bool in
 				guard let lhsType = lhs.card.upgradeTypes.first,
 					let lhsIndex = card.availableUpgrades.firstIndex(of: lhsType),
@@ -116,9 +133,33 @@ class Squad: Codable {
 				upgrades.remove(at: index)
 			}
 			
+			removeUpgradesThatNoLongerHaveSlots()
+			
 			SquadStore.save()
 			NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromPilot, object: self)
 			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+		}
+		
+		private func removeUpgradesThatNoLongerHaveSlots() {
+			var availableUpgradeSlots = allUpgradeSlots
+			var upgradesToRemove: [Upgrade] = []
+			
+			for upgrade in upgrades {
+				for upgradeType in upgrade.card.upgradeTypes {
+					guard availableUpgradeSlots.contains(upgradeType) else {
+						upgradesToRemove.append(upgrade)
+						break
+					}
+					availableUpgradeSlots.remove(at: availableUpgradeSlots.firstIndex(of: upgradeType)!)
+				}
+			}
+			
+			for upgrade in upgradesToRemove {
+				guard let index = upgrades.firstIndex(where: { $0.uuid == upgrade.uuid }) else {
+					continue
+				}
+				upgrades.remove(at: index)
+			}
 		}
 		
 		class Upgrade: Codable {

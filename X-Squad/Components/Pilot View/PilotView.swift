@@ -49,18 +49,6 @@ class PilotView: UIView {
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
 		
-		if isEditing {
-			for upgrade in pilot.card.availableUpgrades {
-				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
-				upgradeButton.upgradeType = upgrade
-				
-				insertSubview(upgradeButton, at: 0)
-				upgradeButtons.append(upgradeButton)
-				
-				upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
-			}
-		}
-		
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidAddUpgradeToPilot, object: pilot)
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidRemoveUpgradeFromPilot, object: pilot)
 	}
@@ -97,6 +85,23 @@ class PilotView: UIView {
 	}
 	
 	@objc func updatePilot() {
+		if isEditing {
+			for upgradeButton in self.upgradeButtons {
+				upgradeButton.removeFromSuperview()
+			}
+			self.upgradeButtons.removeAll()
+			
+			for upgrade in pilot.allUpgradeSlots {
+				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+				upgradeButton.upgradeType = upgrade
+				
+				insertSubview(upgradeButton, at: 0)
+				self.upgradeButtons.append(upgradeButton)
+				
+				upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
+			}
+		}
+		
 		// Constants
 		let pilotCardTopPadding: CGFloat = 10
 		let cardLength: CGFloat = bounds.height - pilotCardTopPadding * 2

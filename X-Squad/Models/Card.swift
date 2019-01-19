@@ -35,7 +35,38 @@ struct Card: Codable {
 	let isUnique: Bool
 	let shipType: ShipType?
 	
+	private var _addedUpgradeSlots: [UpgradeType]?
+	private var _removedUpgradeSlots: [UpgradeType]?
 	
+	var addedUpgradeSlots: [UpgradeType] {
+		return amendedSlots(for: "Add")
+	}
+	
+	var removedUpgradeSlots: [UpgradeType] {
+		return amendedSlots(for: "Remove")
+	}
+	
+	private func amendedSlots(for term: String) -> [UpgradeType] {
+		guard abilityText.hasSuffix("slot.") || abilityText.hasSuffix("slots.") else {
+			return []
+		}
+		
+		let sentences = abilityText
+			.split(separator: ".")
+			.filter({ $0.contains(term) && $0.contains("slot") })
+		
+		var upgrades: [UpgradeType] = []
+		
+		for sentence in sentences {
+			for upgradeType in UpgradeType.allCases {
+				if sentence.contains(upgradeType.abilityTextTag) {
+					upgrades.append(upgradeType)
+				}
+			}
+		}
+		
+		return upgrades
+	}
 	
 	var defaultID: String {
 		return String(id)
@@ -225,7 +256,7 @@ struct Card: Codable {
 		}
 	}
 	
-	enum UpgradeType: Int, Codable {
+	enum UpgradeType: Int, Codable, CaseIterable {
 		case talent = 1
 		case sensor = 2
 		case cannon = 3
@@ -375,5 +406,46 @@ extension Card: Hashable {
 	
 	func hash(into hasher: inout Hasher) {
 		id.hash(into: &hasher)
+	}
+}
+
+extension Card.UpgradeType {
+	var abilityTextTag: String {
+		switch self {
+		case .talent:
+			return "<talent>"
+		case .sensor:
+			return "<sensor>"
+		case .cannon:
+			return "<cannon>"
+		case .turret:
+			return "<turret>"
+		case .torpedo:
+			return "<torpedo>"
+		case .missile:
+			return "<missile>"
+		case .crew:
+			return "<crew>"
+		case .astromech:
+			return "<astro>"
+		case .device:
+			return "<bomb>"
+		case .illicit:
+			return "<illicit>"
+		case .modification:
+			return "<mod>"
+		case .title:
+			return "<title>"
+		case .gunner:
+			return "<gunner>"
+		case .force:
+			return "<force>"
+		case .configuration:
+			return "<config>"
+		case .tech:
+			return "<tech>"
+		case .special:
+			return "<special>"
+		}
 	}
 }
