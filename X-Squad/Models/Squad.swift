@@ -48,6 +48,10 @@ class Squad: Codable {
 			pilots.remove(at: index)
 		}
 		
+		for pilot in pilots {
+			pilot.removeInValidUpgrades(shouldNotify: true)
+		}
+		
 		SquadStore.save()
 		NotificationCenter.default.post(name: .squadStoreDidRemovePilotFromSquad, object: self)
 		NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
@@ -87,7 +91,7 @@ class Squad: Codable {
 		}
 		
 		var allUpgradeSlots: [Card.UpgradeType] {
-			return upgrades.reduce(card.availableUpgrades, { availableUpgrades, upgrade in
+			var availableUpgrades = upgrades.reduce(card.availableUpgrades.filter({ $0 != .special }), { availableUpgrades, upgrade in
 				var upgrades = availableUpgrades + upgrade.card.addedUpgradeSlots
 				
 				for removedUpgrade in upgrade.card.removedUpgradeSlots {
@@ -98,13 +102,24 @@ class Squad: Codable {
 				
 				return upgrades
 			})
+			
+			if card.abilityText.contains("Weapon Hardpoint") {
+				let hardpointUpgrades: [Card.UpgradeType] = [.cannon, .torpedo, .missile]
+				if let equippedHardpointUpgrade = upgrades.first(where: { $0.card.upgradeTypes.contains(where: { hardpointUpgrades.contains($0) })}) {
+					availableUpgrades.append(equippedHardpointUpgrade.card.upgradeTypes.first!)
+				} else {
+					availableUpgrades.append(contentsOf: hardpointUpgrades)
+				}
+			}
+			
+			return availableUpgrades
 		}
 		
 		@discardableResult func addUpgrade(for upgradeCard: Card) -> Upgrade {
 			let upgrade = Upgrade(card: upgradeCard)
 			upgrades.append(upgrade)
 			
-			removeUpgradesThatNoLongerHaveSlots()
+			removeInValidUpgrades()
 			
 			upgrades.sort { (lhs, rhs) -> Bool in
 				guard let lhsType = lhs.card.upgradeTypes.first,
@@ -133,11 +148,37 @@ class Squad: Codable {
 				upgrades.remove(at: index)
 			}
 			
-			removeUpgradesThatNoLongerHaveSlots()
+			removeInValidUpgrades()
 			
 			SquadStore.save()
 			NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromPilot, object: self)
 			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+		}
+		
+		func removeInValidUpgrades(shouldNotify: Bool = false, notify: Bool = false) {
+			removeUpgradesThatNoLongerHaveSlots()
+			
+			guard let squad = squad else { return }
+			
+			var invalidUpgrade: Upgrade? = nil
+			
+			for upgrade in upgrades {
+				guard upgrade.card.validity(in: squad, for: self, replacing: upgrade) == .valid else {
+					invalidUpgrade = upgrade
+					break
+				}
+			}
+			
+			if let invalidUpgrade = invalidUpgrade,
+				let index = upgrades.firstIndex(where: { $0.uuid == invalidUpgrade.uuid }) {
+				upgrades.remove(at: index)
+				removeInValidUpgrades(shouldNotify: shouldNotify, notify: true)
+			}
+			
+			if shouldNotify, notify {
+				NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromPilot, object: self)
+				NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+			}
 		}
 		
 		private func removeUpgradesThatNoLongerHaveSlots() {

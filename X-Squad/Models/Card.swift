@@ -253,6 +253,7 @@ struct Card: Codable {
 			case attackBullseye = 11
 			case attackSingleMobileArc = 12
 			case attackStandardRearArc = 14
+			case weaponRangeNoBonus = 20
 		}
 	}
 	

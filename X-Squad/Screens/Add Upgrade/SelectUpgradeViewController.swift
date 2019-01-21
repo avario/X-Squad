@@ -43,7 +43,7 @@ class SelectUpgradeViewController: CardsViewController {
 					continue
 			}
 			
-			if card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .restrictionsNotMet {
+			if validity(of: card) == .restrictionsNotMet {
 				restrictedUpgrades.append(card)
 			} else {
 				upgrades.append(card)
@@ -131,7 +131,7 @@ class SelectUpgradeViewController: CardsViewController {
 			return .remove
 		}
 		
-		if cardViewController.card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid {
+		if validity(of: cardViewController.card) == .valid {
 			return .add
 		}
 		
@@ -164,7 +164,7 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		guard card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid else {
+		guard validity(of: card) == .valid else {
 			return .unavailable
 		}
 
@@ -177,7 +177,7 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
-		guard let card = cardView.card, card.validity(in: squad, for: pilot, replacing: currentUpgrade) == .valid else {
+		guard let card = cardView.card, validity(of: card) == .valid else {
 			return
 		}
 		
@@ -195,6 +195,10 @@ class SelectUpgradeViewController: CardsViewController {
 		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
 		
 		dismiss(animated: true, completion: nil)
+	}
+	
+	func validity(of card: Card) -> Card.PilotValidity {
+		return card.validity(in: squad, for: pilot, replacing: currentUpgrade)
 	}
 }
 
@@ -289,7 +293,7 @@ extension Card {
 								passedSet = true
 							}
 						case .dark:
-							if pilot.card.forceSide == .dark {
+							if pilot.card.forceSide == .dark || pilot.upgrades.contains(where: { $0.card.id == 361 /* Maul */ }) {
 								passedSet = true
 							}
 						}
