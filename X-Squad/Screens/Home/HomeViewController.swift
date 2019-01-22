@@ -86,11 +86,6 @@ class _HomeViewController: UITableViewController {
 		tableView.backgroundView = squads.isEmpty ? SquadsEmptyView() : nil
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		navigationItem.hidesSearchBarWhenScrolling = true
-	}
-	
 	@objc func showSettings() {
 		let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
 		navigationController.viewControllers = [SettingsViewController()]

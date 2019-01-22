@@ -210,13 +210,21 @@ class PilotView: UIView {
 		}
 		
 		// Any buttons that weren't used by an upgrade should be positioned at the end of the list
-		for upgradeButton in availableUpgradeButtons {
-			upgradeButton.frame = CGRect(
-				origin: CGPoint(x: leadingEdge, y: upgradeCardTopPadding + cardWidth),
-				size: upgradeButton.bounds.size)
-			leadingEdge = upgradeButton.frame.maxX
+		if isEditing, availableUpgradeButtons.isEmpty == false {
+			let buttonsInColumn = 4
 			
-			upgradeButton.associatedUpgrade = nil
+			for (index, upgradeButton) in availableUpgradeButtons.enumerated() {
+				let column = floor(Double(index)/Double(buttonsInColumn))
+				let row = index % buttonsInColumn
+				
+				upgradeButton.frame = CGRect(
+					origin: CGPoint(x: leadingEdge + 10 + upgradeButton.frame.width * CGFloat(column), y: upgradeCardTopPadding + upgradeButton.frame.height * CGFloat(row)),
+					size: upgradeButton.bounds.size)
+				upgradeButton.associatedUpgrade = nil
+			}
+			
+			let numberOfColumns = ceil(Double(availableUpgradeButtons.count)/Double(buttonsInColumn))
+			leadingEdge += 32 * CGFloat(numberOfColumns) + 20
 		}
 		
 		widthConstraint.constant = leadingEdge

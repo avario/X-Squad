@@ -40,7 +40,7 @@ class SquadHeaderView: UIView {
 	}
 	
 	@objc func updateCost() {
-		costView.cost = String(squad.cost)
+		costView.cost = String(squad.pointCost)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

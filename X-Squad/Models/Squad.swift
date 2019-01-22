@@ -20,15 +20,8 @@ class Squad: Codable {
 		self.pilots = []
 	}
 	
-	var cost: Int {
-		var total = 0
-		for pilot in pilots {
-			total += pilot.card.pointCost
-			for upgrade in pilot.upgrades {
-				total += upgrade.card.pointCost(for: pilot)
-			}
-		}
-		return total
+	var pointCost: Int {
+		return pilots.reduce(0, { $0 + $1.pointCost })
 	}
 	
 	@discardableResult func addPilot(for card: Card) -> Pilot {
@@ -90,6 +83,10 @@ class Squad: Codable {
 			return SquadStore.squads.first(where: { $0.pilots.contains(where: { $0.uuid == uuid }) })
 		}
 		
+		var pointCost: Int {
+			return upgrades.reduce(card.pointCost, { $0 + $1.card.pointCost(for: self) })
+		}
+		
 		var allUpgradeSlots: [Card.UpgradeType] {
 			var availableUpgrades = upgrades.reduce(card.availableUpgrades.filter({ $0 != .special }), { availableUpgrades, upgrade in
 				var upgrades = availableUpgrades + upgrade.card.addedUpgradeSlots
@@ -113,6 +110,10 @@ class Squad: Codable {
 			}
 			
 			return availableUpgrades
+		}
+		
+		var allActions: [Card.Action] {
+			return upgrades.reduce(card.availableActions, { $0 + $1.card.availableActions })
 		}
 		
 		@discardableResult func addUpgrade(for upgradeCard: Card) -> Upgrade {

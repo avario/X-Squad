@@ -24,9 +24,11 @@ class SquadCell: UITableViewCell {
 			
 			iconLabel.text = squad.faction.characterCode
 			updatePilotViews()
+			updateCost()
 			
 			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidAddPilotToSquad, object: squad)
 			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateCost), name: .squadStoreDidUpdateSquad, object: squad)
 		}
 	}
 	
@@ -35,6 +37,8 @@ class SquadCell: UITableViewCell {
 	let stackView = UIStackView()
 	
 	var emptyLabel: UILabel?
+	
+	let costView = CostView()
 	
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -76,6 +80,15 @@ class SquadCell: UITableViewCell {
 		stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
 		stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -16).isActive = true
 		stackView.leftAnchor.constraint(equalTo: iconLabel.rightAnchor).isActive = true
+		
+		scrollView.addSubview(costView)
+		costView.translatesAutoresizingMaskIntoConstraints = false
+		costView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+		costView.rightAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 0).isActive = true
+	}
+	
+	@objc func updateCost() {
+		costView.cost = String(squad?.pointCost ?? 0)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

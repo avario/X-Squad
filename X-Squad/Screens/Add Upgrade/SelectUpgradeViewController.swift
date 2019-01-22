@@ -227,7 +227,7 @@ extension Card {
 					
 				case .action:
 					if let actionID = restriction.parameters.id,
-						let action = pilot.card.availableActions.first(where: { $0.baseType.rawValue == actionID }) {
+						let action = pilot.allActions.first(where: { $0.baseType.rawValue == actionID }) {
 						if let sideEffect = restriction.parameters.sideEffectName {
 							switch sideEffect {
 							case .stress:
