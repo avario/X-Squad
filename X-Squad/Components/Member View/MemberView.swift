@@ -1,5 +1,5 @@
 //
-//  SquadPilotView.swift
+//  MemberView.swift
 //  X-Squad
 //
 //  Created by Avario on 11/01/2019.
@@ -9,19 +9,19 @@
 import Foundation
 import UIKit
 
-protocol PilotViewDelegate: AnyObject {
-	func pilotView(_ pilotView: PilotView, didSelect pilot: Squad.Pilot)
-	func pilotView(_ pilotView: PilotView, didSelect upgrade: Squad.Pilot.Upgrade)
-	func pilotView(_ pilotView: PilotView, didPress button: UpgradeButton)
+protocol MemberViewDelegate: AnyObject {
+	func memberView(_ memberView: MemberView, didSelect pilot: Pilot)
+	func memberView(_ memberView: MemberView, didSelect upgrade: Upgrade)
+	func memberView(_ memberView: MemberView, didPress button: UpgradeButton)
 }
 
-class PilotView: UIView {
+class MemberView: UIView {
 	
-	weak var delegate: PilotViewDelegate?
+	weak var delegate: MemberViewDelegate?
 	
-	let pilot: Squad.Pilot
+	let member: Squad.Member
+	
 	private let pilotCardView = CardView()
-	
 	private var upgradeButtons: [UpgradeButton] = []
 	private var cardViews: [CardView] = []
 	
@@ -29,8 +29,8 @@ class PilotView: UIView {
 	
 	private var widthConstraint: NSLayoutConstraint! = nil
 	
-	init(pilot: Squad.Pilot, height: CGFloat, isEditing: Bool = true) {
-		self.pilot = pilot
+	init(member: Squad.Member, height: CGFloat, isEditing: Bool = true) {
+		self.member = member
 		self.isEditing = isEditing
 		
 		super.init(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: height)))
@@ -42,15 +42,15 @@ class PilotView: UIView {
 		
 		clipsToBounds = false
 		
-		pilotCardView.card = pilot.card
-		pilotCardView.id = pilot.uuid.uuidString
+		pilotCardView.card = member.pilot
+		pilotCardView.member = member
 		addSubview(pilotCardView)
 		
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidAddUpgradeToPilot, object: pilot)
-		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidRemoveUpgradeFromPilot, object: pilot)
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidAddUpgradeToMember, object: member)
+		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidRemoveUpgradeFromMember, object: member)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -58,7 +58,7 @@ class PilotView: UIView {
 	}
 	
 	@objc func addUpgrade(button: UpgradeButton) {
-		delegate?.pilotView(self, didPress: button)
+		delegate?.memberView(self, didPress: button)
 	}
 	
 	@objc func selectCard(tapGesture: UITapGestureRecognizer) {
@@ -67,14 +67,13 @@ class PilotView: UIView {
 				return
 		}
 		
-		switch card.type {
-		case .pilot:
-			delegate?.pilotView(self, didSelect: pilot)
-		case .upgrade:
-			guard let upgrade = pilot.upgrades.first(where: { $0.uuid.uuidString == cardView.id }) else {
-				return
-			}
-			delegate?.pilotView(self, didSelect: upgrade)
+		switch card {
+		case let pilot as Pilot:
+			delegate?.memberView(self, didSelect: pilot)
+		case let upgrade as Upgrade:
+			delegate?.memberView(self, didSelect: upgrade)
+		default:
+			fatalError()
 		}
 	}
 	
@@ -91,7 +90,7 @@ class PilotView: UIView {
 			}
 			self.upgradeButtons.removeAll()
 			
-			for upgrade in pilot.allUpgradeSlots {
+			for upgrade in member.upgradeSlots {
 				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
 				upgradeButton.upgradeType = upgrade
 				
@@ -112,9 +111,8 @@ class PilotView: UIView {
 		
 		// Remove any card views for upgrades that are no longer equipped
 		for cardView in cardViews {
-			if let card = cardView.card,
-				card.type == .upgrade,
-				!pilot.upgrades.contains(where: { $0.card == card }) {
+			if let upgrade = cardView.card as? Upgrade,
+				!member.upgrades.contains(upgrade) {
 				cardView.removeFromSuperview()
 			}
 		}
@@ -124,9 +122,9 @@ class PilotView: UIView {
 		var availableUpgradeButtons = self.upgradeButtons
 		
 		// Return the upgrade button for the upgrade and remove it from the available upgrade buttons
-		func upgradeButtons(for upgrade: Squad.Pilot.Upgrade) -> [UpgradeButton] {
+		func upgradeButtons(for upgrade: Upgrade) -> [UpgradeButton] {
 			var upgradeButtons: [UpgradeButton] = []
-			for upgradeType in upgrade.card.upgradeTypes {
+			for upgradeType in upgrade.primarySide.slots {
 				guard let upgradeButton = availableUpgradeButtons.first(where: { $0.upgradeType == upgradeType }) else {
 					continue
 				}
@@ -141,13 +139,19 @@ class PilotView: UIView {
 		}
 		
 		// Return the existing card view for the upgrade or create a new card view
-		func cardView(for upgrade: Squad.Pilot.Upgrade) -> CardView {
-			if let existingCardView = cardViews.first(where: { $0.id == upgrade.uuid.uuidString }) {
+		func cardView(for upgrade: Upgrade) -> CardView {
+			if let existingCardView = cardViews.first(where: {
+				if let card = $0.card as? Upgrade, card == upgrade {
+					return true
+				} else {
+					return false
+				}
+			}) {
 				return existingCardView
 			} else {
 				let cardView = CardView()
-				cardView.card = upgrade.card
-				cardView.id = upgrade.uuid.uuidString
+				cardView.card = upgrade
+				cardView.member = member
 				
 				let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 				cardView.addGestureRecognizer(cardTapGesture)
@@ -160,7 +164,7 @@ class PilotView: UIView {
 		}
 		
 		// Position the configuration card to the left of the pilot
-		if let configuration = pilot.upgrades.first(where: { $0.card.upgradeTypes.contains(Card.UpgradeType.configuration) }) {
+		if let configuration = member.upgrades.first(where: { $0.primarySide.type == .configuration }) {
 			let configurationCardView = cardView(for: configuration)
 			
 			configurationCardView.frame = CGRect(
@@ -186,8 +190,8 @@ class PilotView: UIView {
 		// Keep track of the previous card view so that following cards can be placed below it
 		var previousCardView = pilotCardView
 		
-		for upgrade in pilot.upgrades {
-			guard upgrade.card.upgradeTypes.contains(.configuration) == false else {
+		for upgrade in member.upgrades {
+			guard upgrade.primarySide.type != .configuration else {
 				continue
 			}
 			

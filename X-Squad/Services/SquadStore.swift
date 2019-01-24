@@ -12,13 +12,13 @@ extension Notification.Name {
 	static let squadStoreDidAddSquad = Notification.Name("squadStoreDidAddSquad")
 	static let squadStoreDidDeleteSquad = Notification.Name("squadStoreDidDeleteSquad")
 	
-	static let squadStoreDidAddPilotToSquad = Notification.Name("squadStoreDidAddPilotToSquad")
-	static let squadStoreDidRemovePilotFromSquad = Notification.Name("squadStoreDidRemovePilotFromSquad")
+	static let squadStoreDidAddMemberToSquad = Notification.Name("squadStoreDidAddMemberToSquad")
+	static let squadStoreDidRemoveMemberFromSquad = Notification.Name("squadStoreDidRemoveMemberFromSquad")
 	
 	static let squadStoreDidUpdateSquad = Notification.Name("squadStoreDidUpdateSquad")
 	
-	static let squadStoreDidAddUpgradeToPilot = Notification.Name("squadStoreDidAddUpgradeToPilot")
-	static let squadStoreDidRemoveUpgradeFromPilot = Notification.Name("squadStoreDidRemoveUpgradeFromPilot")
+	static let squadStoreDidAddUpgradeToMember = Notification.Name("squadStoreDidAddUpgradeToMember")
+	static let squadStoreDidRemoveUpgradeFromMember = Notification.Name("squadStoreDidRemoveUpgradeFromMember")
 }
 
 class SquadStore {

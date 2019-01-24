@@ -13,9 +13,9 @@ class SquadViewController: UIViewController {
 	
 	let squad: Squad
 	
-	static let pilotCardWidth = UIScreen.main.bounds.width * 0.5
+	static let memberCardWidth = UIScreen.main.bounds.width * 0.5
 	
-	var pilotViews: [SquadPilotView] = []
+	var memberViews: [SquadMemberView] = []
 	
 	init(for squad: Squad) {
 		self.squad = squad
@@ -77,23 +77,23 @@ class SquadViewController: UIViewController {
 		
 		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
 		
-		updatePilotViews()
+		updateMemberViews()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidAddPilotToSquad, object: squad)
-		NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidAddMemberToSquad, object: squad)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidRemoveMemberFromSquad, object: squad)
 	}
 	
 	var emptyLabel: UILabel?
 	
 	func updateEmptyView() {
-		if squad.pilots.isEmpty, emptyLabel == nil {
+		if squad.members.isEmpty, emptyLabel == nil {
 			emptyLabel = UILabel()
 			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
 			emptyLabel?.textAlignment = .center
 			emptyLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
 			emptyLabel?.font = UIFont.systemFont(ofSize: 16)
 			emptyLabel?.numberOfLines = 0
-			emptyLabel?.text = "This squad is empty.\nUse this + button to add a pilot to this squad.\n\nSwipe down to dimiss."
+			emptyLabel?.text = "This squad is empty.\nUse this + button to add a member to this squad.\n\nSwipe down to dimiss."
 			
 			stackView.insertArrangedSubview(emptyLabel!, at: 1)
 			emptyLabel?.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -103,34 +103,34 @@ class SquadViewController: UIViewController {
 		}
 	}
 	
-	@objc func updatePilotViews() {
+	@objc func updateMemberViews() {
 		updateEmptyView()
 		
-		func pilotView(for pilot: Squad.Pilot) -> SquadPilotView {
-			if let existingPilotView = pilotViews.first(where: { $0.pilotView.pilot.uuid == pilot.uuid }) {
-				return existingPilotView
+		func memberView(for member: Squad.Member) -> SquadMemberView {
+			if let existingMemberView = memberViews.first(where: { $0.memberView.member.uuid == member.uuid }) {
+				return existingMemberView
 			} else {
-				let squadPilotView = SquadPilotView(pilot: pilot)
-				squadPilotView.pilotView.delegate = self
-				pilotViews.append(squadPilotView)
+				let squadMemberView = SquadMemberView(member: member)
+				squadMemberView.memberView.delegate = self
+				memberViews.append(squadMemberView)
 				
-				return squadPilotView
+				return squadMemberView
 			}
 		}
 		
-		// Remove any pilots that are no longer in the squad
-		for pilotView in pilotViews {
-			if !squad.pilots.contains(where: { $0.uuid == pilotView.pilotView.pilot.uuid }) {
-				pilotView.removeFromSuperview()
+		// Remove any members that are no longer in the squad
+		for memberView in memberViews {
+			if !squad.members.contains(where: { $0.uuid == memberView.memberView.member.uuid }) {
+				memberView.removeFromSuperview()
 			}
 		}
-		pilotViews = pilotViews.filter({ $0.superview != nil })
+		memberViews = memberViews.filter({ $0.superview != nil })
 		
-		for (index, pilot) in squad.pilots.enumerated() {
-			let squadPilotView = pilotView(for: pilot)
+		for (index, member) in squad.members.enumerated() {
+			let squadMemberView = memberView(for: member)
 			
 			// +1 for header view
-			stackView.insertArrangedSubview(squadPilotView, at: index + 1)
+			stackView.insertArrangedSubview(squadMemberView, at: index + 1)
 		}
 	}
 	
@@ -145,7 +145,7 @@ class SquadViewController: UIViewController {
 			SquadStore.delete(squad: self.squad)
 			
 			for cardView in CardView.all(in: self.view) {
-				cardView.id = cardView.card?.defaultID
+				cardView.member = nil
 			}
 			
 			self.dismiss(animated: true, completion: nil)
@@ -158,21 +158,21 @@ class SquadViewController: UIViewController {
 	
 }
 
-extension SquadViewController: PilotViewDelegate {
-	func pilotView(_ pilotView: PilotView, didSelect pilot: Squad.Pilot) {
-		let cardViewController = CardViewController(card: pilot.card, id: pilot.uuid.uuidString)
+extension SquadViewController: MemberViewDelegate {
+	func memberView(_ memberView: MemberView, didSelect pilot: Pilot) {
+		let cardViewController = CardViewController(card: pilot, member: memberView.member)
 		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
-	func pilotView(_ pilotView: PilotView, didSelect upgrade: Squad.Pilot.Upgrade) {
-		let cardViewController = CardViewController(card: upgrade.card, id: upgrade.uuid.uuidString, pilot: pilotView.pilot)
+	func memberView(_ memberView: MemberView, didSelect upgrade: Upgrade) {
+		let cardViewController = CardViewController(card: upgrade, member: memberView.member)
 		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
-	func pilotView(_ pilotView: PilotView, didPress button: UpgradeButton) {
-		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, pilot: pilotView.pilot, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!, upgradeButton: button)
+	func memberView(_ memberView: MemberView, didPress button: UpgradeButton) {
+		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, member: memberView.member, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!)
 		present(selectUpgradeViewController, animated: true, completion: nil)
 	}
 }
@@ -183,19 +183,15 @@ extension SquadViewController: CardViewControllerDelegate {
 	}
 	
 	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		switch cardViewController.card.type {
-		case .pilot:
-			guard let pilot = squad.pilots.first(where: { $0.card == cardViewController.card }) else {
-				return
-			}
-			squad.remove(pilot: pilot)
-		case .upgrade:
-			guard let pilot = squad.pilots.first(where: { $0.upgrades.contains(where: { $0.card == cardViewController.card }) }),
-			 	let upgrade = pilot.upgrades.first(where: { $0.card == cardViewController.card }) else {
-				return
-			}
-			
-			pilot.remove(upgrade: upgrade)
+		let member = cardViewController.member!
+		
+		switch cardViewController.card {
+		case _ as Pilot:
+			squad.remove(member: member)
+		case let upgrade as Upgrade:
+			member.remove(upgrade: upgrade)
+		default:
+			fatalError()
 		}
 		
 		dismiss(animated: true, completion: nil)
@@ -205,7 +201,7 @@ extension SquadViewController: CardViewControllerDelegate {
 extension SquadViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		if squad.pilots.isEmpty {
+		if squad.members.isEmpty {
 			return nil
 		}
 		
@@ -213,7 +209,7 @@ extension SquadViewController: UIViewControllerTransitioningDelegate {
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		if squad.pilots.isEmpty {
+		if squad.members.isEmpty {
 			return nil
 		}
 		

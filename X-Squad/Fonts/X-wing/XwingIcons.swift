@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Card.Action.ActionType {
+extension Action.ActionType {
 	var characterCode: String {
 		switch self {
 		case .focus:
@@ -41,7 +41,7 @@ extension Card.Action.ActionType {
 	}
 }
 
-extension Card.UpgradeType {
+extension Upgrade.UpgradeType {
 	var characterCode: String {
 		switch self {
 		case .talent:
@@ -76,13 +76,13 @@ extension Card.UpgradeType {
 			return "F"
 		case .configuration:
 			return "n"
-		case .special:
-			return "ê"
+		case .tacticalRelay:
+			return "t" // This is wrong...
 		}
 	}
 }
 
-extension Card.Faction {
+extension Faction {
 	var characterCode: String {
 		switch self {
 		case .resistance:
@@ -95,13 +95,16 @@ extension Card.Faction {
 			return "+"
 		case .scumAndVillainy:
 			return "#"
+		case .galacticRepublic:
+			return "/"
 		}
 	}
 }
 
-extension Card.ShipType {
+extension Ship {
+	
 	var characterCode: String {
-		switch self {
+		switch type {
 		case .modifiedYT1300:
 			return "m"
 		case .starViper:

@@ -17,7 +17,6 @@ class CardCollectionViewCell: UICollectionViewCell {
 	var card: Card? {
 		didSet {
 			cardView.card = card
-			cardView.id = card?.defaultID
 		}
 	}
 	

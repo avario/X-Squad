@@ -42,7 +42,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			var targetAlpha: CGFloat = 1.0
 			var targetScale: CGFloat = 0.001
 			
-			if let matchingToCardView = toCardViews.first(where: { $0.id == fromCardView.id }) {
+			if let matchingToCardView = toCardViews.first(where: { fromCardView.matches($0) }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
 				fromCardView.snap.snapPoint = cardPosition
@@ -91,7 +91,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			
 			if toVC is SquadViewController,
 				let matchedCardView = self.matchedToCardViews.first,
-				matchedCardView.card?.type == .upgrade,
+				matchedCardView.card is Upgrade,
 				let snapshot = matchedCardView.snapshotView(afterScreenUpdates: true) {
 				matchedCardView.superview?.addSubview(snapshot)
 				snapshot.center = matchedCardView.center

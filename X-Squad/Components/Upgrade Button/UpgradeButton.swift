@@ -11,13 +11,13 @@ import UIKit
 
 class UpgradeButton: UIButton {
 	
-	var upgradeType: Card.UpgradeType? {
+	var upgradeType: Upgrade.UpgradeType? {
 		didSet {
 			setTitle(upgradeType?.characterCode, for: .normal)
 		}
 	}
 	
-	var associatedUpgrade: Squad.Pilot.Upgrade?
+	var associatedUpgrade: Upgrade?
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)

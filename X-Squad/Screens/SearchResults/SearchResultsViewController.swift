@@ -34,7 +34,7 @@ extension SearchResultsViewController: UISearchResultsUpdating {
 			return
 		}
 		
-		searchResults = CardStore.searchResults(for: searchController.searchBar.text!)
+		searchResults = CardSearch.searchResults(for: searchController.searchBar.text!)
 		collectionView.reloadData()
 	}
 }

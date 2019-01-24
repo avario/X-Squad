@@ -92,7 +92,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	}
 	
 	open func cardViewController(for card: Card) -> CardViewController {
-		return CardViewController(card: card, id: id(for: card))
+		return CardViewController(card: card, member: nil)
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -123,10 +123,6 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		return sectionHeader
 	}
 	
-	open func id(for card: Card) -> String {
-		return card.defaultID
-	}
-	
 	open func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
 		return nil
 	}
@@ -146,16 +142,9 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 
 extension CardsViewController: CardCollectionViewLayoutDelegate {
 	
-	func collectionView(_ collectionView: UICollectionView, orientationForCardAtIndexPath indexPath: IndexPath) -> CardCollectionViewLayout.CardOrientation {
-		
+	func collectionView(_ collectionView: UICollectionView, orientationForCardAtIndexPath indexPath: IndexPath) -> CardOrientation {
 		let card = cardSections[indexPath.section].cards[indexPath.row]
-		
-		switch card.type {
-		case .pilot:
-			return .portrait
-		case .upgrade:
-			return .landscape
-		}
+		return card.orientation
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, shouldShowHeaderFor section: Int) -> Bool {

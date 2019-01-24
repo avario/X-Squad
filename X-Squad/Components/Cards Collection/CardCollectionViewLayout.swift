@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol CardCollectionViewLayoutDelegate: class {
-	func collectionView(_ collectionView: UICollectionView, orientationForCardAtIndexPath indexPath: IndexPath) -> CardCollectionViewLayout.CardOrientation
+	func collectionView(_ collectionView: UICollectionView, orientationForCardAtIndexPath indexPath: IndexPath) -> CardOrientation
 	func collectionView(_ collectionView: UICollectionView, shouldShowHeaderFor section: Int) -> Bool
 }
 
@@ -23,11 +23,6 @@ class CardCollectionViewLayout: UICollectionViewLayout {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
-	}
-	
-	enum CardOrientation {
-		case portrait
-		case landscape
 	}
 	
 	weak var delegate: CardCollectionViewLayoutDelegate!

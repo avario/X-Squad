@@ -16,14 +16,14 @@ class FactionCell: UITableViewCell {
 	let iconLabel = UILabel()
 	let nameLabel = UILabel()
 	
-	var faction: Card.Faction? {
+	var faction: Faction? {
 		didSet {
 			guard let faction = faction else {
 				return
 			}
 			
 			iconLabel.text = faction.characterCode
-			nameLabel.text = faction.name
+			nameLabel.text = faction.rawValue
 		}
 	}
 	
@@ -61,21 +61,4 @@ class FactionCell: UITableViewCell {
 		fatalError()
 	}
 	
-}
-
-extension Card.Faction {
-	var name: String {
-		switch self {
-		case .resistance:
-			return "Resistance"
-		case .rebelAlliance:
-			return "Rebel Alliance"
-		case .galacticEmpire:
-			return "Galactic Empire"
-		case .firstOrder:
-			return "First Order"
-		case .scumAndVillainy:
-			return "Scum and Villainy"
-		}
-	}
 }

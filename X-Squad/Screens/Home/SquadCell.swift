@@ -23,11 +23,11 @@ class SquadCell: UITableViewCell {
 			}
 			
 			iconLabel.text = squad.faction.characterCode
-			updatePilotViews()
+			updateMemberViews()
 			updateCost()
 			
-			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidAddPilotToSquad, object: squad)
-			NotificationCenter.default.addObserver(self, selector: #selector(updatePilotViews), name: .squadStoreDidRemovePilotFromSquad, object: squad)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidAddMemberToSquad, object: squad)
+			NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidRemoveMemberFromSquad, object: squad)
 			NotificationCenter.default.addObserver(self, selector: #selector(updateCost), name: .squadStoreDidUpdateSquad, object: squad)
 		}
 	}
@@ -96,7 +96,7 @@ class SquadCell: UITableViewCell {
 	}
 	
 	func updateEmptyLabel() {
-		if let squad = squad, squad.pilots.isEmpty, emptyLabel == nil {
+		if let squad = squad, squad.members.isEmpty, emptyLabel == nil {
 			emptyLabel = UILabel()
 			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
 			emptyLabel?.textAlignment = .center
@@ -116,37 +116,37 @@ class SquadCell: UITableViewCell {
 		}
 	}
 	
-	var pilotViews: [PilotView] = []
+	var memberViews: [MemberView] = []
 	
-	@objc func updatePilotViews() {
+	@objc func updateMemberViews() {
 		guard let squad = squad else {
 			return
 		}
 		
 		updateEmptyLabel()
 		
-		func pilotView(for pilot: Squad.Pilot) -> PilotView {
-			if let existingPilotView = pilotViews.first(where: { $0.pilot.uuid == pilot.uuid }) {
-				return existingPilotView
+		func memberView(for member: Squad.Member) -> MemberView {
+			if let existingMemberView = memberViews.first(where: { $0.member.uuid == member.uuid }) {
+				return existingMemberView
 			} else {
-				let squadPilotView = PilotView(pilot: pilot, height: SquadCell.rowHeight, isEditing: false)
-				pilotViews.append(squadPilotView)
+				let squadMemberView = MemberView(member: member, height: SquadCell.rowHeight, isEditing: false)
+				memberViews.append(squadMemberView)
 				
-				return squadPilotView
+				return squadMemberView
 			}
 		}
 		
-		// Remove any pilots that are no longer in the squad
-		for pilotView in pilotViews {
-			if !squad.pilots.contains(where: { $0.uuid == pilotView.pilot.uuid }) {
-				pilotView.removeFromSuperview()
+		// Remove any members that are no longer in the squad
+		for memberView in memberViews {
+			if !squad.members.contains(where: { $0.uuid == memberView.member.uuid }) {
+				memberView.removeFromSuperview()
 			}
 		}
-		pilotViews = pilotViews.filter({ $0.superview != nil })
+		memberViews = memberViews.filter({ $0.superview != nil })
 		
-		for (index, pilot) in squad.pilots.enumerated() {
-			let squadPilotView = pilotView(for: pilot)
-			stackView.insertArrangedSubview(squadPilotView, at: index)
+		for (index, member) in squad.members.enumerated() {
+			let squadMemberView = memberView(for: member)
+			stackView.insertArrangedSubview(squadMemberView, at: index)
 		}
 	}
 	

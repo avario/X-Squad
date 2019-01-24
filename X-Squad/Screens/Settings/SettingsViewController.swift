@@ -13,7 +13,6 @@ import MessageUI
 class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 	
 	enum Section: Int, CaseIterable {
-		case updateCards
 		case downloadImages
 		case developer
 	}
@@ -55,7 +54,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch Section(rawValue: section)! {
-		case .updateCards, .downloadImages:
+		case .downloadImages:
 			return 1
 		case .developer:
 			return DeveloperCell.allCases.count
@@ -67,8 +66,6 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		settingCell.accessoryType = .none
 		
 		switch Section(rawValue: indexPath.section)! {
-		case .updateCards:
-			settingCell.textLabel?.text = "Update Card Database"
 		case .downloadImages:
 			settingCell.textLabel?.text = "Download All Card Images"
 		case .developer:
@@ -89,8 +86,6 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch Section(rawValue: section)! {
-		case .updateCards:
-			return "Update all cards to the latest data available from FFG."
 		case .downloadImages:
 			return "Download all card images so that they can be viewed offline. This may use up to 100MB of data."
 		case .developer:
@@ -100,16 +95,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		switch Section(rawValue: indexPath.section)! {
-		case .updateCards:
-			let updateCardsViewController = UpdateCardsViewController()
-			
-			let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-			navigationController.viewControllers = [updateCardsViewController]
-			present(navigationController, animated: true, completion: nil)
-			
-			updateCardsViewController.update(dismissOnCompletion: true)
-			
+		switch Section(rawValue: indexPath.section)! {			
 		case .downloadImages:
 			let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
 			navigationController.viewControllers = [ImageDownloadViewController()]

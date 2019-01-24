@@ -1,14 +1,28 @@
 //
-//  CardStoreSearch.swift
+//  CardSearch.swift
 //  X-Squad
 //
-//  Created by Avario on 03/01/2019.
+//  Created by Avario on 23/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
 
 import Foundation
 
-extension CardStore {
+class CardSearch {
+	
+	private static let searchIndices = createSearchIndices()
+	
+	public static func createSearchIndices() -> [SearchIndex] {
+		let pilotIndices = DataStore.ships.map({ ship -> [SearchIndex] in
+			return ship.pilots.map({ pilot in
+				return SearchIndex(ship: ship, pilot: pilot)
+			})
+		}).flatMap({ $0 })
+		
+		let upgradeIndices = DataStore.upgrades.map(SearchIndex.init(upgrade:))
+		
+		return pilotIndices + upgradeIndices
+	}
 	
 	static func searchResults(for term: String) -> [Card] {
 		let validSearchTerm = term
@@ -23,24 +37,18 @@ extension CardStore {
 		
 		var results: [Card] = []
 		
-		for index in searchIndices {
+		searchIndexLoop: for index in searchIndices {
 			for titleTerm in index.titleTerms {
 				if titleTerm.hasPrefix(validSearchTerm) {
-					results.append(index.card)
-					break
+					results.insert(index.card, at: 0)
+					continue searchIndexLoop
 				}
 			}
-		}
-		
-		for index in searchIndices {
-			guard results.firstIndex(of: index.card) == nil else {
-				continue
-			}
 			
-			for typeTerm in index.typeTerms {
-				if typeTerm.hasPrefix(validSearchTerm) {
+			for additionalTerm in index.additionalTerms {
+				if additionalTerm.hasPrefix(validSearchTerm) {
 					results.append(index.card)
-					break
+					continue searchIndexLoop
 				}
 			}
 		}
@@ -51,7 +59,7 @@ extension CardStore {
 	struct SearchIndex {
 		let card: Card
 		let titleTerms: [String]
-		let typeTerms: [String]
+		let additionalTerms: [String]
 		
 		static let invalidSearchCharacters: CharacterSet = {
 			var characterSet = CharacterSet.alphanumerics
@@ -59,26 +67,24 @@ extension CardStore {
 			return characterSet.inverted
 		}()
 		
-		init(card: Card) {
+		init(ship: Ship, pilot: Pilot) {
+			self.init(card: pilot, additionalTerms: ship.searchTags)
+		}
+		
+		init(upgrade: Upgrade) {
+			self.init(card: upgrade, additionalTerms: upgrade.searchTags)
+		}
+		
+		private init(card: Card, additionalTerms: [String]) {
 			self.card = card
-			
-			let invalidWords = [
-				"undefined",
-				"<italic>",
-				"</italic>"]
 			
 			var titleTerms: [String] = []
 			
-			var title = card.name
-				
-			for invalidWord in invalidWords {
-				title = title.replacingOccurrences(of: invalidWord, with: "")
-			}
-				
-			title = title.components(separatedBy: SearchIndex.invalidSearchCharacters)
+			let title = card.name
+				.components(separatedBy: SearchIndex.invalidSearchCharacters)
 				.joined()
 				.lowercased()
-						
+			
 			titleTerms.append(title)
 			
 			var titleComponents = title.components(separatedBy: CharacterSet.whitespaces)
@@ -91,80 +97,61 @@ extension CardStore {
 			}
 			
 			self.titleTerms = titleTerms
-			
-			var typeTerms: [String] = []
-			
-			switch card.type {
-			case .pilot:
-				guard let shipType = card.shipType else {
-					break
-				}
-				typeTerms.append(contentsOf: shipType.searchTags)
-				
-			case .upgrade:
-				guard let upgradeType = card.upgradeTypes.first else {
-					break
-				}
-				typeTerms.append(contentsOf: upgradeType.searchTags)
+			self.additionalTerms = additionalTerms
+		}
+	}
+	
+}
+
+extension Upgrade {
+	
+	var searchTags: [String] {
+		return sides.map({ side -> [String] in
+			switch side.type {
+			case .astromech:
+				return ["astromech"]
+			case .talent:
+				return ["talent"]
+			case .sensor:
+				return ["sensor"]
+			case .cannon:
+				return ["cannon"]
+			case .turret:
+				return ["turret"]
+			case .torpedo:
+				return ["torpedo"]
+			case .missile:
+				return ["missile"]
+			case .crew:
+				return ["crew"]
+			case .gunner:
+				return ["gunner"]
+			case .illicit:
+				return ["illicit"]
+			case .modification:
+				return ["modification"]
+			case .title:
+				return ["title"]
+			case .device:
+				return ["device"]
+			case .force:
+				return ["force"]
+			case .configuration:
+				return ["configuration"]
+			case .tech:
+				return ["tech"]
+			case .tacticalRelay:
+				return ["tactical relay"]
 			}
-			
-			self.typeTerms = typeTerms
-		}
-	}
-	
-	public static func createSearchIndices(for cards: [Card]) -> [SearchIndex] {
-		return cards.map(SearchIndex.init)
+		}).flatMap({ $0 })
 	}
 	
 }
 
-extension Card.UpgradeType {
+extension Ship {
 	
 	var searchTags: [String] {
-		switch self {
-		case .astromech:
-			return ["astromech"]
-		case .talent:
-			return ["talent"]
-		case .sensor:
-			return ["sensor"]
-		case .cannon:
-			return ["cannon"]
-		case .turret:
-			return ["turret"]
-		case .torpedo:
-			return ["torpedo"]
-		case .missile:
-			return ["missile"]
-		case .crew:
-			return ["crew"]
-		case .gunner:
-			return ["gunner"]
-		case .illicit:
-			return ["illicit"]
-		case .modification:
-			return ["modification"]
-		case .title:
-			return ["title"]
-		case .device:
-			return ["device"]
-		case .force:
-			return ["force"]
-		case .configuration:
-			return ["configuration"]
-		case .tech:
-			return ["tech"]
-		case .special:
-			return []
-		}
-	}
-	
-}
-
-extension Card.ShipType {
-	
-	var searchTags: [String] {
-		switch self {
+		switch self.type {
 		case .aggressor:
 			return ["aggressor"]
 		case .modifiedYT1300:

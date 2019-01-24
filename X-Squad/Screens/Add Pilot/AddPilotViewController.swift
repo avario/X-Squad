@@ -24,47 +24,29 @@ class AddPilotViewController: CardsViewController {
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
 		
-		var pilots: [Card.ShipType: [Card]] = [:]
-		
-		for card in CardStore.cards {
-			if card.type == .pilot,
-				card.faction == squad.faction,
-				let shipType = card.shipType {
-				
-				if pilots[shipType] != nil {
-					pilots[shipType]!.append(card)
-				} else {
-					pilots[shipType] = [card]
-				}
+		let ships = DataStore.ships.filter({ $0.faction == squad.faction }).sorted {
+			if $0.pilots.count == $1.pilots.count {
+				return $0.name < $1.name
+			} else {
+				return $0.pilots.count > $1.pilots.count
 			}
 		}
 		
-		for (shipType, pilots) in pilots {
-			
-			// Sort the pilots by pilot skill, then by cost, then by name
-			let sortedPilots = pilots.sorted(by: Squad.rankPilots)
+		for ship in ships {
+			let sortedPilots = ship.pilots.sorted(by: Squad.rankPilots)
 			
 			cardSections.append(
 				CardSection(
 					header: .header(
 						CardSection.HeaderInfo(
 							title: "",//shipType.title,
-							icon: shipType.characterCode,
+							icon: ship.characterCode,
 							iconFont: UIFont.xWingShip(48)
 						)
 					),
 					cards: sortedPilots
 				)
 			)
-		}
-		
-		// Sort the ship sections by the number of cards in them, then alphabetically
-		cardSections = cardSections.sorted {
-			if $0.cards.count == $1.cards.count {
-				return $0.cards.first!.shipType!.title < $1.cards.first!.shipType!.title
-			} else {
-				return $0.cards.count > $1.cards.count
-			}
 		}
 	}
 	
@@ -89,9 +71,10 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		let pilot = squad.addPilot(for: cardViewController.card)
+		let pilot = cardViewController.card as! Pilot
+		let member = squad.addMember(for: pilot)
 		
-		cardViewController.cardView.id = pilot.uuid.uuidString
+		cardViewController.cardView.member = member
 		
 		let window = UIApplication.shared.keyWindow!
 		let snapshot = cardViewController.view.snapshotView(afterScreenUpdates: false)!
@@ -108,21 +91,24 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		return card.isUnique && squad.pilots.contains(where: {
-			$0.card.name == card.name ||
-				$0.upgrades.contains(where: {
-					$0.card.name == card.name }) }) ? .unavailable : .default
+		switch squad.validity(of: card as! Pilot) {
+		case .valid:
+			return .default
+		case .limitExceeded:
+			return .unavailable
+		}
 	}
 	
 	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
-		guard let card = cardView.card, status(for: card) == .default else {
+		let pilot = cardView.card as! Pilot
+		guard squad.validity(of: pilot) == .valid else {
 			return
 		}
 		
 		cardView.touchesCancelled(touches, with: event)
 		
-		let pilot = squad.addPilot(for: card)
-		cardView.id = pilot.uuid.uuidString
+		let member = squad.addMember(for: pilot)
+		cardView.member = member
 		
 		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
 		
@@ -150,121 +136,6 @@ extension AddPilotViewController: UIGestureRecognizerDelegate {
 		return true
 	}
 	
-}
-
-extension Card.ShipType {
-	var title: String {
-		switch self {
-		case .modifiedYT1300:
-			return "Modified YT1300"
-		case .starViper:
-			return "Star Viper"
-		case .scurrgH6Bomber:
-			return "Scurgg H6 Bomber"
-		case .YT2400:
-			return "YT2400"
-		case .auzituckGunship:
-			return "Auzituck Gunship"
-		case .kihraxzFighter:
-			return "Kihraxz Fighter"
-		case .sheathipede:
-			return "Sheathipede"
-		case .quadrijetSpacetug:
-			return "Duadrijet"
-		case .firespray:
-			return "Firespray"
-		case .TIElnFighter:
-			return "TIE/ln Fighter"
-		case .BTLA4Ywing:
-			return "BTLA4 Y-wing"
-		case .TIEAdvancedx1:
-			return "TIE Advanced x1"
-		case .alphaclassStarWing:
-			return "Alpha-class Star Wing"
-		case .UT60DUwing:
-			return "UT60 U-wing"
-		case .TIEskStriker:
-			return "TIE/sk Striker"
-		case .ASF01Bwing:
-			return "ASF01 B-wing"
-		case .TIEDDefender:
-			return "TIE/d Defender"
-		case .TIEsaBomber:
-			return "TIE/sa Bomber"
-		case .TIEcsPunisher:
-			return "TIE/cs Punisher"
-		case .aggressor:
-			return "Aggressor"
-		case .G1AStarfighter:
-			return "G1A Starfighter"
-		case .VCX100:
-			return "VCX100"
-		case .YV666:
-			return "YV666"
-		case .TIEAdvancedv1:
-			return "TIE Advanced v1"
-		case .lambdaShuttle:
-			return "Lambda Shuttle"
-		case .TIEphPhantom:
-			return "TIE/ph Phantom"
-		case .VT49Decimator:
-			return "VT49 Decimator"
-		case .TIEagAggressor:
-			return "TIE/ag Aggressor"
-		case .BTLS8Kwing:
-			return "BTLS8 K-wing"
-		case .ARC170Starfighter:
-			return "ARC170 Starfighter"
-		case .attackShuttle:
-			return "Attack Shuttle"
-		case .T65Xwing:
-			return "T-65 X-wing"
-		case .HWK290:
-			return "HWK290"
-		case .RZ1Awing:
-			return "RZ1 A-wing"
-		case .fangFighter:
-			return "Fang Fighter"
-		case .Z95AF4Headhunter:
-			return "Z95AF4 Headhunter"
-		case .M12LKimogila:
-			return "M12L Kimogila"
-		case .Ewing:
-			return "E-wing"
-		case .TIEInterceptor:
-			return "TIE Interceptor"
-		case .lancerPursuitCraft:
-			return "Lancer Pursuit Craft"
-		case .TIEReaper:
-			return "TIE Reaper"
-		case .M3AInterceptor:
-			return "M3A Interceptor"
-		case .jumpMaster5000:
-			return "JumpMaster 5000"
-		case .customizedYT1300:
-			return "Customized YT1300"
-		case .escapeCraft:
-			return "Escape Craft"
-		case .TIEfoFighter:
-			return "TIE/fo Fighter"
-		case .TIEsfFighter:
-			return "TIE/sf Fighter"
-		case .upsilonclassCommandShuttle:
-			return "Upsilon-class Command Shuttle"
-		case .TIEvnSilencer:
-			return "TIE/vn Silencer"
-		case .T70Xwing:
-			return "T-70 X-wing"
-		case .RZ2Awing:
-			return "RZ2 A-wing"
-		case .MG100StarFortress:
-			return "MG100 Star Fortress"
-		case .modifiedTIEln:
-			return "Modified TIE/ln"
-		case .scavengedYT1300:
-			return "Scavenged YT1300"
-		}
-	}
 }
 
 extension AddPilotViewController: UIViewControllerTransitioningDelegate {

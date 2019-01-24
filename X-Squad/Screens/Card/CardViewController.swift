@@ -17,8 +17,7 @@ protocol CardViewControllerDelegate: AnyObject {
 class CardViewController: UIViewController {
 	
 	let card: Card
-	let cardID: String
-	let pilot: Squad.Pilot?
+	let member: Squad.Member?
 	let cardView = CardView()
 	let costView = CostView()
 	let upgradeBar = UIStackView()
@@ -30,10 +29,9 @@ class CardViewController: UIViewController {
 	
 	let squadButton = SquadButton()
 	
-	init(card: Card, id: String, pilot: Squad.Pilot? = nil) {
+	init(card: Card, member: Squad.Member? = nil) {
 		self.card = card
-		self.cardID = id
-		self.pilot = pilot
+		self.member = member
 		
 		super.init(nibName: nil, bundle: nil)
 		
@@ -61,10 +59,8 @@ class CardViewController: UIViewController {
 		cardView.center = CGPoint(x: view.center.x, y: view.center.y - 20)
 		
 		cardView.card = card
-		cardView.id = cardID
+		cardView.member = member
 		cardView.snap.snapPoint = cardView.center
-		
-//		animator.setValue(true, forKey: "debugEnabled")
 		
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCard(recognizer:)))
 		panGesture.maximumNumberOfTouches = 1
@@ -93,12 +89,6 @@ class CardViewController: UIViewController {
 		view.insertSubview(costView, belowSubview: cardView)
 		costView.translatesAutoresizingMaskIntoConstraints = false
 		
-		if let pilot = pilot {
-			costView.cost = String(card.pointCost(for: pilot))
-		} else {
-			costView.cost = card.cost
-		}
-		
 		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
 		costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 		
@@ -110,12 +100,14 @@ class CardViewController: UIViewController {
 		upgradeBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
 		upgradeBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
 		
-		for upgrade in card.availableUpgrades {
-			let upgradeButton = UpgradeButton()
-			upgradeButton.isUserInteractionEnabled = false
-			upgradeButton.upgradeType = upgrade
-			
-			upgradeBar.addArrangedSubview(upgradeButton)
+		if let pilot = card as? Pilot {
+			for upgrade in pilot.slots {
+				let upgradeButton = UpgradeButton()
+				upgradeButton.isUserInteractionEnabled = false
+				upgradeButton.upgradeType = upgrade
+				
+				upgradeBar.addArrangedSubview(upgradeButton)
+			}
 		}
 	}
 	

@@ -45,15 +45,15 @@ class ImageDownloadViewController: DownloadViewController {
 	}
 	
 	func downloadCardImage(for index: Int) {
-		guard CardStore.cards.count > index else {
+		guard DataStore.allCards.count > index else {
 			finishDownload()
 			return
 		}
 		
-		let card = CardStore.cards[index]
-		label.text = "Downloading card \(index + 1) of \(CardStore.cards.count)"
+		let card = DataStore.allCards[index]
+		label.text = "Downloading card \(index + 1) of \(DataStore.allCards.count)"
 		
-		currentDownloadTask = KingfisherManager.shared.retrieveImage(with: card.cardImageURL) { result in
+		currentDownloadTask = KingfisherManager.shared.retrieveImage(with: card.image) { result in
 			DispatchQueue.main.async {
 				switch result {
 				case .success:
@@ -61,7 +61,7 @@ class ImageDownloadViewController: DownloadViewController {
 						return
 					}
 					
-					self.progressView.progress = Float(index + 1)/Float(CardStore.cards.count)
+					self.progressView.progress = Float(index + 1)/Float(DataStore.allCards.count)
 					self.downloadCardImage(for: index + 1)
 					
 				case .failure(let error):

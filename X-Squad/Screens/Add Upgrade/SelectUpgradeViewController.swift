@@ -12,21 +12,17 @@ import UIKit
 class SelectUpgradeViewController: CardsViewController {
 	
 	let squad: Squad
-	let pilot: Squad.Pilot
-	let currentUpgrade: Squad.Pilot.Upgrade?
-	let upgradeType: Card.UpgradeType
+	let member: Squad.Member
+	let currentUpgrade: Upgrade?
+	let upgradeType: Upgrade.UpgradeType
 	
 	var pullToDismissController: PullToDismissController?
 	
-	let transitionPoint: CGPoint
-	
-	init(squad: Squad, pilot: Squad.Pilot, currentUpgrade: Squad.Pilot.Upgrade?, upgradeType: Card.UpgradeType, upgradeButton: UpgradeButton) {
+	init(squad: Squad, member: Squad.Member, currentUpgrade: Upgrade?, upgradeType: Upgrade.UpgradeType) {
 		self.squad = squad
-		self.pilot = pilot
+		self.member = member
 		self.currentUpgrade = currentUpgrade
 		self.upgradeType = upgradeType
-		
-		self.transitionPoint = upgradeButton.superview!.convert(upgradeButton.center, to: nil)
 		
 		super.init(numberOfColumns: 3)
 		
@@ -35,26 +31,26 @@ class SelectUpgradeViewController: CardsViewController {
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
 		
-		var upgrades: [Card] = []
-		var restrictedUpgrades: [Card] = []
-		for card in CardStore.cards {
-			guard card.type == .upgrade,
-				card.upgradeTypes.contains(upgradeType) else {
+		var upgrades: [Upgrade] = []
+		var restrictedUpgrades: [Upgrade] = []
+		
+		for upgrade in DataStore.upgrades {
+			guard upgrade.primarySide.slots.contains(upgradeType) else {
 					continue
 			}
 			
-			if validity(of: card) == .restrictionsNotMet {
-				restrictedUpgrades.append(card)
+			if validity(of: upgrade) == .restrictionsNotMet {
+				restrictedUpgrades.append(upgrade)
 			} else {
-				upgrades.append(card)
+				upgrades.append(upgrade)
 			}
 		}
 		
-		let upgradeSort: (Card, Card) -> Bool = {
-			if $0.pointCost == $1.pointCost {
+		let upgradeSort: (Upgrade, Upgrade) -> Bool = {
+			if $0.pointCost(for: member) == $1.pointCost(for: member) {
 				return $0.name < $1.name
 			}
-			return $0.pointCost > $1.pointCost
+			return $0.pointCost(for: member) > $1.pointCost(for: member)
 		}
 		
 		cardSections.append(
@@ -103,35 +99,29 @@ class SelectUpgradeViewController: CardsViewController {
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cardCell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.identifier, for: indexPath) as! CardCollectionViewCell
 
-		let card = cardSections[indexPath.section].cards[indexPath.row]
-		cardCell.card = card
-		cardCell.status = status(for: card)
+		let upgrade = cardSections[indexPath.section].cards[indexPath.row] as! Upgrade
+		cardCell.card = upgrade
+		cardCell.status = status(for: upgrade)
 		cardCell.cardView.delegate = self
 
-		if card == currentUpgrade?.card {
-			cardCell.cardView.id = currentUpgrade?.uuid.uuidString
+		if upgrade == currentUpgrade {
+			cardCell.cardView.member = member
 		}
 
 		return cardCell
 	}
 	
 	override func cardViewController(for card: Card) -> CardViewController {
-		return CardViewController(card: card, id: id(for: card), pilot: pilot)
-	}
-	
-	override func id(for card: Card) -> String {
-		if let currentUpgrade = currentUpgrade, card == currentUpgrade.card {
-			return currentUpgrade.uuid.uuidString
-		}
-		return super.id(for: card)
+		let member = (card as! Upgrade) == currentUpgrade ? self.member : nil
+		return CardViewController(card: card, member: member)
 	}
 	
 	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		if cardViewController.card == currentUpgrade?.card {
+		if cardViewController.card as? Upgrade == currentUpgrade {
 			return .remove
 		}
 		
-		if validity(of: cardViewController.card) == .valid {
+		if validity(of: cardViewController.card as! Upgrade) == .valid {
 			return .add
 		}
 		
@@ -140,13 +130,12 @@ class SelectUpgradeViewController: CardsViewController {
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
 		if let currentUpgrade = currentUpgrade {
-			pilot.remove(upgrade: currentUpgrade)
+			member.remove(upgrade: currentUpgrade)
 		}
 		
-		if cardViewController.card != currentUpgrade?.card {
-			let upgrade = pilot.addUpgrade(for: cardViewController.card)
-			
-			cardViewController.cardView.id = upgrade.uuid.uuidString
+		if cardViewController.card as? Upgrade != currentUpgrade {
+			member.addUpgrade(cardViewController.card as! Upgrade)
+			cardViewController.cardView.member = member
 		}
 		
 		let window = UIApplication.shared.keyWindow!
@@ -164,12 +153,16 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		guard validity(of: card) == .valid else {
+		guard let upgrade = card as? Upgrade else {
+			fatalError()
+		}
+		
+		guard validity(of: upgrade) == .valid else {
 			return .unavailable
 		}
 
 		if let currentUpgrade = currentUpgrade,
-			card == currentUpgrade.card {
+			upgrade == currentUpgrade {
 			return .selected
 		}
 
@@ -177,19 +170,19 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
-		guard let card = cardView.card, validity(of: card) == .valid else {
+		guard let upgrade = cardView.card as? Upgrade, validity(of: upgrade) == .valid else {
 			return
 		}
 		
 		cardView.touchesCancelled(touches, with: event)
 		
-		if card != currentUpgrade?.card {
+		if upgrade != currentUpgrade {
 			if let currentUpgrade = currentUpgrade {
-				pilot.remove(upgrade: currentUpgrade)
+				member.remove(upgrade: currentUpgrade)
 			}
 			
-			let upgrade = pilot.addUpgrade(for: card)
-			cardView.id = upgrade.uuid.uuidString
+			member.addUpgrade(upgrade)
+			cardView.member = member
 		}
 		
 		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
@@ -197,159 +190,9 @@ class SelectUpgradeViewController: CardsViewController {
 		dismiss(animated: true, completion: nil)
 	}
 	
-	func validity(of card: Card) -> Card.PilotValidity {
-		return card.validity(in: squad, for: pilot, replacing: currentUpgrade)
+	func validity(of upgrade: Upgrade) -> Squad.Member.UpgradeValidity {
+		return member.validity(of: upgrade, replacing: currentUpgrade)
 	}
-}
-
-extension Card {
-	
-	enum PilotValidity {
-		case valid
-		case alreadyEquipped
-		case slotsNotAvailable
-		case uniqueInUse
-		case restrictionsNotMet
-	}
-	
-	func validity(in squad: Squad, for pilot: Squad.Pilot, replacing currentUpgrade: Squad.Pilot.Upgrade?) -> PilotValidity {
-		// Ensure the any restrictions of the upgrade are met
-		for restrictionSet in restrictions {
-			var passedSet = false
-			
-			for restriction in restrictionSet {
-				switch restriction.type {
-				case .faction:
-					if let factionID = restriction.parameters.id,
-						squad.faction.rawValue == factionID {
-						passedSet = true
-					}
-					
-				case .action:
-					if let actionID = restriction.parameters.id,
-						let action = pilot.allActions.first(where: { $0.baseType.rawValue == actionID }) {
-						if let sideEffect = restriction.parameters.sideEffectName {
-							switch sideEffect {
-							case .stress:
-								if action.baseSideEffect == .stress {
-									passedSet = true
-								}
-							case .none:
-								if action.baseSideEffect == nil {
-									passedSet = true
-								}
-							}
-						} else {
-							passedSet = true
-						}
-					}
-					
-				case .shipType:
-					if let shipID = restriction.parameters.id,
-						pilot.card.shipType?.rawValue == shipID {
-						passedSet = true
-					}
-					
-				case .shipSize:
-					if let shipSize = restriction.parameters.shipSizeName {
-						switch shipSize {
-						case .small:
-							if pilot.card.shipSize == .small {
-								passedSet = true
-							}
-						case .medium:
-							if pilot.card.shipSize == .medium {
-								passedSet = true
-							}
-						case .large:
-							if pilot.card.shipSize == .large {
-								passedSet = true
-							}
-						}
-					}
-					
-				case .cardIncluded:
-					if let cardID = restriction.parameters.id {
-						for pilot in squad.pilots {
-							if pilot.card.id == cardID ||
-								pilot.upgrades.contains(where: { $0.card.id == cardID }) {
-								passedSet = true
-								break
-							}
-						}
-					}
-					
-				case .arc:
-					if let arcID = restriction.parameters.id,
-						pilot.card.statistics.contains(where: { $0.type.rawValue == arcID }) {
-						passedSet = true
-					}
-					
-				case .forceSide:
-					if let forceSide = restriction.parameters.forceSideName {
-						switch forceSide {
-						case .light:
-							if pilot.card.forceSide == .light {
-								passedSet = true
-							}
-						case .dark:
-							if pilot.card.forceSide == .dark || pilot.upgrades.contains(where: { $0.card.id == 361 /* Maul */ }) {
-								passedSet = true
-							}
-						}
-					}
-				}
-				
-				if passedSet { break }
-			}
-			
-			guard passedSet else { return .restrictionsNotMet }
-		}
-		
-		// Ensure the the pilot has the correct upgrade slots available for the upgrade
-		var availableUpgradeSlots = pilot.upgrades.reduce(pilot.allUpgradeSlots) { availableUpgrades, upgrade in
-			if upgrade.uuid == currentUpgrade?.uuid {
-				return availableUpgrades
-			}
-			
-			var availableUpgrades = availableUpgrades
-			for upgradeType in upgrade.card.upgradeTypes {
-				if let index = availableUpgrades.index(of: upgradeType) {
-					availableUpgrades.remove(at: index)
-				}
-			}
-			return availableUpgrades
-		}
-		
-		for upgradeType in upgradeTypes {
-			guard let index = availableUpgradeSlots.index(of: upgradeType) else {
-				return .slotsNotAvailable
-			}
-			availableUpgradeSlots.remove(at: index)
-		}
-		
-		// Unique cards can only be in a squad once
-		if isUnique {
-			for pilot in squad.pilots {
-				if pilot.card.name == name {
-					return .uniqueInUse
-				}
-				if let uniqueUpgrade = pilot.upgrades.first(where: { $0.card.name == name }), uniqueUpgrade.uuid != currentUpgrade?.uuid {
-					return .uniqueInUse
-				}
-			}
-		}
-		
-		// A pilot can never have two of the same upgrade
-		for upgrade in pilot.upgrades {
-			if upgrade.card == self, upgrade.uuid != currentUpgrade?.uuid {
-				return .alreadyEquipped
-			}
-		}
-		
-		return .valid
-	}
-	
 }
 
 extension SelectUpgradeViewController: UIViewControllerTransitioningDelegate {

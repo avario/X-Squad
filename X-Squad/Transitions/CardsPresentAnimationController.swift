@@ -47,7 +47,7 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 			toCardView.snap.snapPoint = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
 			let targetAlpha = toCardView.alpha
 			
-			if let matchingFromCardView = fromCardViews.first(where: { $0.id == toCardView.id }) {
+			if let matchingFromCardView = fromCardViews.first(where: { toCardView.matches($0) }) {
 				
 				let fromCardPosition = matchingFromCardView.superview!.convert(matchingFromCardView.center, to: fromVC.view)
 				toCardView.center = toVC.view.convert(fromCardPosition, to: toCardView.superview)

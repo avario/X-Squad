@@ -31,15 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
 		
-		if CardStore.needsUpdate {
-			let updateCardsViewController = UpdateCardsViewController()
-			window?.rootViewController = updateCardsViewController
-			updateCardsViewController.update(dismissOnCompletion: false)
-		} else {
-			let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-			darkNavigation.viewControllers = [_HomeViewController()]
-			window?.rootViewController = darkNavigation
-		}
+		let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
+		darkNavigation.viewControllers = [_HomeViewController()]
+		window?.rootViewController = darkNavigation
 		
 		window?.makeKeyAndVisible()
 		
