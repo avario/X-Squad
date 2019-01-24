@@ -12,6 +12,7 @@ import UIKit
 class AcknowledgementsViewController: UITableViewController {
 	
 	enum Section: Int, CaseIterable {
+		case data
 		case font
 		case imageCache
 	}
@@ -47,6 +48,8 @@ class AcknowledgementsViewController: UITableViewController {
 		settingCell.accessoryType = .disclosureIndicator
 		
 		switch Section(rawValue: indexPath.section)! {
+		case .data:
+			settingCell.textLabel?.text = "X-Wing Data 2"
 		case .font:
 			settingCell.textLabel?.text = "X-Wing Miniatures Font"
 		case .imageCache:
@@ -58,6 +61,8 @@ class AcknowledgementsViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch Section(rawValue: section)! {
+		case .data:
+			return "Card Data"
 		case .font:
 			return "Icons"
 		case .imageCache:
@@ -67,8 +72,10 @@ class AcknowledgementsViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch Section(rawValue: section)! {
+		case .data:
+			return "X-Squad uses card data compiled by Guido Kessels, Philip Douglas, and many other contributors."
 		case .font:
-			return "X-Squad uses the X-Wing Miniatures Font by Hinny, armoredgear7, ScottKarch, and FedoraMark for excellent vector icons."
+			return "X-Squad uses the X-Wing Miniatures Font by Hinny, armoredgear7, ScottKarch, and FedoraMark."
 		case .imageCache:
 			return "X-Squad uses the Kingfisher library for image downloading and caching."
 		}
@@ -77,6 +84,8 @@ class AcknowledgementsViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let url: URL
 		switch Section(rawValue: indexPath.section)! {
+		case .data:
+			url = URL(string: "https://github.com/guidokessels/xwing-data2")!
 		case .font:
 			url = URL(string: "https://github.com/geordanr/xwing-miniatures-font")!
 		case .imageCache:
@@ -84,6 +93,7 @@ class AcknowledgementsViewController: UITableViewController {
 		}
 		
 		UIApplication.shared.open(url)
+		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 }

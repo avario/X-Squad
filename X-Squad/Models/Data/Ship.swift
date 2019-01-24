@@ -8,10 +8,12 @@
 
 import Foundation
 
+typealias XWS = String
+
 class Ship: Codable {
 	
 	let name: String
-	let xws: String
+	let xws: XWS
 	let ffg: Int?
 	let size: Size
 	let faction: Faction
@@ -44,7 +46,7 @@ class Ship: Codable {
 		}
 	}
 	
-	enum Size: String, Codable {
+	enum Size: String, CodingKey, Codable, CaseIterable {
 		case small = "Small"
 		case medium = "Medium"
 		case large = "Large"

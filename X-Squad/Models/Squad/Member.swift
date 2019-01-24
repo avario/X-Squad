@@ -23,72 +23,12 @@ extension Squad {
 			self.upgrades = []
 		}
 		
-		var squad: Squad? {
-			return SquadStore.squads.first(where: { $0.members.contains(self) })
+		var squad: Squad {
+			return SquadStore.squads.first(where: { $0.members.contains(self) })!
 		}
 		
 		var pointCost: Int {
-			return upgrades.reduce(pilot.cost, { $0 + $1.pointCost(for: self) })
-		}
-		
-		var upgradeSlots: [Upgrade.UpgradeType] {
-			var upgradeSlots = upgrades.reduce(pilot.slots, {
-				$1.sides.reduce($0, {
-					guard let grants = $1.grants else {
-						return $0
-					}
-					
-					return grants.reduce($0, {
-						switch $1.type {
-						case .slot(let slot, let amount):
-							switch amount {
-							case 1:
-								return $0 + [slot]
-							case -1:
-								var slots = $0
-								if let index = slots.firstIndex(of: slot) {
-									slots.remove(at: index)
-								}
-								return slots
-							default:
-								return $0
-							}
-						default:
-							return $0
-						}
-					})
-				})
-			})
-			
-			if pilot.shipAbility?.name == "Weapon Hardpoint" {
-				let hardpointUpgrades: [Upgrade.UpgradeType] = [.cannon, .torpedo, .missile]
-				if let equippedHardpointUpgrade = upgrades.first(where: { $0.sides.contains(where: { hardpointUpgrades.contains($0.type) })}) {
-					upgradeSlots.append(equippedHardpointUpgrade.primarySide.type)
-				} else {
-					upgradeSlots.append(contentsOf: hardpointUpgrades)
-				}
-			}
-			
-			return upgradeSlots
-		}
-		
-		var actions: [Action] {
-			return upgrades.reduce(ship.actions, {
-				$1.sides.reduce($0, {
-					guard let grants = $1.grants else {
-						return $0
-					}
-					
-					return grants.reduce($0, {
-						switch $1.type {
-						case .action(let action):
-							return $0 + [action]
-						default:
-							return $0
-						}
-					})
-				})
-			})
+			return upgrades.reduce(pilot.pointCost(), { $0 + $1.pointCost(for: self) })
 		}
 		
 		func addUpgrade(_ upgrade: Upgrade) {
@@ -96,7 +36,7 @@ extension Squad {
 			
 			removeInValidUpgrades()
 			
-			let upgradeSlots = self.upgradeSlots
+			let upgradeSlots = self.allSlots
 			
 			upgrades.sort { (lhs, rhs) -> Bool in
 				let lhsType = lhs.primarySide.type
@@ -162,143 +102,110 @@ extension Squad {
 		}
 		
 		func validity(of upgrade: Upgrade, replacing: Upgrade?) -> UpgradeValidity {
-			return .valid
-			
 			// Ensure the any restrictions of the upgrade are met
-//			for restrictionSet in restrictions {
-//				var passedSet = false
-//
-//				for restriction in restrictionSet {
-//					switch restriction.type {
-//					case .faction:
-//						if let factionID = restriction.parameters.id,
-//							squad.faction.rawValue == factionID {
-//							passedSet = true
-//						}
-//
-//					case .action:
-//						if let actionID = restriction.parameters.id,
-//							let action = pilot.allActions.first(where: { $0.baseType.rawValue == actionID }) {
-//							if let sideEffect = restriction.parameters.sideEffectName {
-//								switch sideEffect {
-//								case .stress:
-//									if action.baseSideEffect == .stress {
-//										passedSet = true
-//									}
-//								case .none:
-//									if action.baseSideEffect == nil {
-//										passedSet = true
-//									}
-//								}
-//							} else {
-//								passedSet = true
-//							}
-//						}
-//
-//					case .shipType:
-//						if let shipID = restriction.parameters.id,
-//							pilot.card.shipType?.rawValue == shipID {
-//							passedSet = true
-//						}
-//
-//					case .shipSize:
-//						if let shipSize = restriction.parameters.shipSizeName {
-//							switch shipSize {
-//							case .small:
-//								if pilot.card.shipSize == .small {
-//									passedSet = true
-//								}
-//							case .medium:
-//								if pilot.card.shipSize == .medium {
-//									passedSet = true
-//								}
-//							case .large:
-//								if pilot.card.shipSize == .large {
-//									passedSet = true
-//								}
-//							}
-//						}
-//
-//					case .cardIncluded:
-//						if let cardID = restriction.parameters.id {
-//							for pilot in squad.pilots {
-//								if pilot.card.id == cardID ||
-//									pilot.upgrades.contains(where: { $0.card.id == cardID }) {
-//									passedSet = true
-//									break
-//								}
-//							}
-//						}
-//
-//					case .arc:
-//						if let arcID = restriction.parameters.id,
-//							pilot.card.statistics.contains(where: { $0.type.rawValue == arcID }) {
-//							passedSet = true
-//						}
-//
-//					case .forceSide:
-//						if let forceSide = restriction.parameters.forceSideName {
-//							switch forceSide {
-//							case .light:
-//								if pilot.card.forceSide == .light {
-//									passedSet = true
-//								}
-//							case .dark:
-//								if pilot.card.forceSide == .dark || pilot.upgrades.contains(where: { $0.card.id == 361 /* Maul */ }) {
-//									passedSet = true
-//								}
-//							}
-//						}
-//					}
-//
-//					if passedSet { break }
-//				}
-//
-//				guard passedSet else { return .restrictionsNotMet }
-//			}
-//			
-//			// Ensure the the pilot has the correct upgrade slots available for the upgrade
-//			var availableUpgradeSlots = pilot.upgrades.reduce(pilot.allUpgradeSlots) { availableUpgrades, upgrade in
-//				if upgrade.uuid == currentUpgrade?.uuid {
-//					return availableUpgrades
-//				}
-//				
-//				var availableUpgrades = availableUpgrades
-//				for upgradeType in upgrade.card.upgradeTypes {
-//					if let index = availableUpgrades.index(of: upgradeType) {
-//						availableUpgrades.remove(at: index)
-//					}
-//				}
-//				return availableUpgrades
-//			}
-//			
-//			for upgradeType in upgradeTypes {
-//				guard let index = availableUpgradeSlots.index(of: upgradeType) else {
-//					return .slotsNotAvailable
-//				}
-//				availableUpgradeSlots.remove(at: index)
-//			}
-//			
-//			// Unique cards can only be in a squad once
-//			if isUnique {
-//				for pilot in squad.pilots {
-//					if pilot.card.name == name {
-//						return .uniqueInUse
-//					}
-//					if let uniqueUpgrade = pilot.upgrades.first(where: { $0.card.name == name }), uniqueUpgrade.uuid != currentUpgrade?.uuid {
-//						return .uniqueInUse
-//					}
-//				}
-//			}
-//			
-//			// A pilot can never have two of the same upgrade
-//			for upgrade in pilot.upgrades {
-//				if upgrade.card == self, upgrade.uuid != currentUpgrade?.uuid {
-//					return .alreadyEquipped
-//				}
-//			}
-//			
-//			return .valid
+			if let restrictionSets = upgrade.restrictions {
+				checkingRestrictionSets: for restrictionSet in restrictionSets {
+					for restriction in restrictionSet.restrictions {
+						switch restriction {
+						case .factions(let factions):
+							if factions.contains(squad.faction) {
+								continue checkingRestrictionSets
+							}
+							
+						case .action(let action):
+							if allActions.contains(where: {
+								$0.type == action.type &&
+									$0.difficulty == action.difficulty
+							}) {
+								continue checkingRestrictionSets
+							}
+							
+						case .ships(let ships):
+							if ships.contains(where: {
+								$0 == pilot.ship.xws
+							}) {
+								continue checkingRestrictionSets
+							}
+							
+						case .sizes(let sizes):
+							if sizes.contains(where: {
+								$0 == pilot.ship.size
+							}) {
+								continue checkingRestrictionSets
+							}
+							
+						case .names(let names):
+							for name in names {
+								if squad.members.contains(where: {
+									$0.pilot.name == name ||
+										$0.upgrades.contains(where: { $0.name == name })
+								}) {
+									continue checkingRestrictionSets
+								}
+							}
+							
+						case .arcs(let arcs):
+							for arc in arcs {
+								if pilot.ship.stats.map({ $0.arc }).compactMap({ $0 }).contains(arc) {
+									continue checkingRestrictionSets
+								}
+							}
+							
+						case .forceSides(let forceSides):
+							for forceSide in forceSides {
+								if allForceSides.contains(forceSide) {
+									continue checkingRestrictionSets
+								}
+							}
+						}
+					}
+					
+					return .restrictionsNotMet
+				}
+			}
+			
+			// Ensure the the pilot has the correct upgrade slots available for the upgrade
+			var availablelots = upgrades.reduce(allSlots) { availablelots, upgrade in
+				if upgrade == replacing {
+					return availablelots
+				}
+				
+				return upgrade.primarySide.slots.reduce(availablelots) {
+					var availablelots = $0
+					if let index = availablelots.index(of: $1) {
+						availablelots.remove(at: index)
+					}
+					return availablelots
+				}
+			}
+			
+			for slot in upgrade.primarySide.slots {
+				guard let index = availablelots.index(of: slot) else {
+					return .slotsNotAvailable
+				}
+				availablelots.remove(at: index)
+			}
+			
+			// Make sure the card limit is not exceeded
+			switch squad.limitStatus(for: upgrade) {
+			case .met:
+				if upgrade == replacing {
+					break
+				} else {
+					fallthrough
+				}
+			case .exceeded:
+				return .limitExceeded
+			case .available:
+				break
+			}
+			
+			// A pilot can never have two of the same upgrade
+			guard upgrade == replacing || upgrades.contains(upgrade) == false else {
+				return .alreadyEquipped
+			}
+			
+			return .valid
 		}
 	}
 }
@@ -311,4 +218,89 @@ extension Squad.Member: Hashable {
 	public func hash(into hasher: inout Hasher) {
 		uuid.hash(into: &hasher)
 	}
+}
+
+extension Squad.Member {
+	var allSlots: [Upgrade.UpgradeType] {
+		var upgradeSlots = upgrades.reduce(pilot.slots ?? [], {
+			$1.sides.reduce($0, {
+				guard let grants = $1.grants else {
+					return $0
+				}
+				
+				return grants.reduce($0, {
+					switch $1.type {
+					case .slot(let slot, let amount):
+						switch amount {
+						case 1:
+							return $0 + [slot]
+						case -1:
+							var slots = $0
+							if let index = slots.firstIndex(of: slot) {
+								slots.remove(at: index)
+							}
+							return slots
+						default:
+							return $0
+						}
+					default:
+						return $0
+					}
+				})
+			})
+		})
+		
+		if pilot.shipAbility?.name == "Weapon Hardpoint" {
+			let hardpointUpgrades: [Upgrade.UpgradeType] = [.cannon, .torpedo, .missile]
+			if let equippedHardpointUpgrade = upgrades.first(where: { $0.sides.contains(where: { hardpointUpgrades.contains($0.type) })}) {
+				upgradeSlots.append(equippedHardpointUpgrade.primarySide.type)
+			} else {
+				upgradeSlots.append(contentsOf: hardpointUpgrades)
+			}
+		}
+		
+		return upgradeSlots
+	}
+	
+	var allActions: [Action] {
+		return upgrades.reduce(ship.actions, {
+			$1.sides.reduce($0, {
+				guard let grants = $1.grants else {
+					return $0
+				}
+				
+				return grants.reduce($0, {
+					switch $1.type {
+					case .action(let action):
+						return $0 + [action]
+					default:
+						return $0
+					}
+				})
+			})
+		})
+	}
+	
+	var allForceSides: [Force.Side] {
+		return upgrades.reduce([pilot.force?.side].compactMap({ $0 }).flatMap({ $0 }), {
+			$1.sides.reduce($0, {
+				guard let grants = $1.grants else {
+					return $0
+				}
+				
+				return grants.reduce($0, {
+					switch $1.type {
+					case .force(let force):
+						guard let side = force.side else {
+							fallthrough
+						}
+						return $0 + side
+					default:
+						return $0
+					}
+				})
+			})
+		})
+	}
+	
 }

@@ -88,7 +88,7 @@ class SquadCell: UITableViewCell {
 	}
 	
 	@objc func updateCost() {
-		costView.cost = String(squad?.pointCost ?? 0)
+		costView.cost = squad?.pointCost ?? 0
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

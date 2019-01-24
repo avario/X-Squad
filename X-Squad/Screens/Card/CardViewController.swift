@@ -37,6 +37,8 @@ class CardViewController: UIViewController {
 		
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
+		
+		costView.cost = card.pointCost(for: member)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -101,7 +103,7 @@ class CardViewController: UIViewController {
 		upgradeBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
 		
 		if let pilot = card as? Pilot {
-			for upgrade in pilot.slots {
+			for upgrade in pilot.slots ?? [] {
 				let upgradeButton = UpgradeButton()
 				upgradeButton.isUserInteractionEnabled = false
 				upgradeButton.upgradeType = upgrade

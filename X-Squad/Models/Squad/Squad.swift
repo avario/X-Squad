@@ -55,19 +55,41 @@ class Squad: Codable {
 			if $0.cost == $1.cost {
 				return $0.name > $1.name
 			}
-			return $0.cost > $1.cost
+			return $0.pointCost() > $1.pointCost()
 		}
 		return $0.initiative > $1.initiative
 	}
 	
-	enum PilotValidity {
-		case valid
-		case limitExceeded
+	enum LimitStatus {
+		case available
+		case met
+		case exceeded
 	}
 	
-	func validity(of pilot: Pilot) -> PilotValidity {
-		#warning("")
-		return .valid
+	func limitStatus(for card: Card) -> LimitStatus {
+		if card.limited > 0 {
+			let count = members.reduce(0) {
+				var count = $0
+				if $1.pilot.name == card.name {
+					count += 1
+				}
+				return $1.upgrades.reduce(count) {
+					if $1.name == card.name {
+						return $0 + 1
+					} else {
+						return $0
+					}
+				}
+			}
+			
+			if count == card.limited {
+				return .met
+			} else if count > card.limited {
+				return .exceeded
+			}
+		}
+		
+		return .available
 	}
 }
 

@@ -13,7 +13,6 @@ class SquadsEmptyView: UIView {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-//		translatesAutoresizingMaskIntoConstraints = false
 		
 		let label = UILabel()
 		label.numberOfLines = 0

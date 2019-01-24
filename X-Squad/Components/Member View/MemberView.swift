@@ -90,7 +90,7 @@ class MemberView: UIView {
 			}
 			self.upgradeButtons.removeAll()
 			
-			for upgrade in member.upgradeSlots {
+			for upgrade in member.allSlots {
 				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
 				upgradeButton.upgradeType = upgrade
 				

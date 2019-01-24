@@ -32,5 +32,6 @@ class Action: Codable {
 	enum Difficulty: String, Codable {
 		case white = "White"
 		case red = "Red"
+		case purple = "Purple"
 	}
 }

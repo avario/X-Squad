@@ -65,7 +65,10 @@ class _HomeViewController: UITableViewController {
 		}
 		
 		squads = SquadStore.squads
-		tableView.insertRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
+		
+		let indexPath = IndexPath(row: squadIndex, section: 0)
+		tableView.insertRows(at: [indexPath], with: .none)
+		tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
 		
 		updateEmptyView()
 	}

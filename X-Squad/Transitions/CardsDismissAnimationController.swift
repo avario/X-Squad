@@ -29,8 +29,6 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				return
 		}
 		
-//		animator.setValue(true, forKey: "debugEnabled")
-		
 		fromVC.view.isUserInteractionEnabled = false
 		
 		let fromCardViews = CardView.all(in: fromVC.view)
@@ -66,13 +64,12 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			}
 		}
 		
-//		viewsToAnimateOut.append(contentsOf: fromVC.view.allHUDViews())
-		
 		for view in viewsToAnimateOut {
 			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
 				view.center = CGPoint(
 					x: view.center.x,
 					y: view.center.y + UIScreen.main.bounds.height)
+				view.alpha = 0
 			}, completion: nil)
 		}
 		

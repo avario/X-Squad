@@ -97,6 +97,8 @@ extension Faction {
 			return "#"
 		case .galacticRepublic:
 			return "/"
+		case .separatistAlliance:
+			return "."
 		}
 	}
 }

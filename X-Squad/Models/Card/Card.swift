@@ -10,7 +10,8 @@ import Foundation
 
 protocol Card {
 	var name: String { get }
-	var image: URL { get }
+	var limited: Int { get }
+	var image: URL? { get }
 	var orientation: CardOrientation { get }
 }
 
@@ -20,17 +21,31 @@ enum CardOrientation {
 }
 
 extension Card {
-	func pointCost(for member: Squad.Member?) -> Int {
+	func pointCost(for member: Squad.Member? = nil) -> Int {
 		switch self {
 		case let pilot as Pilot:
-			return pilot.cost
+			return pilot.cost ?? 0
 		case let upgrade as Upgrade:
-			switch upgrade.cost {
+			guard let cost = upgrade.cost else {
+				return 0
+			}
+			
+			switch cost {
 			case .constant(let cost):
 				return cost
 			case .variable(let variable):
-				#warning("Unimplemented")
-				return 0
+				guard let member = member else {
+					return 0
+				}
+				
+				switch variable {
+				case .size(let sizeValues):
+					return sizeValues[member.pilot.ship.size]!
+				
+				case .agility(let agilityValues):
+					let agility = member.pilot.ship.stats.first(where: { $0.type == .agility })!
+					return agilityValues[Upgrade.Cost.Variable.Agility(rawValue: String(agility.value))!]!
+				}
 			}
 		default:
 			fatalError()
@@ -43,7 +58,7 @@ extension Pilot: Card {
 }
 
 extension Upgrade: Card {
-	var image: URL {
+	var image: URL? {
 		return sides.first!.image
 	}
 	

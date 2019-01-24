@@ -51,9 +51,15 @@ class ImageDownloadViewController: DownloadViewController {
 		}
 		
 		let card = DataStore.allCards[index]
+		
+		guard let imageURL = card.image else {
+			self.downloadCardImage(for: index + 1)
+			return
+		}
+		
 		label.text = "Downloading card \(index + 1) of \(DataStore.allCards.count)"
 		
-		currentDownloadTask = KingfisherManager.shared.retrieveImage(with: card.image) { result in
+		currentDownloadTask = KingfisherManager.shared.retrieveImage(with: imageURL) { result in
 			DispatchQueue.main.async {
 				switch result {
 				case .success:

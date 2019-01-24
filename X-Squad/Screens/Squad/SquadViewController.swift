@@ -13,9 +13,11 @@ class SquadViewController: UIViewController {
 	
 	let squad: Squad
 	
-	static let memberCardWidth = UIScreen.main.bounds.width * 0.5
-	
 	var memberViews: [SquadMemberView] = []
+	let scrollView = UIScrollView()
+	let stackView = UIStackView()
+	
+	var pullToDismissController: PullToDismissController!
 	
 	init(for squad: Squad) {
 		self.squad = squad
@@ -32,11 +34,6 @@ class SquadViewController: UIViewController {
 	override var preferredStatusBarStyle: UIStatusBarStyle {
 		return .lightContent
 	}
-	
-	let scrollView = UIScrollView()
-	let stackView = UIStackView()
-	
-	var pullToDismissController: PullToDismissController!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()

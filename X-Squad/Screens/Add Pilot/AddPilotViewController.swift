@@ -91,17 +91,17 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		switch squad.validity(of: card as! Pilot) {
-		case .valid:
+		switch squad.limitStatus(for: card) {
+		case .available:
 			return .default
-		case .limitExceeded:
+		case .exceeded, .met:
 			return .unavailable
 		}
 	}
 	
 	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
 		let pilot = cardView.card as! Pilot
-		guard squad.validity(of: pilot) == .valid else {
+		guard squad.limitStatus(for: pilot) == .available else {
 			return
 		}
 		
@@ -114,28 +114,6 @@ class AddPilotViewController: CardsViewController {
 		
 		dismiss(animated: true, completion: nil)
 	}
-}
-
-extension AddPilotViewController: UIGestureRecognizerDelegate {
-	
-	func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-		guard let panGesture = gestureRecognizer as? UIPanGestureRecognizer else {
-			return true
-		}
-		
-		if collectionView.contentOffset.y <= -collectionView.adjustedContentInset.top,
-			panGesture.velocity(in: nil).y >= 0 {
-			return true
-		}
-		
-		// Scroll as normal
-		return false
-	}
-	
-	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-		return true
-	}
-	
 }
 
 extension AddPilotViewController: UIViewControllerTransitioningDelegate {

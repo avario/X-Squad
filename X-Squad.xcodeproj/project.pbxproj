@@ -444,12 +444,12 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		B671C98B21EBC53B0034C7C9 /* Add Upgrade */ = {
+		B671C98B21EBC53B0034C7C9 /* Select Upgrade */ = {
 			isa = PBXGroup;
 			children = (
 				B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */,
 			);
-			path = "Add Upgrade";
+			path = "Select Upgrade";
 			sourceTree = "<group>";
 		};
 		B671C9C721EE11420034C7C9 /* Pull Down to Dismiss */ = {
@@ -467,7 +467,7 @@
 				B671C93B21E76C370034C7C9 /* New Squad */,
 				B671C94021E7BC470034C7C9 /* Squad */,
 				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
-				B671C98B21EBC53B0034C7C9 /* Add Upgrade */,
+				B671C98B21EBC53B0034C7C9 /* Select Upgrade */,
 				B671C93821E76B950034C7C9 /* SearchResults */,
 				B65BCD4521E53C4A005721A7 /* Settings */,
 				B662FB4621DE75A400EF79F7 /* Card */,

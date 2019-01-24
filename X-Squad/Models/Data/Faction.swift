@@ -15,4 +15,5 @@ enum Faction: String, CaseIterable, Codable {
 	case resistance = "Resistance"
 	case firstOrder = "First Order"
 	case galacticRepublic = "Galactic Republic"
+	case separatistAlliance = "Separatist Alliance"
 }

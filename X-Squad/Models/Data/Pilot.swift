@@ -14,18 +14,18 @@ class Pilot: Codable {
 	let caption: String?
 	let initiative: Int
 	let limited: Int
-	let cost: Int
-	let xws: String
-	let ffg: Int
+	let cost: Int?
+	let xws: XWS
+	let ffg: Int?
 	let hyperspace: Bool
 	let ability: String?
 	let shipAbility: ShipAbility?
 	let text: String?
-	let image: URL
-	let artwork: URL
+	let image: URL?
+	let artwork: URL?
 	let force: Force?
 	let charges: Charges?
-	let slots: [Upgrade.UpgradeType]
+	let slots: [Upgrade.UpgradeType]?
 	
 	struct ShipAbility: Codable {
 		let name: String

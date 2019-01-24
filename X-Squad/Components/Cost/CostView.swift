@@ -11,9 +11,9 @@ import UIKit
 
 class CostView: UIView {
 	
-	var cost: String? {
+	var cost: Int = 0 {
 		didSet {
-			valueLabel.text = cost
+			valueLabel.text = String(cost)
 		}
 	}
 	

@@ -103,16 +103,12 @@ class SelectUpgradeViewController: CardsViewController {
 		cardCell.card = upgrade
 		cardCell.status = status(for: upgrade)
 		cardCell.cardView.delegate = self
-
-		if upgrade == currentUpgrade {
-			cardCell.cardView.member = member
-		}
+		cardCell.cardView.member = member
 
 		return cardCell
 	}
 	
 	override func cardViewController(for card: Card) -> CardViewController {
-		let member = (card as! Upgrade) == currentUpgrade ? self.member : nil
 		return CardViewController(card: card, member: member)
 	}
 	
@@ -193,6 +189,7 @@ class SelectUpgradeViewController: CardsViewController {
 	func validity(of upgrade: Upgrade) -> Squad.Member.UpgradeValidity {
 		return member.validity(of: upgrade, replacing: currentUpgrade)
 	}
+	
 }
 
 extension SelectUpgradeViewController: UIViewControllerTransitioningDelegate {

@@ -44,7 +44,7 @@ class SquadMemberView: UIScrollView {
 	}
 	
 	@objc func updateCost() {
-		costView.cost = String(member.pointCost)
+		costView.cost = member.pointCost
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
