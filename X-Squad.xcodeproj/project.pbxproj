@@ -18,8 +18,6 @@
 		B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */; };
 		B65BCD3821E4C388005721A7 /* CostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3721E4C388005721A7 /* CostView.swift */; };
 		B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3921E4C5E2005721A7 /* Fonts.swift */; };
-		B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */; };
-		B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */; };
 		B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */; };
 		B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4321E4EB86005721A7 /* UpgradeButton.swift */; };
 		B65BCD4721E53C5B005721A7 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4621E53C5B005721A7 /* SettingsViewController.swift */; };
@@ -67,6 +65,8 @@
 		B6EC67E521F76D2600D2BA5D /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC67E421F76D2600D2BA5D /* Card.swift */; };
 		B6EC67E721F76E9500D2BA5D /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC67E621F76E9500D2BA5D /* DataStore.swift */; };
 		B6EC67E921F8A7E800D2BA5D /* CardSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC67E821F8A7E800D2BA5D /* CardSearch.swift */; };
+		B6F6065721FA330700D108E6 /* xwing-miniatures.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6065521FA330700D108E6 /* xwing-miniatures.ttf */; };
+		B6F6065821FA330700D108E6 /* xwing-miniatures-ships.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6065621FA330700D108E6 /* xwing-miniatures-ships.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -105,8 +105,6 @@
 		B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BankGothic.ttf; sourceTree = "<group>"; };
 		B65BCD3721E4C388005721A7 /* CostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostView.swift; sourceTree = "<group>"; };
 		B65BCD3921E4C5E2005721A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures-ships.ttf"; sourceTree = "<group>"; };
-		B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xwing-miniatures.ttf"; sourceTree = "<group>"; };
 		B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XwingIcons.swift; sourceTree = "<group>"; };
 		B65BCD4321E4EB86005721A7 /* UpgradeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeButton.swift; sourceTree = "<group>"; };
 		B65BCD4621E53C5B005721A7 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +154,8 @@
 		B6EC67E421F76D2600D2BA5D /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B6EC67E621F76E9500D2BA5D /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		B6EC67E821F8A7E800D2BA5D /* CardSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSearch.swift; sourceTree = "<group>"; };
+		B6F6065521FA330700D108E6 /* xwing-miniatures.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "xwing-miniatures.ttf"; path = "X-Wing-Miniatures-Font/src/fonts/xwing-miniatures.ttf"; sourceTree = SOURCE_ROOT; };
+		B6F6065621FA330700D108E6 /* xwing-miniatures-ships.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "xwing-miniatures-ships.ttf"; path = "X-Wing-Miniatures-Font/src/fonts/xwing-miniatures-ships.ttf"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,8 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */,
-				B65BCD3C21E4E769005721A7 /* xwing-miniatures-ships.ttf */,
-				B65BCD3D21E4E769005721A7 /* xwing-miniatures.ttf */,
+				B6F6065621FA330700D108E6 /* xwing-miniatures-ships.ttf */,
+				B6F6065521FA330700D108E6 /* xwing-miniatures.ttf */,
 			);
 			path = "X-wing";
 			sourceTree = "<group>";
@@ -322,6 +322,7 @@
 		B662FB2221DD4CB300EF79F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B6F6065921FA52EB00D108E6 /* XWS */,
 				B6EC67E321F76D1F00D2BA5D /* Card */,
 				B6EC67D421F736CC00D2BA5D /* Data */,
 				B6EC67D521F7380600D2BA5D /* Squad */,
@@ -543,6 +544,13 @@
 			path = Card;
 			sourceTree = "<group>";
 		};
+		B6F6065921FA52EB00D108E6 /* XWS */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = XWS;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -608,13 +616,13 @@
 				B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */,
 				B65BCD2C21E4BDE8005721A7 /* Eurostile-Black.ttf in Resources */,
 				B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */,
+				B6F6065821FA330700D108E6 /* xwing-miniatures-ships.ttf in Resources */,
 				B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */,
 				B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */,
 				B65BCD2D21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf in Resources */,
 				B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */,
-				B65BCD3E21E4E769005721A7 /* xwing-miniatures-ships.ttf in Resources */,
+				B6F6065721FA330700D108E6 /* xwing-miniatures.ttf in Resources */,
 				B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */,
-				B65BCD3F21E4E769005721A7 /* xwing-miniatures.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

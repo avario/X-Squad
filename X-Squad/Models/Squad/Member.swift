@@ -12,15 +12,21 @@ extension Squad {
 	class Member: Codable {
 		let uuid: UUID
 		
-		var ship: Ship
-		var pilot: Pilot
-		var upgrades: [Upgrade]
+		let shipXWS: XWS
+		let pilotXWS: XWS
+		var upgradesXWS: [XWS]
+		
+		lazy var ship: Ship = DataStore.ships.first(where: { $0.xws == shipXWS })!
+		lazy var pilot: Pilot = DataStore.ships.reduce([]) { $0 + $1.pilots }.first(where: { $0.xws == pilotXWS })!
+		lazy var upgrades: [Upgrade] = upgradesXWS.map({ upgradeXWS in
+			return DataStore.upgrades.first(where: { $0.xws == upgradeXWS })!
+		}).sorted(by: upgradeSort)
 		
 		init(ship: Ship, pilot: Pilot) {
 			self.uuid = UUID()
-			self.ship = ship
-			self.pilot = pilot
-			self.upgrades = []
+			self.shipXWS = ship.xws
+			self.pilotXWS = pilot.xws
+			self.upgradesXWS = []
 		}
 		
 		var squad: Squad {
@@ -31,28 +37,31 @@ extension Squad {
 			return upgrades.reduce(pilot.pointCost(), { $0 + $1.pointCost(for: self) })
 		}
 		
+		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
+			let upgradeSlots = self.allSlots
+			
+			let lhsType = lhs.primarySide.type
+			let rhsType = rhs.primarySide.type
+			
+			guard let lhsIndex = upgradeSlots.firstIndex(of: lhsType),
+				let rhsIndex = upgradeSlots.firstIndex(of: rhsType) else {
+					return false
+			}
+			
+			if lhsType == rhsType {
+				return lhs.name < rhs.name
+			} else {
+				return lhsIndex < rhsIndex
+			}
+		}
+		
 		func addUpgrade(_ upgrade: Upgrade) {
+			upgradesXWS.append(upgrade.xws)
 			upgrades.append(upgrade)
 			
 			removeInValidUpgrades()
 			
-			let upgradeSlots = self.allSlots
-			
-			upgrades.sort { (lhs, rhs) -> Bool in
-				let lhsType = lhs.primarySide.type
-				let rhsType = rhs.primarySide.type
-				
-				guard let lhsIndex = upgradeSlots.firstIndex(of: lhsType),
-					let rhsIndex = upgradeSlots.firstIndex(of: rhsType) else {
-						return false
-				}
-				
-				if lhsType == rhsType {
-					return lhs.name < rhs.name
-				} else {
-					return lhsIndex < rhsIndex
-				}
-			}
+			upgrades.sort(by: upgradeSort)
 			
 			SquadStore.save()
 			NotificationCenter.default.post(name: .squadStoreDidAddUpgradeToMember, object: self)
@@ -60,8 +69,10 @@ extension Squad {
 		}
 		
 		func remove(upgrade: Upgrade) {
-			if let index = upgrades.firstIndex(of: upgrade) {
+			if let index = upgrades.firstIndex(of: upgrade),
+				let indexXWS = upgradesXWS.firstIndex(of: upgrade.xws) {
 				upgrades.remove(at: index)
+				upgradesXWS.remove(at: indexXWS)
 			}
 			
 			removeInValidUpgrades()
@@ -82,8 +93,10 @@ extension Squad {
 			}
 			
 			if let invalidUpgrade = invalidUpgrade,
-				let index = upgrades.firstIndex(of: invalidUpgrade) {
+				let index = upgrades.firstIndex(of: invalidUpgrade),
+				let indexXWS = upgradesXWS.firstIndex(of: invalidUpgrade.xws){
 				upgrades.remove(at: index)
+				upgradesXWS.remove(at: indexXWS)
 				removeInValidUpgrades(shouldNotify: shouldNotify, notify: true)
 			}
 			

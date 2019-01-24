@@ -35,6 +35,8 @@ class Upgrade: Codable {
 		init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
 			
+			print(values.allKeys)
+			
 			self.restrictions = CodingKeys.allCases.reduce([]) { restrictions, codingKey in
 				switch codingKey {
 				case .factions:

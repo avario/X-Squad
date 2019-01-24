@@ -208,13 +208,13 @@ extension Ship {
 		case .T70Xwing:
 			return "w"
 		case .RZ2Awing:
-			return "a"
+			return "E"
 		case .MG100StarFortress:
 			return "Z"
 		case .modifiedTIEln:
-			return "F"
+			return "C"
 		case .scavengedYT1300:
-			return "m"
+			return "Y"
 		}
 	}
 }
