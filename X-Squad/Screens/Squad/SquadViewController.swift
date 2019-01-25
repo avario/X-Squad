@@ -81,23 +81,16 @@ class SquadViewController: UIViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidRemoveMemberFromSquad, object: squad)
 	}
 	
-	var emptyLabel: UILabel?
+	var emptyView: SquadEmptyView?
 	
 	func updateEmptyView() {
-		if squad.members.isEmpty, emptyLabel == nil {
-			emptyLabel = UILabel()
-			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
-			emptyLabel?.textAlignment = .center
-			emptyLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
-			emptyLabel?.font = UIFont.systemFont(ofSize: 16)
-			emptyLabel?.numberOfLines = 0
-			emptyLabel?.text = "This squad is empty.\nUse this + button to add a member to this squad."
+		if squad.members.isEmpty, emptyView == nil {
+			emptyView = SquadEmptyView(faction: squad.faction)
+			stackView.insertArrangedSubview(emptyView!, at: 1)
 			
-			stackView.insertArrangedSubview(emptyLabel!, at: 1)
-			emptyLabel?.heightAnchor.constraint(equalToConstant: 100).isActive = true
-		} else if let emptyLabel = emptyLabel {
-			emptyLabel.removeFromSuperview()
-			self.emptyLabel = nil
+		} else if let emptyView = emptyView {
+			emptyView.removeFromSuperview()
+			self.emptyView = nil
 		}
 	}
 	
@@ -143,18 +136,20 @@ class SquadViewController: UIViewController {
 	
 	@objc func showSquadInfo() {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .default, handler: { _ in
+			self.copyXWS()
+		}))
+		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .default, handler: { _ in
+			self.showXWSQRCode()
+		}))
+		alert.addAction(UIAlertAction(title: "Duplicate Squad", style: .default, handler: { _ in
+			self.duplicateSquad()
+		}))
 		alert.addAction(UIAlertAction(title: "Delete Squad", style: .destructive, handler: { _ in
 			self.deleteSquad()
 		}))
-		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .destructive, handler: { _ in
-			self.copyXWS()
-		}))
-		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .destructive, handler: { _ in
-			self.showXWSQRCode()
-		}))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-			
-		}))
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+		alert.view.tintColor = .black
 		self.present(alert, animated: true, completion: nil)
 	}
 	
@@ -181,9 +176,15 @@ class SquadViewController: UIViewController {
 	}
 	
 	func showXWSQRCode() {
-		let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-		darkNavigation.viewControllers = [QRCodeViewController(squad: squad)]
-		present(darkNavigation, animated: true, completion: nil)
+		present(UINavigationController(rootViewController: QRCodeViewController(squad: squad)), animated: true, completion: nil)
+	}
+	
+	func duplicateSquad() {
+		let duplicateMembers = squad.members.map({ Squad.Member(ship: $0.ship, pilot: $0.pilot, upgrades: $0.upgrades) })
+		let duplicateSquad = Squad(faction: squad.faction, members: duplicateMembers, name: squad.name, description: squad.description, obstacles: squad.obstacles, vendor: squad.vendor)
+		
+		SquadStore.add(squad: duplicateSquad)
+		dismiss(animated: true, completion: nil)
 	}
 }
 

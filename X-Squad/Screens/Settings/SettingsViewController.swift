@@ -43,6 +43,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		super.viewDidLoad()
 		
 		view.backgroundColor = .black
+		navigationController?.navigationBar.barStyle = .black
 		
 		tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
@@ -97,9 +98,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch Section(rawValue: indexPath.section)! {			
 		case .downloadImages:
-			let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-			navigationController.viewControllers = [ImageDownloadViewController()]
-			present(navigationController, animated: true, completion: nil)
+			present(UINavigationController(rootViewController: ImageDownloadViewController()), animated: true, completion: nil)
 			
 		case .developer:
 			switch DeveloperCell(rawValue: indexPath.row)! {

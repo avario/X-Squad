@@ -22,11 +22,6 @@ class QRCodeViewController: UITableViewController {
 		
 		let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
 		navigationItem.rightBarButtonItem = closeButton
-		
-		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
-		tableView.rowHeight = SquadCell.rowHeight
-		
-		tableView.register(SquadCell.self, forCellReuseIdentifier: SquadCell.reuseIdentifier)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -41,6 +36,12 @@ class QRCodeViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		view.backgroundColor = .black
+		navigationController?.navigationBar.barStyle = .black
+		
+		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
+		tableView.rowHeight = SquadCell.rowHeight
+		
+		tableView.register(SquadCell.self, forCellReuseIdentifier: SquadCell.reuseIdentifier)
 		
 		let xws = XWS(squad: squad)
 		let xwsData = try! JSONEncoder().encode(xws)

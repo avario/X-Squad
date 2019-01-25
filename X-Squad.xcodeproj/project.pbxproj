@@ -24,13 +24,11 @@
 		B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4821E53DEE005721A7 /* SettingCell.swift */; };
 		B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */; };
 		B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */; };
-		B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */; };
 		B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5421E561AF005721A7 /* DownloadViewController.swift */; };
 		B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */; };
 		B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */; };
 		B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1421DD4C0400EF79F7 /* Assets.xcassets */; };
 		B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */; };
-		B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3321DE1E3900EF79F7 /* Result.swift */; };
 		B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */; };
 		B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */; };
 		B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4721DE75EA00EF79F7 /* CardViewController.swift */; };
@@ -71,6 +69,7 @@
 		B6F6065D21FA59DC00D108E6 /* XWSConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065C21FA59DC00D108E6 /* XWSConverter.swift */; };
 		B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */; };
 		B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066621FB518100D108E6 /* ScanViewController.swift */; };
+		B6F6066F21FB614A00D108E6 /* SquadEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -115,7 +114,6 @@
 		B65BCD4821E53DEE005721A7 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
 		B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
-		B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkNavigationBar.swift; sourceTree = "<group>"; };
 		B65BCD5421E561AF005721A7 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		B662FB0A21DD4C0000EF79F7 /* X-Squad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X-Squad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 		B662FB1421DD4C0400EF79F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B662FB1721DD4C0400EF79F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B662FB1921DD4C0400EF79F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B662FB3321DE1E3900EF79F7 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewLayout.swift; sourceTree = "<group>"; };
 		B662FB4721DE75EA00EF79F7 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +161,7 @@
 		B6F6065C21FA59DC00D108E6 /* XWSConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWSConverter.swift; sourceTree = "<group>"; };
 		B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		B6F6066621FB518100D108E6 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadEmptyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,7 +315,6 @@
 				B671CA5621F0D1360034C7C9 /* Components */,
 				B65BCCDE21E4BD4E005721A7 /* Fonts */,
 				B65BCC9C21E3BA06005721A7 /* Transitions */,
-				B662FB3221DE1E2600EF79F7 /* Utilities */,
 				B662FB2F21DE1D8E00EF79F7 /* Services */,
 				B662FB2221DD4CB300EF79F7 /* Models */,
 				B662FB1421DD4C0400EF79F7 /* Assets.xcassets */,
@@ -346,15 +343,6 @@
 				B6EC67E821F8A7E800D2BA5D /* CardSearch.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		B662FB3221DE1E2600EF79F7 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				B65BCD5121E55B3C005721A7 /* DarkNavigationBar.swift */,
-				B662FB3321DE1E3900EF79F7 /* Result.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		B662FB3A21DE5B9100EF79F7 /* Home */ = {
@@ -414,6 +402,7 @@
 				B671C94121E7BC540034C7C9 /* SquadViewController.swift */,
 				B671C98821EBC0E50034C7C9 /* Header */,
 				B671C98321E9614D0034C7C9 /* Pilot */,
+				B6F6067021FB614E00D108E6 /* Empty View */,
 			);
 			path = Squad;
 			sourceTree = "<group>";
@@ -571,6 +560,14 @@
 			path = XWS;
 			sourceTree = "<group>";
 		};
+		B6F6067021FB614E00D108E6 /* Empty View */ = {
+			isa = PBXGroup;
+			children = (
+				B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */,
+			);
+			path = "Empty View";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -714,11 +711,9 @@
 				B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */,
 				B6EC67E221F75B1500D2BA5D /* Member.swift in Sources */,
 				B6F6065B21FA546300D108E6 /* XWS.swift in Sources */,
-				B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */,
 				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
 				B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */,
 				B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */,
-				B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */,
 				B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
 				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
@@ -726,6 +721,7 @@
 				B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */,
 				B6F6065D21FA59DC00D108E6 /* XWSConverter.swift in Sources */,
 				B6EC67D321F736C800D2BA5D /* Faction.swift in Sources */,
+				B6F6066F21FB614A00D108E6 /* SquadEmptyView.swift in Sources */,
 				B6EC67E521F76D2600D2BA5D /* Card.swift in Sources */,
 				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
 				B6EC67DA21F73C0B00D2BA5D /* Upgrade.swift in Sources */,

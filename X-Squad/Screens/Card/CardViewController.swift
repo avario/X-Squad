@@ -116,8 +116,7 @@ class CardViewController: UIViewController {
 		
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
 		closeButton.setTitle("Close", for: .normal)
-		closeButton.titleLabel?.font = UIFont.bankGothicBold(18)
-		closeButton.setTitleColor(UIColor(named: "XRed"), for: .normal)
+		closeButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
 		closeButton.setTitleColor(.white, for: .highlighted)
 		
 		view.addSubview(closeButton)

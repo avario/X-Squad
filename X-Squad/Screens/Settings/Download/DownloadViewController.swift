@@ -19,6 +19,7 @@ class DownloadViewController: UIViewController {
 		super.viewDidLoad()
 		
 		view.backgroundColor = .black
+		navigationController?.navigationBar.barStyle = .black
 		
 		view.addSubview(progressView)
 		progressView.translatesAutoresizingMaskIntoConstraints = false

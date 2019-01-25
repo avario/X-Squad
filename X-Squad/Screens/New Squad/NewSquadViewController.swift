@@ -41,6 +41,7 @@ class NewSquadViewController: UITableViewController {
 		super.viewDidLoad()
 		
 		view.backgroundColor = .black
+		navigationController?.navigationBar.barStyle = .black
 		
 		tableView.register(FactionCell.self, forCellReuseIdentifier: FactionCell.reuseIdentifier)
 		tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)

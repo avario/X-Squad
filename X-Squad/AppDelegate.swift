@@ -26,14 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //		cache.clearMemoryCache()
 //		cache.clearDiskCache { print("Done") }
 		
-		UIView.appearance().tintColor = UIColor(named: "XRed")
-		UIView.appearance(whenContainedInInstancesOf: [DarkNavigationBar.self]).tintColor = UIColor.white.withAlphaComponent(0.5)
+//		UIView.appearance()
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
-		
-		let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-		darkNavigation.viewControllers = [_HomeViewController()]
-		window?.rootViewController = darkNavigation
+		window!.tintColor = UIColor(named: "XRed")
+
+		window?.rootViewController = UINavigationController(rootViewController: _HomeViewController())
 		
 		window?.makeKeyAndVisible()
 		

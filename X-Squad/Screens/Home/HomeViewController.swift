@@ -40,9 +40,11 @@ class _HomeViewController: UITableViewController {
 		
 		let settingsButton = UIBarButtonItem(image: UIImage(named: "Settings"), style: .done, target: self, action: #selector(showSettings))
 		navigationItem.leftBarButtonItem = settingsButton
+		settingsButton.tintColor = UIColor.white.withAlphaComponent(0.5)
 		
 		let addSquadButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSquad))
 		navigationItem.rightBarButtonItem = addSquadButton
+		addSquadButton.tintColor = UIColor.white.withAlphaComponent(0.5)
 		
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
 		tableView.rowHeight = SquadCell.rowHeight
@@ -68,7 +70,10 @@ class _HomeViewController: UITableViewController {
 		
 		let indexPath = IndexPath(row: squadIndex, section: 0)
 		tableView.insertRows(at: [indexPath], with: .none)
-		tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+//		tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+		
+		tableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
+		tableView.deselectRow(at: indexPath, animated: true)
 		
 		updateEmptyView()
 	}
@@ -90,15 +95,11 @@ class _HomeViewController: UITableViewController {
 	}
 	
 	@objc func showSettings() {
-		let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-		navigationController.viewControllers = [SettingsViewController()]
-		present(navigationController, animated: true, completion: nil)
+		present(UINavigationController(rootViewController: SettingsViewController()), animated: true, completion: nil)
 	}
 	
 	@objc func addSquad() {
-		let navigationController = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
-		navigationController.viewControllers = [NewSquadViewController()]
-		present(navigationController, animated: true, completion: nil)
+		present(UINavigationController(rootViewController: NewSquadViewController()), animated: true, completion: nil)
 	}
 	
 	override func numberOfSections(in tableView: UITableView) -> Int {
