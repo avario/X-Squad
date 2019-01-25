@@ -55,11 +55,23 @@ class DataStore {
 	
 	static var allCards: [Card] = (ships.map({ $0.pilots }).flatMap({ $0 }) as [Card]) + (upgrades as [Card])
 	
+	static func ship(for xws: XWSID) -> Ship? {
+		return ships.first(where: { $0.xws == xws })
+	}
+	
+	static func pilot(for xws: XWSID) -> Pilot? {
+		return ships.reduce([]) { $0 + $1.pilots }.first(where: { $0.xws == xws })
+	}
+	
+	static func upgrade(for xws: XWSID) -> Upgrade? {
+		return upgrades.first(where: { $0.xws == xws })!
+	}
+	
 	private init() { }
 }
 
 extension Pilot {
-	var ship: Ship {
-		return DataStore.ships.first(where: { $0.pilots.contains(self) })!
+	var ship: Ship? {
+		return DataStore.ships.first(where: { $0.pilots.contains(self) })
 	}
 }

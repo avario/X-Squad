@@ -65,6 +65,7 @@ class SquadViewController: UIViewController {
 		
 		let header = SquadHeaderView(squad: squad)
 		header.infoButton.addTarget(self, action: #selector(showSquadInfo), for: .touchUpInside)
+		header.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 		stackView.addArrangedSubview(header)
 		
 		let addPilotButton = SquadButton(height: 80)
@@ -90,7 +91,7 @@ class SquadViewController: UIViewController {
 			emptyLabel?.textColor = UIColor.white.withAlphaComponent(0.5)
 			emptyLabel?.font = UIFont.systemFont(ofSize: 16)
 			emptyLabel?.numberOfLines = 0
-			emptyLabel?.text = "This squad is empty.\nUse this + button to add a member to this squad.\n\nSwipe down to dimiss."
+			emptyLabel?.text = "This squad is empty.\nUse this + button to add a member to this squad."
 			
 			stackView.insertArrangedSubview(emptyLabel!, at: 1)
 			emptyLabel?.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -98,6 +99,10 @@ class SquadViewController: UIViewController {
 			emptyLabel.removeFromSuperview()
 			self.emptyLabel = nil
 		}
+	}
+	
+	@objc func close() {
+		dismiss(animated: true, completion: nil)
 	}
 	
 	@objc func updateMemberViews() {
@@ -139,18 +144,37 @@ class SquadViewController: UIViewController {
 	@objc func showSquadInfo() {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		alert.addAction(UIAlertAction(title: "Delete Squad", style: .destructive, handler: { _ in
-			SquadStore.delete(squad: self.squad)
-			
-			for cardView in CardView.all(in: self.view) {
-				cardView.member = nil
-			}
-			
-			self.dismiss(animated: true, completion: nil)
+			self.deleteSquad()
+		}))
+		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .destructive, handler: { _ in
+			self.copyXWS()
 		}))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
 			
 		}))
 		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func deleteSquad() {
+		SquadStore.delete(squad: squad)
+		
+		for cardView in CardView.all(in: view) {
+			cardView.member = nil
+		}
+		
+		dismiss(animated: true, completion: nil)
+	}
+	
+	func copyXWS() {
+		let xws = XWS(squad: squad)
+		
+		let jsonEncoder = JSONEncoder()
+		jsonEncoder.outputFormatting = .prettyPrinted
+		
+		let jsonData = try! JSONEncoder().encode(xws)
+		let jsonText = String(data: jsonData, encoding: .utf8)
+		
+		UIPasteboard.general.string = jsonText
 	}
 	
 }

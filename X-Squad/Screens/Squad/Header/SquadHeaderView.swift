@@ -14,6 +14,7 @@ class SquadHeaderView: UIView {
 	let squad: Squad
 	let infoButton = UIButton(type: .infoDark)
 	let costView = CostView()
+	let closeButton = UIButton()
 	
 	init(squad: Squad) {
 		self.squad = squad
@@ -21,6 +22,18 @@ class SquadHeaderView: UIView {
 	
 		translatesAutoresizingMaskIntoConstraints = false
 		heightAnchor.constraint(equalToConstant: 24).isActive = true
+		
+		closeButton.translatesAutoresizingMaskIntoConstraints = false
+		closeButton.setTitle("Close", for: .normal)
+		closeButton.titleLabel?.font = UIFont.bankGothicBold(18)
+		closeButton.setTitleColor(UIColor(named: "XRed"), for: .normal)
+		closeButton.setTitleColor(.white, for: .highlighted)
+		
+		addSubview(closeButton)
+		closeButton.widthAnchor.constraint(equalToConstant: 88).isActive = true
+		closeButton.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		closeButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
+		closeButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 		
 		infoButton.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(infoButton)

@@ -12,21 +12,19 @@ extension Squad {
 	class Member: Codable {
 		let uuid: UUID
 		
-		let shipXWS: XWS
-		let pilotXWS: XWS
-		var upgradesXWS: [XWS]
+		let shipXWS: XWSID
+		let pilotXWS: XWSID
+		var upgradesXWS: [XWSID]
 		
-		lazy var ship: Ship = DataStore.ships.first(where: { $0.xws == shipXWS })!
-		lazy var pilot: Pilot = DataStore.ships.reduce([]) { $0 + $1.pilots }.first(where: { $0.xws == pilotXWS })!
-		lazy var upgrades: [Upgrade] = upgradesXWS.map({ upgradeXWS in
-			return DataStore.upgrades.first(where: { $0.xws == upgradeXWS })!
-		}).sorted(by: upgradeSort)
+		lazy var ship: Ship = DataStore.ship(for: shipXWS)!
+		lazy var pilot: Pilot = DataStore.pilot(for: pilotXWS)!
+		lazy var upgrades: [Upgrade] = upgradesXWS.map({  DataStore.upgrade(for: $0)! })//.sorted(by: upgradeSort)
 		
-		init(ship: Ship, pilot: Pilot) {
+		init(ship: Ship, pilot: Pilot, upgrades: [Upgrade] = []) {
 			self.uuid = UUID()
 			self.shipXWS = ship.xws
 			self.pilotXWS = pilot.xws
-			self.upgradesXWS = []
+			self.upgradesXWS = upgrades.map({ $0.xws })
 		}
 		
 		var squad: Squad {
@@ -39,15 +37,15 @@ extension Squad {
 		
 		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
 			let upgradeSlots = self.allSlots
-			
+
 			let lhsType = lhs.primarySide.type
 			let rhsType = rhs.primarySide.type
-			
+
 			guard let lhsIndex = upgradeSlots.firstIndex(of: lhsType),
 				let rhsIndex = upgradeSlots.firstIndex(of: rhsType) else {
 					return false
 			}
-			
+
 			if lhsType == rhsType {
 				return lhs.name < rhs.name
 			} else {
@@ -135,14 +133,14 @@ extension Squad {
 							
 						case .ships(let ships):
 							if ships.contains(where: {
-								$0 == pilot.ship.xws
+								$0 == pilot.ship!.xws
 							}) {
 								continue checkingRestrictionSets
 							}
 							
 						case .sizes(let sizes):
 							if sizes.contains(where: {
-								$0 == pilot.ship.size
+								$0 == pilot.ship!.size
 							}) {
 								continue checkingRestrictionSets
 							}
@@ -159,7 +157,7 @@ extension Squad {
 							
 						case .arcs(let arcs):
 							for arc in arcs {
-								if pilot.ship.stats.map({ $0.arc }).compactMap({ $0 }).contains(arc) {
+								if pilot.ship!.stats.map({ $0.arc }).compactMap({ $0 }).contains(arc) {
 									continue checkingRestrictionSets
 								}
 							}

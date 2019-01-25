@@ -14,10 +14,20 @@ class Squad: Codable {
 	let faction: Faction
 	private(set) var members: [Member]
 	
-	init(faction: Faction) {
+	let name: String?
+	let description: String?
+	let obstacles: [XWS.Obstacle]?
+	let vendor: XWS.Vendor?
+	
+	init(faction: Faction, members: [Member] = [], name: String? = nil, description: String? = nil, obstacles: [XWS.Obstacle]? = nil, vendor: XWS.Vendor? = nil) {
 		self.uuid = UUID()
 		self.faction = faction
-		self.members = []
+		self.members = members
+		
+		self.name = name
+		self.description = description
+		self.obstacles = obstacles
+		self.vendor = vendor
 	}
 	
 	var pointCost: Int {
@@ -25,7 +35,7 @@ class Squad: Codable {
 	}
 	
 	@discardableResult func addMember(for pilot: Pilot) -> Member {
-		let member = Member(ship: pilot.ship, pilot: pilot)
+		let member = Member(ship: pilot.ship!, pilot: pilot)
 		members.append(member)
 		members.sort(by: { Squad.rankPilots($0.pilot, $1.pilot) })
 		

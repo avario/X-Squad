@@ -12,7 +12,7 @@ class Upgrade: Codable {
 	
 	let name: String
 	let limited: Int
-	let xws: XWS
+	let xws: XWSID
 	let sides: [Side]
 	let cost: Cost?
 	let restrictions: [RestrictionsSet]?
@@ -25,7 +25,7 @@ class Upgrade: Codable {
 			case factions([Faction])
 			case names([String])
 			case sizes([Ship.Size])
-			case ships([XWS])
+			case ships([XWSID])
 			case forceSides([Force.Side])
 			case arcs([Ship.Stat.Arc])
 			case action(Action)
@@ -34,9 +34,7 @@ class Upgrade: Codable {
 		
 		init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			
-			print(values.allKeys)
-			
+						
 			self.restrictions = CodingKeys.allCases.reduce([]) { restrictions, codingKey in
 				switch codingKey {
 				case .factions:
@@ -52,7 +50,7 @@ class Upgrade: Codable {
 						return restrictions + [.sizes(sizes)]
 					}
 				case .ships:
-					if let ships = try? values.decode([XWS].self, forKey: .ships) {
+					if let ships = try? values.decode([XWSID].self, forKey: .ships) {
 						return restrictions + [.ships(ships)]
 					}
 				case .forceSides:
@@ -289,7 +287,7 @@ class Upgrade: Codable {
 		}
 	}
 	
-	enum UpgradeType: String, Codable {
+	enum UpgradeType: String, Codable, CaseIterable {
 		case talent = "Talent"
 		case sensor = "Sensor"
 		case cannon = "Cannon"

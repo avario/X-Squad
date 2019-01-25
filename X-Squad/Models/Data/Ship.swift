@@ -8,12 +8,12 @@
 
 import Foundation
 
-typealias XWS = String
+typealias XWSID = String
 
 class Ship: Codable {
 	
 	let name: String
-	let xws: XWS
+	let xws: XWSID
 	let ffg: Int?
 	let size: Size
 	let faction: Faction

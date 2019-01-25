@@ -118,9 +118,15 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 			sectionHeader.nameLabel.text = headerInfo.title
 			sectionHeader.iconLabel.text = headerInfo.icon
 			sectionHeader.iconLabel.font = headerInfo.iconFont
+			sectionHeader.closeButton.isHidden = indexPath.section != 0
+			sectionHeader.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 		}
 		
 		return sectionHeader
+	}
+	
+	@objc func close() {
+		self.dismiss(animated: true, completion: nil)
 	}
 	
 	open func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {

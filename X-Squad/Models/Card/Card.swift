@@ -40,10 +40,10 @@ extension Card {
 				
 				switch variable {
 				case .size(let sizeValues):
-					return sizeValues[member.pilot.ship.size]!
+					return sizeValues[member.pilot.ship!.size]!
 				
 				case .agility(let agilityValues):
-					let agility = member.pilot.ship.stats.first(where: { $0.type == .agility })!
+					let agility = member.pilot.ship!.stats.first(where: { $0.type == .agility })!
 					return agilityValues[Upgrade.Cost.Variable.Agility(rawValue: String(agility.value))!]!
 				}
 			}

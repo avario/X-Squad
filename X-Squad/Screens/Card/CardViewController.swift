@@ -29,6 +29,8 @@ class CardViewController: UIViewController {
 	
 	let squadButton = SquadButton()
 	
+	let closeButton = UIButton()
+	
 	init(card: Card, member: Squad.Member? = nil) {
 		self.card = card
 		self.member = member
@@ -111,6 +113,24 @@ class CardViewController: UIViewController {
 				upgradeBar.addArrangedSubview(upgradeButton)
 			}
 		}
+		
+		closeButton.translatesAutoresizingMaskIntoConstraints = false
+		closeButton.setTitle("Close", for: .normal)
+		closeButton.titleLabel?.font = UIFont.bankGothicBold(18)
+		closeButton.setTitleColor(UIColor(named: "XRed"), for: .normal)
+		closeButton.setTitleColor(.white, for: .highlighted)
+		
+		view.addSubview(closeButton)
+		closeButton.widthAnchor.constraint(equalToConstant: 88).isActive = true
+		closeButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+		closeButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+		closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+		
+		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+	}
+	
+	@objc func close() {
+		dismiss(animated: true, completion: nil)
 	}
 	
 	@objc func squadButtonPressed() {
