@@ -14,6 +14,7 @@ class AcknowledgementsViewController: UITableViewController {
 	enum Section: Int, CaseIterable {
 		case data
 		case font
+		case xws
 		case imageCache
 	}
 	
@@ -52,6 +53,8 @@ class AcknowledgementsViewController: UITableViewController {
 			settingCell.textLabel?.text = "X-Wing Data 2"
 		case .font:
 			settingCell.textLabel?.text = "X-Wing Miniatures Font"
+		case .xws:
+			settingCell.textLabel?.text = "XWS Spec 2.0.0"
 		case .imageCache:
 			settingCell.textLabel?.text = "Kingfisher"
 		}
@@ -67,6 +70,8 @@ class AcknowledgementsViewController: UITableViewController {
 			return "Icons"
 		case .imageCache:
 			return "Image Cache"
+		case .xws:
+			return "XWS"
 		}
 	}
 	
@@ -78,6 +83,8 @@ class AcknowledgementsViewController: UITableViewController {
 			return "X-Squad uses the X-Wing Miniatures Font by Hinny, armoredgear7, ScottKarch, and FedoraMark."
 		case .imageCache:
 			return "X-Squad uses the Kingfisher library for image downloading and caching."
+		case .xws:
+			return "X-Squad uses the XWS spec by Eli Stevens to import and export squads in a consistent format."
 		}
 	}
 	
@@ -90,6 +97,8 @@ class AcknowledgementsViewController: UITableViewController {
 			url = URL(string: "https://github.com/geordanr/xwing-miniatures-font")!
 		case .imageCache:
 			url = URL(string: "https://github.com/onevcat/Kingfisher")!
+		case .xws:
+			url = URL(string: "https://github.com/elistevens/xws-spec")!
 		}
 		
 		UIApplication.shared.open(url)

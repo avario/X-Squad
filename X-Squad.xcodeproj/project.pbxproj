@@ -69,7 +69,8 @@
 		B6F6065821FA330700D108E6 /* xwing-miniatures-ships.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6F6065621FA330700D108E6 /* xwing-miniatures-ships.ttf */; };
 		B6F6065B21FA546300D108E6 /* XWS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065A21FA546300D108E6 /* XWS.swift */; };
 		B6F6065D21FA59DC00D108E6 /* XWSConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065C21FA59DC00D108E6 /* XWSConverter.swift */; };
-		B6F6066021FA72ED00D108E6 /* XWSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065F21FA72ED00D108E6 /* XWSViewController.swift */; };
+		B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */; };
+		B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066621FB518100D108E6 /* ScanViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -161,7 +162,8 @@
 		B6F6065621FA330700D108E6 /* xwing-miniatures-ships.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "xwing-miniatures-ships.ttf"; path = "X-Wing-Miniatures-Font/src/fonts/xwing-miniatures-ships.ttf"; sourceTree = SOURCE_ROOT; };
 		B6F6065A21FA546300D108E6 /* XWS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWS.swift; sourceTree = "<group>"; };
 		B6F6065C21FA59DC00D108E6 /* XWSConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWSConverter.swift; sourceTree = "<group>"; };
-		B6F6065F21FA72ED00D108E6 /* XWSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XWSViewController.swift; sourceTree = "<group>"; };
+		B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
+		B6F6066621FB518100D108E6 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -563,7 +565,8 @@
 		B6F6065E21FA6F7400D108E6 /* XWS */ = {
 			isa = PBXGroup;
 			children = (
-				B6F6065F21FA72ED00D108E6 /* XWSViewController.swift */,
+				B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */,
+				B6F6066621FB518100D108E6 /* ScanViewController.swift */,
 			);
 			path = XWS;
 			sourceTree = "<group>";
@@ -714,7 +717,7 @@
 				B662FB3421DE1E3900EF79F7 /* Result.swift in Sources */,
 				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
 				B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */,
-				B6F6066021FA72ED00D108E6 /* XWSViewController.swift in Sources */,
+				B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */,
 				B65BCD5221E55B3C005721A7 /* DarkNavigationBar.swift in Sources */,
 				B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
@@ -734,6 +737,7 @@
 				B6EC67E021F7577200D2BA5D /* Charges.swift in Sources */,
 				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,
 				B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */,
+				B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */,
 				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,
 				B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */,
 				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,

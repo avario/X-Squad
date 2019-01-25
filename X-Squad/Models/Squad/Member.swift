@@ -18,7 +18,7 @@ extension Squad {
 		
 		lazy var ship: Ship = DataStore.ship(for: shipXWS)!
 		lazy var pilot: Pilot = DataStore.pilot(for: pilotXWS)!
-		lazy var upgrades: [Upgrade] = upgradesXWS.map({  DataStore.upgrade(for: $0)! })//.sorted(by: upgradeSort)
+		lazy var upgrades: [Upgrade] = upgradesXWS.map({  DataStore.upgrade(for: $0)! }).sorted(by: upgradeSort)
 		
 		init(ship: Ship, pilot: Pilot, upgrades: [Upgrade] = []) {
 			self.uuid = UUID()
@@ -36,17 +36,15 @@ extension Squad {
 		}
 		
 		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
-			let upgradeSlots = self.allSlots
+			let upgradeSlots = self.pilot.slots ?? []
 
 			let lhsType = lhs.primarySide.type
 			let rhsType = rhs.primarySide.type
 
-			guard let lhsIndex = upgradeSlots.firstIndex(of: lhsType),
-				let rhsIndex = upgradeSlots.firstIndex(of: rhsType) else {
-					return false
-			}
+			let lhsIndex = upgradeSlots.firstIndex(of: lhsType) ?? 999
+			let rhsIndex = upgradeSlots.firstIndex(of: rhsType) ?? 999
 
-			if lhsType == rhsType {
+			if lhsIndex == rhsIndex {
 				return lhs.name < rhs.name
 			} else {
 				return lhsIndex < rhsIndex

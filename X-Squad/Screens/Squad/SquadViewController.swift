@@ -149,6 +149,9 @@ class SquadViewController: UIViewController {
 		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .destructive, handler: { _ in
 			self.copyXWS()
 		}))
+		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .destructive, handler: { _ in
+			self.showXWSQRCode()
+		}))
 		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
 			
 		}))
@@ -177,6 +180,11 @@ class SquadViewController: UIViewController {
 		UIPasteboard.general.string = jsonText
 	}
 	
+	func showXWSQRCode() {
+		let darkNavigation = UINavigationController(navigationBarClass: DarkNavigationBar.self, toolbarClass: nil)
+		darkNavigation.viewControllers = [QRCodeViewController(squad: squad)]
+		present(darkNavigation, animated: true, completion: nil)
+	}
 }
 
 extension SquadViewController: MemberViewDelegate {
