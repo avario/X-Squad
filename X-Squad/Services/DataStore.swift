@@ -50,7 +50,7 @@ class DataStore {
 	private static func loadUpgrades() -> [Upgrade] {
 		return data(in: upgradesDirectory).map({ (data) -> [Upgrade] in
 			return try! JSONDecoder().decode([Upgrade].self, from: data)
-		}).flatMap({ $0 })
+		}).flatMap({ $0 }).filter({ $0.primarySide.image != nil })
 	}
 	
 	static var allCards: [Card] = (ships.map({ $0.pilots }).flatMap({ $0 }) as [Card]) + (upgrades as [Card])
