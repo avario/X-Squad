@@ -26,12 +26,7 @@
 	<string>X-Squad uses your camera to scan XWS QR codes.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>BankGothic Bold.ttf</string>
-		<string>BankGothic.ttf</string>
 		<string>kimberley bl.ttf</string>
-		<string>Eurostile-Black.ttf</string>
-		<string>Eurostile-LT-Std-Oblique.otf</string>
-		<string>Eurostile-LT-Std.otf</string>
 		<string>xwing-miniatures-ships.ttf</string>
 		<string>xwing-miniatures.ttf</string>
 	</array>

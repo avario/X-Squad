@@ -10,12 +10,7 @@
 		B60E895121F14A4C00A58579 /* SquadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */; };
 		B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */; };
 		B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */; };
-		B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */; };
-		B65BCD2C21E4BDE8005721A7 /* Eurostile-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */; };
-		B65BCD2D21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */; };
 		B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */; };
-		B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */; };
-		B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */; };
 		B65BCD3821E4C388005721A7 /* CostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3721E4C388005721A7 /* CostView.swift */; };
 		B65BCD3A21E4C5E2005721A7 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD3921E4C5E2005721A7 /* Fonts.swift */; };
 		B65BCD4121E4E7A6005721A7 /* XwingIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */; };
@@ -100,12 +95,7 @@
 		B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadsEmptyView.swift; sourceTree = "<group>"; };
 		B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPresentAnimationController.swift; sourceTree = "<group>"; };
 		B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsDismissAnimationController.swift; sourceTree = "<group>"; };
-		B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-LT-Std.otf"; sourceTree = "<group>"; };
-		B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-Black.ttf"; sourceTree = "<group>"; };
-		B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Eurostile-LT-Std-Oblique.otf"; sourceTree = "<group>"; };
 		B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kimberley bl.ttf"; sourceTree = "<group>"; };
-		B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BankGothic Bold.ttf"; sourceTree = "<group>"; };
-		B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BankGothic.ttf; sourceTree = "<group>"; };
 		B65BCD3721E4C388005721A7 /* CostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostView.swift; sourceTree = "<group>"; };
 		B65BCD3921E4C5E2005721A7 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		B65BCD4021E4E7A6005721A7 /* XwingIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XwingIcons.swift; sourceTree = "<group>"; };
@@ -191,21 +181,9 @@
 			children = (
 				B65BCD3921E4C5E2005721A7 /* Fonts.swift */,
 				B65BCD3B21E4E754005721A7 /* X-wing */,
-				B65BCD3121E4BE07005721A7 /* Bank Gothic */,
 				B65BCD2E21E4BDF0005721A7 /* Kimberley */,
-				B65BCD2721E4BDD9005721A7 /* Eurostile */,
 			);
 			path = Fonts;
-			sourceTree = "<group>";
-		};
-		B65BCD2721E4BDD9005721A7 /* Eurostile */ = {
-			isa = PBXGroup;
-			children = (
-				B65BCD2921E4BDE8005721A7 /* Eurostile-Black.ttf */,
-				B65BCD2A21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf */,
-				B65BCD2821E4BDE8005721A7 /* Eurostile-LT-Std.otf */,
-			);
-			path = Eurostile;
 			sourceTree = "<group>";
 		};
 		B65BCD2E21E4BDF0005721A7 /* Kimberley */ = {
@@ -214,15 +192,6 @@
 				B65BCD2F21E4BE01005721A7 /* kimberley bl.ttf */,
 			);
 			path = Kimberley;
-			sourceTree = "<group>";
-		};
-		B65BCD3121E4BE07005721A7 /* Bank Gothic */ = {
-			isa = PBXGroup;
-			children = (
-				B65BCD3221E4BE1A005721A7 /* BankGothic Bold.ttf */,
-				B65BCD3321E4BE1A005721A7 /* BankGothic.ttf */,
-			);
-			path = "Bank Gothic";
 			sourceTree = "<group>";
 		};
 		B65BCD3621E4C37E005721A7 /* Cost */ = {
@@ -631,15 +600,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */,
-				B65BCD2C21E4BDE8005721A7 /* Eurostile-Black.ttf in Resources */,
 				B65BCD3021E4BE01005721A7 /* kimberley bl.ttf in Resources */,
 				B6F6065821FA330700D108E6 /* xwing-miniatures-ships.ttf in Resources */,
 				B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */,
-				B65BCD3521E4BE1A005721A7 /* BankGothic.ttf in Resources */,
-				B65BCD2D21E4BDE8005721A7 /* Eurostile-LT-Std-Oblique.otf in Resources */,
-				B65BCD2B21E4BDE8005721A7 /* Eurostile-LT-Std.otf in Resources */,
 				B6F6065721FA330700D108E6 /* xwing-miniatures.ttf in Resources */,
-				B65BCD3421E4BE1A005721A7 /* BankGothic Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
