@@ -17,6 +17,14 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	
 	let transitionTime: TimeInterval = 0.5
 	
+	let targetViewController: UIViewController?
+	
+	init(targetViewController: UIViewController? = nil) {
+		self.targetViewController = targetViewController
+		super.init()
+	}
+	
+	
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
 		return transitionTime
 	}
@@ -24,7 +32,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
 		self.transitionContext = transitionContext
 		guard let fromVC = transitionContext.viewController(forKey: .from),
-			let toVC = transitionContext.viewController(forKey: .to)
+			let toVC = targetViewController ?? transitionContext.viewController(forKey: .to)
 			else {
 				return
 		}

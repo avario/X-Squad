@@ -197,6 +197,7 @@ class CardViewController: UIViewController {
 		}
 	}
 	
+	var dismissTargetViewController: UIViewController?
 }
 
 extension CardViewController: UIViewControllerTransitioningDelegate {
@@ -206,7 +207,7 @@ extension CardViewController: UIViewControllerTransitioningDelegate {
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController()
+		return CardsDismissAnimationController(targetViewController: dismissTargetViewController)
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

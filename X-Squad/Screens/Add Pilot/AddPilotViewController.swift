@@ -76,17 +76,10 @@ class AddPilotViewController: CardsViewController {
 		
 		cardViewController.cardView.member = member
 		
-		let window = UIApplication.shared.keyWindow!
-		let snapshot = cardViewController.view.snapshotView(afterScreenUpdates: false)!
-		window.addSubview(snapshot)
-		
-		let baseViewController = self.presentingViewController!
-		
-		baseViewController.dismiss(animated: false) {
-			baseViewController.present(cardViewController, animated: false) {
-				snapshot.removeFromSuperview()
-				baseViewController.dismiss(animated: true, completion: nil)
-			}
+		cardViewController.dismissTargetViewController = self.presentingViewController
+		self.view.isHidden = true
+		cardViewController.dismiss(animated: true) {
+			self.dismiss(animated: false, completion: nil)
 		}
 	}
 	
