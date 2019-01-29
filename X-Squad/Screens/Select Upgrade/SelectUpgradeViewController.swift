@@ -103,7 +103,12 @@ class SelectUpgradeViewController: CardsViewController {
 		cardCell.card = upgrade
 		cardCell.status = status(for: upgrade)
 		cardCell.cardView.delegate = self
-		cardCell.cardView.member = member
+		
+		if upgrade == currentUpgrade {
+			cardCell.cardView.member = member
+		} else {
+			cardCell.cardView.member = nil
+		}
 
 		return cardCell
 	}

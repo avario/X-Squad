@@ -63,7 +63,6 @@ class CardViewController: UIViewController {
 		cardView.center = CGPoint(x: view.center.x, y: view.center.y - 20)
 		
 		cardView.card = card
-		cardView.member = member
 		cardView.snap.snapPoint = cardView.center
 		
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCard(recognizer:)))

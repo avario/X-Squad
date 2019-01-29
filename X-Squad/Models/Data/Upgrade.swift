@@ -31,7 +31,6 @@ class Upgrade: Codable {
 			case action(Action)
 		}
 		
-		
 		init(from decoder: Decoder) throws {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
 						
@@ -118,10 +117,12 @@ class Upgrade: Codable {
 		enum Variable {
 			case size([Ship.Size: Int])
 			case agility([Agility: Int])
+			case initiative([Initiative: Int])
 			
 			enum VariableType: String, Codable {
 				case size
 				case agility
+				case initiative
 			}
 			
 			enum Agility: String, CodingKey, Codable, CaseIterable {
@@ -129,6 +130,16 @@ class Upgrade: Codable {
 				case one = "1"
 				case two = "2"
 				case three = "3"
+			}
+			
+			enum Initiative: String, CodingKey, Codable, CaseIterable {
+				case zero = "0"
+				case one = "1"
+				case two = "2"
+				case three = "3"
+				case four = "4"
+				case five = "5"
+				case six = "6"
 			}
 		}
 		
@@ -158,6 +169,16 @@ class Upgrade: Codable {
 					}
 					
 					self = .variable(.agility(agilityValues))
+					
+				case .initiative:
+					let initiativeValuesContainer = try values.nestedContainer(keyedBy: Variable.Initiative.self, forKey: .values)
+					var initiativeValues = [Variable.Initiative: Int]()
+					for initiative in Variable.Initiative.allCases {
+						let initiativeValue = try initiativeValuesContainer.decode(Int.self, forKey: initiative)
+						initiativeValues[initiative] = initiativeValue
+					}
+					
+					self = .variable(.initiative(initiativeValues))
 				}
 			}
 		}
@@ -178,6 +199,10 @@ class Upgrade: Codable {
 				case .agility(let agilityValues):
 					try container.encode(Variable.VariableType.agility.rawValue, forKey: .variable)
 					try container.encode(agilityValues, forKey: .values)
+					
+				case .initiative(let initiativeValues):
+					try container.encode(Variable.VariableType.initiative.rawValue, forKey: .variable)
+					try container.encode(initiativeValues, forKey: .values)
 				}
 				
 			}

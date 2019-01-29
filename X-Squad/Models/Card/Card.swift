@@ -45,6 +45,10 @@ extension Card {
 				case .agility(let agilityValues):
 					let agility = member.pilot.ship!.stats.first(where: { $0.type == .agility })!
 					return agilityValues[Upgrade.Cost.Variable.Agility(rawValue: String(agility.value))!]!
+					
+				case .initiative(let initiativeValues):
+					let initiative = member.pilot.initiative
+					return initiativeValues[Upgrade.Cost.Variable.Initiative(rawValue: String(initiative))!]!
 				}
 			}
 		default:

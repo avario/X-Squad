@@ -191,12 +191,14 @@ class SquadViewController: UIViewController {
 extension SquadViewController: MemberViewDelegate {
 	func memberView(_ memberView: MemberView, didSelect pilot: Pilot) {
 		let cardViewController = CardViewController(card: pilot, member: memberView.member)
+		cardViewController.cardView.member = memberView.member
 		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}
 	
 	func memberView(_ memberView: MemberView, didSelect upgrade: Upgrade) {
 		let cardViewController = CardViewController(card: upgrade, member: memberView.member)
+		cardViewController.cardView.member = memberView.member
 		cardViewController.delegate = self
 		present(cardViewController, animated: true, completion: nil)
 	}

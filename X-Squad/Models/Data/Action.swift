@@ -10,7 +10,7 @@ import Foundation
 
 class Action: Codable {
 	let type: ActionType
-	let difficulty: Difficulty
+	let difficulty: Difficulty?
 	let linked: Action?
 	
 	enum ActionType: String, Codable {

@@ -124,7 +124,7 @@ extension Squad {
 						case .action(let action):
 							if allActions.contains(where: {
 								$0.type == action.type &&
-									$0.difficulty == action.difficulty
+									(action.difficulty == nil || $0.difficulty == action.difficulty)
 							}) {
 								continue checkingRestrictionSets
 							}
