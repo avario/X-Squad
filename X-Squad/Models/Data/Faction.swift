@@ -16,4 +16,23 @@ enum Faction: String, CaseIterable, Codable {
 	case firstOrder = "First Order"
 	case galacticRepublic = "Galactic Republic"
 	case separatistAlliance = "Separatist Alliance"
+	
+	var isReleased: Bool {
+		switch self {
+		case .rebelAlliance,
+			 .galacticEmpire,
+			 .scumAndVillainy,
+			 .resistance,
+			 .firstOrder:
+			return true
+			
+		case .galacticRepublic,
+			 .separatistAlliance:
+			return false
+		}
+	}
+	
+	static var releasedFactions: [Faction] {
+		return allCases.filter({ $0.isReleased })
+	}
 }

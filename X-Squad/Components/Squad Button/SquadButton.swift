@@ -11,53 +11,60 @@ import UIKit
 
 class SquadButton: UIButton {
 	
-	static let defaultHeight: CGFloat = 44
-	static let circleSize: CGFloat = 24
+	static let circleSize: CGFloat = 32
 	
 	enum Action {
-		case add
-		case remove
+		case add(String)
+		case remove(String)
 	}
 	
-	var action: Action = .add {
+	var action: Action = .add("") {
 		didSet {
-			verticalLine.isHidden = (action == .remove)
+			switch action {
+			case .add(let text):
+				verticalLine.isHidden = false
+				label.text = text
+			case .remove(let text):
+				verticalLine.isHidden = true
+				label.text = text
+			}
 		}
 	}
 	
-	let circleView = UIView(frame: .zero)
-	let verticalLine = UIView(frame: .zero)
-	let horizontalLine = UIView(frame: .zero)
+	let circleView = UIView()
+	let verticalLine = UIView()
+	let horizontalLine = UIView()
+	let label = UILabel()
 	
-	private let color = UIColor(named: "XYellow")!
+	private let color = UIColor.white.withAlphaComponent(0.5)
 	private let highlightColor = UIColor.white
 	
-	init(height: CGFloat = defaultHeight) {
+	init() {
 		super.init(frame: .zero)
 		
 		translatesAutoresizingMaskIntoConstraints = false
-		heightAnchor.constraint(equalToConstant: height).isActive = true
 		
 		addSubview(circleView)
 		circleView.translatesAutoresizingMaskIntoConstraints = false
 		circleView.isUserInteractionEnabled = false
 		
 		circleView.layer.cornerRadius = SquadButton.circleSize/2
-		circleView.layer.borderColor = color.cgColor
+		circleView.layer.borderColor = color.withAlphaComponent(0.2).cgColor
 		circleView.layer.borderWidth = 1
 		
 		circleView.heightAnchor.constraint(equalToConstant: SquadButton.circleSize).isActive = true
-		circleView.widthAnchor.constraint(equalToConstant: SquadButton.circleSize).isActive = true
-		circleView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-		circleView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+		circleView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
+		circleView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
+		circleView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+		circleView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
 		
 		circleView.addSubview(horizontalLine)
 		horizontalLine.translatesAutoresizingMaskIntoConstraints = false
 		horizontalLine.backgroundColor = color
 		
 		horizontalLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
-		horizontalLine.widthAnchor.constraint(equalTo: circleView.widthAnchor, multiplier: 0.5).isActive = true
-		horizontalLine.centerXAnchor.constraint(equalTo: circleView.centerXAnchor).isActive = true
+		horizontalLine.widthAnchor.constraint(equalToConstant: SquadButton.circleSize * 0.3).isActive = true
+		horizontalLine.centerXAnchor.constraint(equalTo: circleView.leftAnchor, constant: SquadButton.circleSize/2).isActive = true
 		horizontalLine.centerYAnchor.constraint(equalTo: circleView.centerYAnchor).isActive = true
 		
 		circleView.addSubview(verticalLine)
@@ -65,24 +72,30 @@ class SquadButton: UIButton {
 		verticalLine.backgroundColor = color
 		
 		verticalLine.widthAnchor.constraint(equalToConstant: 1).isActive = true
-		verticalLine.heightAnchor.constraint(equalTo: circleView.heightAnchor, multiplier: 0.5).isActive = true
-		verticalLine.centerXAnchor.constraint(equalTo: circleView.centerXAnchor).isActive = true
+		verticalLine.heightAnchor.constraint(equalToConstant: SquadButton.circleSize * 0.3).isActive = true
+		verticalLine.centerXAnchor.constraint(equalTo: circleView.leftAnchor, constant: SquadButton.circleSize/2).isActive = true
 		verticalLine.centerYAnchor.constraint(equalTo: circleView.centerYAnchor).isActive = true
+		
+		circleView.addSubview(label)
+		label.textColor = color
+		label.font = UIFont.systemFont(ofSize: 14)
+		
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.centerYAnchor.constraint(equalTo: circleView.centerYAnchor).isActive = true
+		label.leftAnchor.constraint(equalTo: circleView.leftAnchor, constant: SquadButton.circleSize).isActive = true
+		label.rightAnchor.constraint(equalTo: circleView.rightAnchor, constant: -(SquadButton.circleSize/2)).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
 	}
 	
-	override var intrinsicContentSize: CGSize {
-		return CGSize(width: SquadButton.defaultHeight, height: SquadButton.defaultHeight)
-	}
-	
 	override open var isHighlighted: Bool {
 		didSet {
-			circleView.layer.borderColor = isHighlighted ? highlightColor.cgColor : color.cgColor
+			circleView.layer.borderColor = isHighlighted ? highlightColor.cgColor : color.withAlphaComponent(0.2).cgColor
 			horizontalLine.backgroundColor = isHighlighted ? highlightColor : color
 			verticalLine.backgroundColor = isHighlighted ? highlightColor : color
+			label.textColor = isHighlighted ? highlightColor : color
 		}
 	}
 }

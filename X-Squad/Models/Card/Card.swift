@@ -12,6 +12,7 @@ protocol Card {
 	var name: String { get }
 	var limited: Int { get }
 	var image: URL? { get }
+	var hyperspace: Bool? { get }
 	var orientation: CardOrientation { get }
 }
 
@@ -51,6 +52,17 @@ extension Card {
 					return initiativeValues[Upgrade.Cost.Variable.Initiative(rawValue: String(initiative))!]!
 				}
 			}
+		default:
+			fatalError()
+		}
+	}
+	
+	var isReleased: Bool {
+		switch self {
+		case let pilot as Pilot:
+			return pilot.cost != nil
+		case let upgrade as Upgrade:
+			return upgrade.cost != nil
 		default:
 			fatalError()
 		}

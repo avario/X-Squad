@@ -17,7 +17,7 @@ class Ship: Codable {
 	let ffg: Int?
 	let size: Size
 	let faction: Faction
-	let dial: [String]
+	let dial: [Maneuver]
 	let stats: [Stat]
 	let actions: [Action]
 	let pilots: [Pilot]
@@ -50,6 +50,51 @@ class Ship: Codable {
 		case small = "Small"
 		case medium = "Medium"
 		case large = "Large"
+	}
+	
+	struct Maneuver: Codable {
+		let speed: Int
+		let bearing: Bearing
+		let difficulty: Difficulty
+		
+		enum Bearing: String, Codable {
+			case straight = "F"
+			case bankLeft = "B"
+			case bankRight = "N"
+			case turnLeft = "T"
+			case turnRight = "Y"
+			case koiogranTurn = "K"
+			case segnorsLoopLeft = "L"
+			case segnorsLoopRight = "P"
+			case tallonRollLeft = "E"
+			case tallonRollRight = "R"
+			case stationary = "O"
+			case reverse = "S"
+			case reverseBankLeft = "A"
+			case reverseBankRight = "D"
+		}
+		
+		enum Difficulty: String, Codable {
+			case blue = "B"
+			case white = "W"
+			case red = "R"
+		}
+		
+		init(from decoder: Decoder) throws {
+			let string = try decoder.singleValueContainer().decode(String.self)
+			let values = string.map(String.init)
+			
+			speed = Int(values[0])!
+			bearing = Bearing(rawValue: values[1])!
+			difficulty = Difficulty(rawValue: values[2])!
+		}
+		
+		func encode(to encoder: Encoder) throws {
+			var container = encoder.singleValueContainer()
+			
+			let string = String(speed) + bearing.rawValue + difficulty.rawValue
+			try container.encode(string)
+		}
 	}
 	
 	var type: ShipType {

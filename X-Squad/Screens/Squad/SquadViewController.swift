@@ -55,7 +55,7 @@ class SquadViewController: UIViewController {
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.axis = .vertical
 		stackView.spacing = 10
-		stackView.alignment = .fill
+		stackView.alignment = .center
 		
 		stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
 		stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor).isActive = true
@@ -67,8 +67,10 @@ class SquadViewController: UIViewController {
 		header.infoButton.addTarget(self, action: #selector(showSquadInfo), for: .touchUpInside)
 		header.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 		stackView.addArrangedSubview(header)
+		header.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 		
-		let addPilotButton = SquadButton(height: 80)
+		let addPilotButton = SquadButton()
+		addPilotButton.action = .add("Add Pilot")
 		addPilotButton.addTarget(self, action: #selector(addPilot), for: .touchUpInside)
 		
 		stackView.addArrangedSubview(addPilotButton)
@@ -87,6 +89,7 @@ class SquadViewController: UIViewController {
 		if squad.members.isEmpty, emptyView == nil {
 			emptyView = SquadEmptyView(faction: squad.faction)
 			stackView.insertArrangedSubview(emptyView!, at: 1)
+			emptyView?.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 			
 		} else if let emptyView = emptyView {
 			emptyView.removeFromSuperview()
@@ -126,6 +129,7 @@ class SquadViewController: UIViewController {
 			
 			// +1 for header view
 			stackView.insertArrangedSubview(squadMemberView, at: index + 1)
+			squadMemberView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 		}
 	}
 	
@@ -211,7 +215,14 @@ extension SquadViewController: MemberViewDelegate {
 
 extension SquadViewController: CardViewControllerDelegate {
 	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		return .remove
+		switch cardViewController.card {
+		case _ as Pilot:
+			return .remove("Remove from Squad")
+		case _ as Upgrade:
+			return .remove("Remove from Pilot")
+		default:
+			fatalError()
+		}
 	}
 	
 	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {

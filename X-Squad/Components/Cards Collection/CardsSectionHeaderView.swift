@@ -16,7 +16,7 @@ class CardsSectionHeaderView: UICollectionReusableView {
 	let iconLabel = UILabel()
 	let nameLabel = UILabel()
 	
-	let closeButton = UIButton()
+	let closeButton = CloseButton()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -41,15 +41,10 @@ class CardsSectionHeaderView: UICollectionReusableView {
 		nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
 			
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
-		closeButton.setTitle("Close", for: .normal)
-		closeButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
-		closeButton.setTitleColor(.white, for: .highlighted)
 		
 		addSubview(closeButton)
-		closeButton.widthAnchor.constraint(equalToConstant: 88).isActive = true
 		closeButton.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
 		closeButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		closeButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

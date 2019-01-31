@@ -17,7 +17,7 @@ class Pilot: Codable {
 	let cost: Int?
 	let xws: XWSID
 	let ffg: Int?
-	let hyperspace: Bool
+	let hyperspace: Bool?
 	let ability: String?
 	let shipAbility: ShipAbility?
 	let text: String?

@@ -67,7 +67,7 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		return status(for: cardViewController.card) == .default ? .add : nil
+		return status(for: cardViewController.card) == .default ? .add("Add to Squad") : nil
 	}
 	
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {

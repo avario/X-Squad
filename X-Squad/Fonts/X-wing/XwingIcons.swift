@@ -219,3 +219,50 @@ extension Ship {
 	}
 }
 
+extension Ship.Maneuver.Bearing {
+	var characterCode: String {
+		switch self {
+		case .straight:
+			return "8"
+		case .bankLeft:
+			return "7"
+		case .bankRight:
+			return "9"
+		case .turnLeft:
+			return "4"
+		case .turnRight:
+			return "6"
+		case .koiogranTurn:
+			return "2"
+		case .segnorsLoopLeft:
+			return "1"
+		case .segnorsLoopRight:
+			return "3"
+		case .tallonRollLeft:
+			return ":"
+		case .tallonRollRight:
+			return ";"
+		case .stationary:
+			return "5"
+		case .reverse:
+			return "K"
+		case .reverseBankLeft:
+			return "J"
+		case .reverseBankRight:
+			return "L"
+		}
+	}
+}
+
+extension Ship.Size {
+	var characterCode: String {
+		switch self {
+		case.small:
+			return "Á"
+		case .medium:
+			return "Â"
+		case .large:
+			return "Ã"
+		}
+	}
+}

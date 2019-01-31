@@ -19,8 +19,6 @@ class CardViewController: UIViewController {
 	let card: Card
 	let member: Squad.Member?
 	let cardView = CardView()
-	let costView = CostView()
-	let upgradeBar = UIStackView()
 	
 	weak var delegate: CardViewControllerDelegate?
 	
@@ -29,7 +27,7 @@ class CardViewController: UIViewController {
 	
 	let squadButton = SquadButton()
 	
-	let closeButton = UIButton()
+	let closeButton = CloseButton()
 	
 	init(card: Card, member: Squad.Member? = nil) {
 		self.card = card
@@ -39,8 +37,6 @@ class CardViewController: UIViewController {
 		
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
-		
-		costView.cost = card.pointCost(for: member)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -84,44 +80,94 @@ class CardViewController: UIViewController {
 			squadButton.action = action
 			squadButton.addTarget(self, action: #selector(squadButtonPressed), for: .touchUpInside)
 			
-			squadButton.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 50).isActive = true
-			squadButton.centerXAnchor.constraint(equalTo: cardLayoutGuide.centerXAnchor).isActive = true
+			squadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
+			squadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		}
 		
-		// Cost view
-		view.insertSubview(costView, belowSubview: cardView)
-		costView.translatesAutoresizingMaskIntoConstraints = false
-		
-		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
-		costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
-		
-		// Upgrades
-		upgradeBar.translatesAutoresizingMaskIntoConstraints = false
-		upgradeBar.axis = .horizontal
-		view.insertSubview(upgradeBar, belowSubview: cardView)
-		
-		upgradeBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
-		upgradeBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
-		
-		if let pilot = card as? Pilot {
-			for upgrade in pilot.slots ?? [] {
-				let upgradeButton = UpgradeButton()
-				upgradeButton.isUserInteractionEnabled = false
-				upgradeButton.upgradeType = upgrade
+		if card.isReleased {
+			// Cost view
+			let costView = CostView()
+			view.insertSubview(costView, belowSubview: cardView)
+			costView.translatesAutoresizingMaskIntoConstraints = false
+			
+			costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+			costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
+			
+			costView.cost = card.pointCost(for: member)
+			
+			// Hyperspace label
+			let hyperspaceLabel = UILabel()
+			hyperspaceLabel.textColor = UIColor.white.withAlphaComponent(0.5)
+			hyperspaceLabel.font = UIFont.systemFont(ofSize: 12)
+			hyperspaceLabel.text = "H"
+			hyperspaceLabel.translatesAutoresizingMaskIntoConstraints = false
+			hyperspaceLabel.isHidden = card.hyperspace == false
+			
+			view.insertSubview(hyperspaceLabel, belowSubview: cardView)
+			hyperspaceLabel.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
+			
+			if let pilot = card as? Pilot {
+				// Dial
+				let ship = DataStore.ships.first(where: { $0.pilots.contains(pilot) })!
+				let dialView = DialView(ship: ship)
 				
-				upgradeBar.addArrangedSubview(upgradeButton)
+				view.insertSubview(dialView, belowSubview: cardView)
+				
+				dialView.bottomAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor).isActive = true
+				dialView.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
+				
+				// Ship size
+				let shipSizeLabel = UILabel()
+				shipSizeLabel.textAlignment = .center
+				shipSizeLabel.textColor = UIColor.white.withAlphaComponent(0.5)
+				shipSizeLabel.font = UIFont.xWingIcon(24)
+				shipSizeLabel.text = ship.size.characterCode
+				shipSizeLabel.translatesAutoresizingMaskIntoConstraints = false
+				
+				view.insertSubview(shipSizeLabel, belowSubview: cardView)
+				shipSizeLabel.bottomAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: -10).isActive = true
+				shipSizeLabel.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
+				
+				// Hyperspace
+				hyperspaceLabel.bottomAnchor.constraint(equalTo: shipSizeLabel.topAnchor,  constant: -10).isActive = true
+				
+				// Upgrades
+				let upgradeBar = UIStackView()
+				upgradeBar.translatesAutoresizingMaskIntoConstraints = false
+				upgradeBar.axis = .horizontal
+				view.insertSubview(upgradeBar, belowSubview: cardView)
+				
+				upgradeBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+				upgradeBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
+				
+				for upgrade in pilot.slots ?? [] {
+					let upgradeButton = UpgradeButton()
+					upgradeButton.isUserInteractionEnabled = false
+					upgradeButton.upgradeType = upgrade
+					
+					upgradeBar.addArrangedSubview(upgradeButton)
+				}
+			} else {
+				// Hyperspace
+				hyperspaceLabel.bottomAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor,  constant: -10).isActive = true
 			}
+		} else {
+			let unreleasedLabel = UILabel()
+			unreleasedLabel.textColor = UIColor.white.withAlphaComponent(0.5)
+			unreleasedLabel.text = "Unreleased"
+			
+			view.insertSubview(unreleasedLabel, belowSubview: cardView)
+			unreleasedLabel.translatesAutoresizingMaskIntoConstraints = false
+			
+			unreleasedLabel.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+			unreleasedLabel.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 		}
 		
+		// Close button
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
-		closeButton.setTitle("Close", for: .normal)
-		closeButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .normal)
-		closeButton.setTitleColor(.white, for: .highlighted)
 		
 		view.addSubview(closeButton)
-		closeButton.widthAnchor.constraint(equalToConstant: 88).isActive = true
-		closeButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-		closeButton.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+		closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
 		closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 		
 		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -136,7 +182,7 @@ class CardViewController: UIViewController {
 	}
 	
 	@objc func panCard(recognizer: UIPanGestureRecognizer) {
-		let distance = hypot(cardView.center.x - view.center.x, cardView.center.y - view.center.y)
+		let distance = cardView.center.y - view.center.y
 		
 		switch recognizer.state {
 		case .began:
@@ -163,7 +209,7 @@ class CardViewController: UIViewController {
 			
 			let backgroundPercent = 1 - distance/500
 			view.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
-			
+
 			let HUDPercent = 1 - distance/200
 			for hudView in view.allHUDViews() {
 				hudView.alpha = HUDPercent
@@ -208,8 +254,5 @@ extension CardViewController: UIViewControllerTransitioningDelegate {
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 		return CardsDismissAnimationController(targetViewController: dismissTargetViewController)
 	}
-	
-	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-		return nil
-	}
+
 }

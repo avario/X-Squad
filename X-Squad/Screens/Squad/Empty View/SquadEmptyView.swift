@@ -28,7 +28,7 @@ class SquadEmptyView: UIView {
 		emptyLabel.textColor = UIColor.white.withAlphaComponent(0.5)
 		emptyLabel.font = UIFont.systemFont(ofSize: 16)
 		emptyLabel.numberOfLines = 0
-		emptyLabel.text = "This squad is empty.\nUse this + button to add a pilot to this squad."
+		emptyLabel.text = "This squad is empty."
 		
 		let stackView = UIStackView(arrangedSubviews: [factionIcon, emptyLabel])
 		stackView.translatesAutoresizingMaskIntoConstraints = false

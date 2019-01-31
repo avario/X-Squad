@@ -56,7 +56,7 @@ class NewSquadViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch Section(rawValue: section)! {
 		case .factions:
-			return Faction.allCases.count
+			return Faction.releasedFactions.count
 		case .xws:
 			return XWSRow.allCases.count
 		}
@@ -67,7 +67,7 @@ class NewSquadViewController: UITableViewController {
 		switch Section(rawValue: indexPath.section)! {
 		case .factions:
 			let factionCell = tableView.dequeueReusableCell(withIdentifier: FactionCell.reuseIdentifier) as! FactionCell
-			factionCell.faction = Faction.allCases[indexPath.row]
+			factionCell.faction = Faction.releasedFactions[indexPath.row]
 			return factionCell
 		case .xws:
 			let settingCell = tableView.dequeueReusableCell(withIdentifier: SettingCell.reuseIdentifier) as! SettingCell
@@ -96,7 +96,7 @@ class NewSquadViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		switch Section(rawValue: indexPath.section)! {
 		case .factions:
-			let faction = Faction.allCases[indexPath.row]
+			let faction = Faction.releasedFactions[indexPath.row]
 			let squad = Squad(faction: faction)
 			SquadStore.add(squad: squad)
 			

@@ -96,7 +96,12 @@ class SquadCell: UITableViewCell {
 	}
 	
 	func updateEmptyLabel() {
-		if let squad = squad, squad.members.isEmpty, emptyLabel == nil {
+		if let emptyLabel = emptyLabel {
+			emptyLabel.removeFromSuperview()
+			self.emptyLabel = nil
+		}
+		
+		if let squad = squad, squad.members.isEmpty {
 			emptyLabel = UILabel()
 			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
 			emptyLabel?.textAlignment = .center
@@ -110,9 +115,6 @@ class SquadCell: UITableViewCell {
 			emptyLabel?.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 			emptyLabel?.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -44).isActive = true
 			emptyLabel?.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 44).isActive = true
-		} else if let emptyLabel = emptyLabel {
-			emptyLabel.removeFromSuperview()
-			self.emptyLabel = nil
 		}
 	}
 	

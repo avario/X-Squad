@@ -114,16 +114,20 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func cardViewController(for card: Card) -> CardViewController {
-		return CardViewController(card: card, member: member)
+		let cardViewController = CardViewController(card: card, member: member)
+		if (card as! Upgrade) == currentUpgrade {
+			cardViewController.cardView.member = member
+		}
+		return cardViewController
 	}
 	
 	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
 		if cardViewController.card as? Upgrade == currentUpgrade {
-			return .remove
+			return .remove("Remove from Squad")
 		}
 		
 		if validity(of: cardViewController.card as! Upgrade) == .valid {
-			return .add
+			return .add("Add to Pilot")
 		}
 		
 		return nil

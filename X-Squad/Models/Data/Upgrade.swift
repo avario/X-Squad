@@ -16,6 +16,7 @@ class Upgrade: Codable {
 	let sides: [Side]
 	let cost: Cost?
 	let restrictions: [RestrictionsSet]?
+	let hyperspace: Bool?
 	
 	struct RestrictionsSet: Codable {
 		
