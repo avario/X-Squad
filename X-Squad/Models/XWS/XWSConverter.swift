@@ -49,7 +49,7 @@ extension XWS {
 	init(squad: Squad) {
 		name = squad.name
 		description = squad.description
-		points = squad.pointCost
+		points = nil
 		version = XWS.currentVersion
 		obstacles = squad.obstacles
 		vendor = squad.vendor
@@ -82,7 +82,7 @@ typealias DataUpgrade = Upgrade
 extension XWS.Pilot {
 	init(member: Squad.Member) {
 		id = member.pilot.xws
-		points = member.pointCost
+		points = nil
 		
 		var upgrades = [String: [String]]()
 		for upgradeType in DataUpgrade.UpgradeType.allCases {
