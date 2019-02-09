@@ -26,9 +26,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	init() {
 		super.init(style: .grouped)
 		title = "Settings"
-		
-		let closeButton = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
-		navigationItem.rightBarButtonItem = closeButton
+		tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "Settings Tab"), selectedImage: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -42,8 +40,10 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		navigationController?.navigationBar.barStyle = .black
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.navigationBar.prefersLargeTitles = true
 		
 		tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)

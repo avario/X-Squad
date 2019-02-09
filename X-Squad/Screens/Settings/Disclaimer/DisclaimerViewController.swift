@@ -23,7 +23,7 @@ class DisclaimerViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		
 		tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)

@@ -51,7 +51,7 @@ class CardViewController: UIViewController {
 		super.viewDidLoad()
 		
 		navigationController?.navigationBar.barStyle = .black
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		
 		view.addSubview(cardView)
 		let cardWidth = view.frame.width - 20
@@ -208,7 +208,7 @@ class CardViewController: UIViewController {
 			attach?.anchorPoint = anchor
 			
 			let backgroundPercent = 1 - distance/500
-			view.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
+			view.backgroundColor = UIColor(named: "XBackground")!.withAlphaComponent(backgroundPercent)
 
 			let HUDPercent = 1 - distance/200
 			for hudView in view.allHUDViews() {
@@ -231,7 +231,7 @@ class CardViewController: UIViewController {
 				animator.addBehavior(cardView.behaviour)
 				
 				UIView.animate(withDuration: 0.2) {
-					self.view.backgroundColor = .black
+					self.view.backgroundColor = UIColor(named: "XBackground")
 					for hudView in self.view.allHUDViews() {
 						hudView.alpha = 1.0
 					}

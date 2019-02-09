@@ -35,11 +35,12 @@ class QRCodeViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		navigationController?.navigationBar.barStyle = .black
 		
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
 		tableView.rowHeight = SquadCell.rowHeight
+		tableView.contentInset.top = 20
 		
 		tableView.register(SquadCell.self, forCellReuseIdentifier: SquadCell.reuseIdentifier)
 		
@@ -77,7 +78,7 @@ class QRCodeViewController: UITableViewController {
 		
 		footerView.addSubview(imageView)
 		imageView.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
-		imageView.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+		imageView.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 0).isActive = true
 		imageView.widthAnchor.constraint(equalTo: footerView.widthAnchor).isActive = true
 		imageView.heightAnchor.constraint(equalTo: footerView.heightAnchor, constant: -60).isActive = true
 	}

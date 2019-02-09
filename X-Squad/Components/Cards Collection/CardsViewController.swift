@@ -48,7 +48,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		
 		collectionView.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: CardCollectionViewCell.identifier)
 		collectionView.register(CardsSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CardsSectionHeaderView.reuseIdentifier)

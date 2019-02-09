@@ -30,8 +30,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.tintColor = UIColor(named: "XRed")
+		
+		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
+		UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
+		UIToolbar.appearance().isTranslucent = false
+		
+		let tabBarController = UITabBarController()
+		tabBarController.tabBar.barStyle = .black
+		tabBarController.tabBar.isTranslucent = false
+		
+		tabBarController.viewControllers = [
+			GameTab(),
+			SquadsViewController(),
+			SearchTab(),
+			UINavigationController(rootViewController: SettingsViewController())]
 
-		window?.rootViewController = UINavigationController(rootViewController: _HomeViewController())
+		tabBarController.selectedIndex = 1
+		
+		window?.rootViewController = tabBarController//UINavigationController(rootViewController: _HomeViewController())
 		
 		window?.makeKeyAndVisible()
 		

@@ -40,7 +40,7 @@ class NewSquadViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		navigationController?.navigationBar.barStyle = .black
 		
 		tableView.register(FactionCell.self, forCellReuseIdentifier: FactionCell.reuseIdentifier)
@@ -86,9 +86,9 @@ class NewSquadViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch Section(rawValue: section)! {
 		case .factions:
-			return "Select a faction:"
+			return "Select a faction"
 		case .xws:
-			return "XWS"
+			return "Import from XWS"
 		}
 		
 	}

@@ -18,7 +18,7 @@ class DownloadViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = .black
+		view.backgroundColor = UIColor(named: "XBackground")
 		navigationController?.navigationBar.barStyle = .black
 		
 		view.addSubview(progressView)

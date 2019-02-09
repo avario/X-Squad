@@ -30,6 +30,8 @@
 		B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4921DE79F900EF79F7 /* CardView.swift */; };
 		B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */; };
 		B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */; };
+		B66BE41A220E3FF30011203C /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BE419220E3FF30011203C /* Tabs.swift */; };
+		B66BE41D220E46630011203C /* SquadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BE41C220E46630011203C /* SquadsViewController.swift */; };
 		B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */; };
 		B671C93521E7589F0034C7C9 /* Squad.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93421E7589F0034C7C9 /* Squad.swift */; };
 		B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93621E767AD0034C7C9 /* SquadStore.swift */; };
@@ -120,6 +122,8 @@
 		B662FB4921DE79F900EF79F7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
+		B66BE419220E3FF30011203C /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
+		B66BE41C220E46630011203C /* SquadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadsViewController.swift; sourceTree = "<group>"; };
 		B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadViewController.swift; sourceTree = "<group>"; };
 		B671C93421E7589F0034C7C9 /* Squad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squad.swift; sourceTree = "<group>"; };
 		B671C93621E767AD0034C7C9 /* SquadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadStore.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */,
+				B66BE418220E3FDF0011203C /* Tabs */,
 				B671CA5521F0D1280034C7C9 /* Screens */,
 				B671CA5621F0D1360034C7C9 /* Components */,
 				B65BCCDE21E4BD4E005721A7 /* Fonts */,
@@ -324,8 +329,6 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */,
-				B671C93E21E798410034C7C9 /* SquadCell.swift */,
-				B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -345,6 +348,24 @@
 				B662FB4721DE75EA00EF79F7 /* CardViewController.swift */,
 			);
 			path = Card;
+			sourceTree = "<group>";
+		};
+		B66BE418220E3FDF0011203C /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				B66BE419220E3FF30011203C /* Tabs.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		B66BE41B220E46550011203C /* Squads */ = {
+			isa = PBXGroup;
+			children = (
+				B66BE41C220E46630011203C /* SquadsViewController.swift */,
+				B671C93E21E798410034C7C9 /* SquadCell.swift */,
+				B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */,
+			);
+			path = Squads;
 			sourceTree = "<group>";
 		};
 		B671C90C21E6519C0034C7C9 /* Image Download */ = {
@@ -437,6 +458,7 @@
 		B671CA5521F0D1280034C7C9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B66BE41B220E46550011203C /* Squads */,
 				B6F6065E21FA6F7400D108E6 /* XWS */,
 				B662FB3A21DE5B9100EF79F7 /* Home */,
 				B671C93B21E76C370034C7C9 /* New Squad */,
@@ -693,6 +715,7 @@
 				B6F6068D220332CD00D108E6 /* DialView.swift in Sources */,
 				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,
 				B671C9CC21EFEF400034C7C9 /* SquadPilotView.swift in Sources */,
+				B66BE41D220E46630011203C /* SquadsViewController.swift in Sources */,
 				B6EC67E721F76E9500D2BA5D /* DataStore.swift in Sources */,
 				B671C93F21E798410034C7C9 /* SquadCell.swift in Sources */,
 				B6EC67E921F8A7E800D2BA5D /* CardSearch.swift in Sources */,
@@ -728,6 +751,7 @@
 				B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */,
 				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,
 				B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */,
+				B66BE41A220E3FF30011203C /* Tabs.swift in Sources */,
 				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,
 				B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */,
 				B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */,
