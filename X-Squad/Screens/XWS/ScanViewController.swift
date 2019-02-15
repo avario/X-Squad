@@ -86,7 +86,12 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
 		
 		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
 		
-		dismiss(animated: true, completion: nil)
+		let tabViewController = self.presentingViewController!
+		
+		dismiss(animated: true) {
+			let squadViewController = EditSquadViewController(for: squad)
+			tabViewController.present(squadViewController, animated: true, completion: nil)
+		}
 	}
 	
 }

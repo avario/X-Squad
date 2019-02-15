@@ -9,11 +9,10 @@
 import Foundation
 import UIKit
 
-class SquadViewController: UIViewController {
+class SquadViewController: UIViewController, CardViewControllerDelegate {
 	
 	let squad: Squad
 	
-	var memberViews: [SquadMemberView] = []
 	let scrollView = UIScrollView()
 	let stackView = UIStackView()
 	
@@ -69,18 +68,21 @@ class SquadViewController: UIViewController {
 		stackView.addArrangedSubview(header)
 		header.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 		
-		let addPilotButton = SquadButton()
-		addPilotButton.action = .add("Add Pilot")
-		addPilotButton.addTarget(self, action: #selector(addPilot), for: .touchUpInside)
-		
-		stackView.addArrangedSubview(addPilotButton)
-		
 		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
 		
 		updateMemberViews()
+	}
+	
+	@objc func updateMemberViews() {
+		updateEmptyView()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidAddMemberToSquad, object: squad)
-		NotificationCenter.default.addObserver(self, selector: #selector(updateMemberViews), name: .squadStoreDidRemoveMemberFromSquad, object: squad)
+		for (index, member) in squad.members.enumerated() {
+			let squadMemberView = memberView(for: member)
+			
+			// +1 for header view
+			stackView.insertArrangedSubview(squadMemberView, at: index + 1)
+			squadMemberView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+		}
 	}
 	
 	var emptyView: SquadEmptyView?
@@ -101,70 +103,27 @@ class SquadViewController: UIViewController {
 		dismiss(animated: true, completion: nil)
 	}
 	
-	@objc func updateMemberViews() {
-		updateEmptyView()
-		
-		func memberView(for member: Squad.Member) -> SquadMemberView {
-			if let existingMemberView = memberViews.first(where: { $0.memberView.member.uuid == member.uuid }) {
-				return existingMemberView
-			} else {
-				let squadMemberView = SquadMemberView(member: member)
-				squadMemberView.memberView.delegate = self
-				memberViews.append(squadMemberView)
-				
-				return squadMemberView
-			}
-		}
-		
-		// Remove any members that are no longer in the squad
-		for memberView in memberViews {
-			if !squad.members.contains(where: { $0.uuid == memberView.memberView.member.uuid }) {
-				memberView.removeFromSuperview()
-			}
-		}
-		memberViews = memberViews.filter({ $0.superview != nil })
-		
-		for (index, member) in squad.members.enumerated() {
-			let squadMemberView = memberView(for: member)
-			
-			// +1 for header view
-			stackView.insertArrangedSubview(squadMemberView, at: index + 1)
-			squadMemberView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
-		}
-	}
-	
-	@objc func addPilot() {
-		let addPilotViewController = AddPilotViewController(squad: squad)
-		present(addPilotViewController, animated: true, completion: nil)
+	func memberView(for member: Squad.Member) -> UIView {
+		fatalError()
 	}
 	
 	@objc func showSquadInfo() {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		
+		addActions(to: alert)
+		
+		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+		alert.view.tintColor = .black
+		self.present(alert, animated: true, completion: nil)
+	}
+	
+	func addActions(to alert: UIAlertController) {
 		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .default, handler: { _ in
 			self.copyXWS()
 		}))
 		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .default, handler: { _ in
 			self.showXWSQRCode()
 		}))
-		alert.addAction(UIAlertAction(title: "Duplicate Squad", style: .default, handler: { _ in
-			self.duplicateSquad()
-		}))
-		alert.addAction(UIAlertAction(title: "Delete Squad", style: .destructive, handler: { _ in
-			self.deleteSquad()
-		}))
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-		alert.view.tintColor = .black
-		self.present(alert, animated: true, completion: nil)
-	}
-	
-	func deleteSquad() {
-		SquadStore.delete(squad: squad)
-		
-		for cardView in CardView.all(in: view) {
-			cardView.member = nil
-		}
-		
-		dismiss(animated: true, completion: nil)
 	}
 	
 	func copyXWS() {
@@ -183,13 +142,14 @@ class SquadViewController: UIViewController {
 		present(UINavigationController(rootViewController: QRCodeViewController(squad: squad)), animated: true, completion: nil)
 	}
 	
-	func duplicateSquad() {
-		let duplicateMembers = squad.members.map({ Squad.Member(ship: $0.ship, pilot: $0.pilot, upgrades: $0.upgrades) })
-		let duplicateSquad = Squad(faction: squad.faction, members: duplicateMembers, name: squad.name, description: squad.description, obstacles: squad.obstacles, vendor: squad.vendor)
-		
-		SquadStore.add(squad: duplicateSquad)
-		dismiss(animated: true, completion: nil)
+	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
+		return nil
 	}
+	
+	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
+		
+	}
+	
 }
 
 extension SquadViewController: MemberViewDelegate {
@@ -210,34 +170,6 @@ extension SquadViewController: MemberViewDelegate {
 	func memberView(_ memberView: MemberView, didPress button: UpgradeButton) {
 		let selectUpgradeViewController = SelectUpgradeViewController(squad: squad, member: memberView.member, currentUpgrade: button.associatedUpgrade, upgradeType: button.upgradeType!)
 		present(selectUpgradeViewController, animated: true, completion: nil)
-	}
-}
-
-extension SquadViewController: CardViewControllerDelegate {
-	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		switch cardViewController.card {
-		case _ as Pilot:
-			return .remove("Remove from Squad")
-		case _ as Upgrade:
-			return .remove("Remove from Pilot")
-		default:
-			fatalError()
-		}
-	}
-	
-	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		let member = cardViewController.member!
-		
-		switch cardViewController.card {
-		case _ as Pilot:
-			squad.remove(member: member)
-		case let upgrade as Upgrade:
-			member.remove(upgrade: upgrade)
-		default:
-			fatalError()
-		}
-		
-		dismiss(animated: true, completion: nil)
 	}
 }
 

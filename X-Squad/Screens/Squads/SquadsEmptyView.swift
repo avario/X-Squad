@@ -11,12 +11,12 @@ import UIKit
 
 class SquadsEmptyView: UIView {
 	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	init(message: String) {
+		super.init(frame: .zero)
 		
 		let label = UILabel()
 		label.numberOfLines = 0
-		label.text = "You don't have any squads setup.\nUse the + button in the top right corner to create a new squad."
+		label.text = message
 		label.textAlignment = .center
 		label.textColor = UIColor.white.withAlphaComponent(0.5)
 		

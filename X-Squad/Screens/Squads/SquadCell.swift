@@ -131,7 +131,7 @@ class SquadCell: UITableViewCell {
 			if let existingMemberView = memberViews.first(where: { $0.member.uuid == member.uuid }) {
 				return existingMemberView
 			} else {
-				let squadMemberView = MemberView(member: member, height: SquadCell.rowHeight, isEditing: false)
+				let squadMemberView = MemberView(member: member, height: SquadCell.rowHeight, mode: .display)
 				memberViews.append(squadMemberView)
 				
 				return squadMemberView

@@ -238,7 +238,7 @@ extension Squad.Member {
 				}
 				
 				return grants.reduce($0, {
-					switch $1.type {
+					switch $1 {
 					case .slot(let slot, let amount):
 						switch amount {
 						case 1:
@@ -279,7 +279,7 @@ extension Squad.Member {
 				}
 				
 				return grants.reduce($0, {
-					switch $1.type {
+					switch $1 {
 					case .action(let action):
 						return $0 + [action]
 					default:
@@ -298,7 +298,7 @@ extension Squad.Member {
 				}
 				
 				return grants.reduce($0, {
-					switch $1.type {
+					switch $1 {
 					case .force(let force):
 						guard let side = force.side else {
 							fallthrough

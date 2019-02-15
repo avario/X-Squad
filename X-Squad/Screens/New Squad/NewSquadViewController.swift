@@ -42,6 +42,7 @@ class NewSquadViewController: UITableViewController {
 		
 		view.backgroundColor = UIColor(named: "XBackground")
 		navigationController?.navigationBar.barStyle = .black
+		navigationController?.navigationBar.prefersLargeTitles = true
 		
 		tableView.register(FactionCell.self, forCellReuseIdentifier: FactionCell.reuseIdentifier)
 		tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.reuseIdentifier)
@@ -125,7 +126,11 @@ class NewSquadViewController: UITableViewController {
 			let squad = Squad(xws: xws)
 			SquadStore.add(squad: squad)
 			
-			dismiss(animated: true, completion: nil)
+			let tabViewController = self.presentingViewController!
+			dismiss(animated: true) {
+				let squadViewController = EditSquadViewController(for: squad)
+				tabViewController.present(squadViewController, animated: true, completion: nil)
+			}
 		} catch {
 			let alert = UIAlertController(title: "Invalid XWS", message: "The data on your clipboard was not in a valid XWS format. Copy the XWS text to your clipboard and try again.", preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: "Okay", style: .default) { _ in })

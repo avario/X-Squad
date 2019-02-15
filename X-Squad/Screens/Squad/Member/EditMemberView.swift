@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SquadMemberView: UIScrollView {
+class EditMemberView: UIScrollView {
 	
 	let member: Squad.Member
 	let memberView: MemberView
@@ -17,7 +17,7 @@ class SquadMemberView: UIScrollView {
 
 	init(member: Squad.Member) {
 		self.member = member
-		self.memberView = MemberView(member: member, height: UIScreen.main.bounds.width * 0.75, isEditing: true)
+		self.memberView = MemberView(member: member, height: UIScreen.main.bounds.width * 0.75, mode: .edit)
 		
 		super.init(frame: .zero)
 		translatesAutoresizingMaskIntoConstraints = false

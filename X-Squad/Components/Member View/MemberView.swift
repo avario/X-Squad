@@ -23,15 +23,21 @@ class MemberView: UIView {
 	
 	private let pilotCardView = CardView()
 	private var upgradeButtons: [UpgradeButton] = []
-	private var cardViews: [CardView] = []
+	private(set) var cardViews: [CardView] = []
 	
-	let isEditing: Bool
+	enum Mode {
+		case display
+		case edit
+		case game
+	}
+	
+	let mode: Mode
 	
 	private var widthConstraint: NSLayoutConstraint! = nil
 	
-	init(member: Squad.Member, height: CGFloat, isEditing: Bool = true) {
+	init(member: Squad.Member, height: CGFloat, mode: Mode = .display) {
 		self.member = member
-		self.isEditing = isEditing
+		self.mode = mode
 		
 		super.init(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: height)))
 		self.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +90,7 @@ class MemberView: UIView {
 	}
 	
 	@objc func updatePilot() {
-		if isEditing {
+		if mode == .edit {
 			for upgradeButton in self.upgradeButtons {
 				upgradeButton.removeFromSuperview()
 			}
@@ -214,7 +220,7 @@ class MemberView: UIView {
 		}
 		
 		// Any buttons that weren't used by an upgrade should be positioned at the end of the list
-		if isEditing, availableUpgradeButtons.isEmpty == false {
+		if mode == .edit, availableUpgradeButtons.isEmpty == false {
 			let buttonsInColumn = 4
 			
 			for (index, upgradeButton) in availableUpgradeButtons.enumerated() {

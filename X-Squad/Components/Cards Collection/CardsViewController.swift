@@ -81,7 +81,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		let cardViewController = self.cardViewController(for: card)
 		cardViewController.delegate = self
-		if let topViewController = self.presentingViewController?.navigationController {
+		if let topViewController = self.presentingViewController?.navigationController?.tabBarController {
 			topViewController.present(cardViewController, animated: true, completion: nil)
 		} else {
 			self.present(cardViewController, animated: true, completion: nil)

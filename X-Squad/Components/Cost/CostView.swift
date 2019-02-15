@@ -32,7 +32,7 @@ class CostView: UIView {
 		valueLabel.layer.cornerRadius = 12
 		valueLabel.clipsToBounds = true
 		
-		valueLabel.layer.borderColor = UIColor(named: "XRed")!.cgColor
+		valueLabel.layer.borderColor = UIColor(named: "XRed")!.withAlphaComponent(0.6).cgColor
 		valueLabel.layer.borderWidth = 1
 		valueLabel.textColor = UIColor(named: "XRed")
 		valueLabel.textAlignment = .center

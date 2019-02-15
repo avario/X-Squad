@@ -21,7 +21,6 @@
 		B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */; };
 		B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5421E561AF005721A7 /* DownloadViewController.swift */; };
 		B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */; };
-		B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */; };
 		B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1421DD4C0400EF79F7 /* Assets.xcassets */; };
 		B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */; };
 		B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */; };
@@ -30,7 +29,8 @@
 		B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4921DE79F900EF79F7 /* CardView.swift */; };
 		B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */; };
 		B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */; };
-		B66BE41A220E3FF30011203C /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BE419220E3FF30011203C /* Tabs.swift */; };
+		B66A14A82215F324001C6D8E /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66A14A72215F324001C6D8E /* TimerView.swift */; };
+		B66A14AB2215F6AB001C6D8E /* XButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66A14AA2215F6AB001C6D8E /* XButton.swift */; };
 		B66BE41D220E46630011203C /* SquadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BE41C220E46630011203C /* SquadsViewController.swift */; };
 		B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */; };
 		B671C93521E7589F0034C7C9 /* Squad.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C93421E7589F0034C7C9 /* Squad.swift */; };
@@ -46,8 +46,20 @@
 		B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */; };
 		B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */; };
 		B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9C821EE11740034C7C9 /* PullToDismissController.swift */; };
-		B671C9CC21EFEF400034C7C9 /* SquadPilotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9CB21EFEF400034C7C9 /* SquadPilotView.swift */; };
+		B671C9CC21EFEF400034C7C9 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */; };
 		B671CA5E21F0F4310034C7C9 /* SquadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671CA5D21F0F4300034C7C9 /* SquadButton.swift */; };
+		B6D4C8D622143AE3002D598A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D522143AE3002D598A /* Game.swift */; };
+		B6D4C8D82214634D002D598A /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D72214634D002D598A /* NewGameViewController.swift */; };
+		B6D4C8DA22146C27002D598A /* SelectSquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */; };
+		B6D4C8DD22146CB2002D598A /* EditSquadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8DC22146CB2002D598A /* EditSquadsViewController.swift */; };
+		B6D4C8E422148214002D598A /* GameSquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8E322148214002D598A /* GameSquadViewController.swift */; };
+		B6D4C8E62214840A002D598A /* EditSquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8E52214840A002D598A /* EditSquadViewController.swift */; };
+		B6D4C8EA2214A4E3002D598A /* GameMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8E92214A4E3002D598A /* GameMemberView.swift */; };
+		B6D4C8EC2214AB46002D598A /* GameSquadMemberStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8EB2214AB46002D598A /* GameSquadMemberStateView.swift */; };
+		B6D4C8EE2214BAD1002D598A /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8ED2214BAD1002D598A /* TokenView.swift */; };
+		B6D4C8F02214BE92002D598A /* TokenStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8EF2214BE92002D598A /* TokenStackView.swift */; };
+		B6E39671220F29FE001451C1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E39670220F29FE001451C1 /* SearchViewController.swift */; };
+		B6E39675220F319E001451C1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E39674220F319E001451C1 /* GameViewController.swift */; };
 		B6EC67C221F72C7C00D2BA5D /* data in Copy X-Wing Data */ = {isa = PBXBuildFile; fileRef = B6EC67C121F72C7C00D2BA5D /* data */; };
 		B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC67D021F7361700D2BA5D /* Ship.swift */; };
 		B6EC67D321F736C800D2BA5D /* Faction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC67D221F736C800D2BA5D /* Faction.swift */; };
@@ -112,7 +124,6 @@
 		B65BCD5421E561AF005721A7 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		B662FB0A21DD4C0000EF79F7 /* X-Squad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X-Squad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B662FB1421DD4C0400EF79F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B662FB1721DD4C0400EF79F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B662FB1921DD4C0400EF79F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,7 +133,8 @@
 		B662FB4921DE79F900EF79F7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B662FB4D21DEB7E400EF79F7 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = "<group>"; };
-		B66BE419220E3FF30011203C /* Tabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tabs.swift; sourceTree = "<group>"; };
+		B66A14A72215F324001C6D8E /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		B66A14AA2215F6AB001C6D8E /* XButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XButton.swift; sourceTree = "<group>"; };
 		B66BE41C220E46630011203C /* SquadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadsViewController.swift; sourceTree = "<group>"; };
 		B671C90D21E651AE0034C7C9 /* ImageDownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadViewController.swift; sourceTree = "<group>"; };
 		B671C93421E7589F0034C7C9 /* Squad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Squad.swift; sourceTree = "<group>"; };
@@ -138,8 +150,20 @@
 		B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadHeaderView.swift; sourceTree = "<group>"; };
 		B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUpgradeViewController.swift; sourceTree = "<group>"; };
 		B671C9C821EE11740034C7C9 /* PullToDismissController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissController.swift; sourceTree = "<group>"; };
-		B671C9CB21EFEF400034C7C9 /* SquadPilotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadPilotView.swift; sourceTree = "<group>"; };
+		B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
 		B671CA5D21F0F4300034C7C9 /* SquadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadButton.swift; sourceTree = "<group>"; };
+		B6D4C8D522143AE3002D598A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		B6D4C8D72214634D002D598A /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
+		B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSquadViewController.swift; sourceTree = "<group>"; };
+		B6D4C8DC22146CB2002D598A /* EditSquadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSquadsViewController.swift; sourceTree = "<group>"; };
+		B6D4C8E322148214002D598A /* GameSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSquadViewController.swift; sourceTree = "<group>"; };
+		B6D4C8E52214840A002D598A /* EditSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSquadViewController.swift; sourceTree = "<group>"; };
+		B6D4C8E92214A4E3002D598A /* GameMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMemberView.swift; sourceTree = "<group>"; };
+		B6D4C8EB2214AB46002D598A /* GameSquadMemberStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSquadMemberStateView.swift; sourceTree = "<group>"; };
+		B6D4C8ED2214BAD1002D598A /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
+		B6D4C8EF2214BE92002D598A /* TokenStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStackView.swift; sourceTree = "<group>"; };
+		B6E39670220F29FE001451C1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		B6E39674220F319E001451C1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B6EC67C121F72C7C00D2BA5D /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = "X-Wing-Data-2/data"; sourceTree = "<group>"; };
 		B6EC67D021F7361700D2BA5D /* Ship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ship.swift; sourceTree = "<group>"; };
 		B6EC67D221F736C800D2BA5D /* Faction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faction.swift; sourceTree = "<group>"; };
@@ -290,7 +314,6 @@
 			isa = PBXGroup;
 			children = (
 				B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */,
-				B66BE418220E3FDF0011203C /* Tabs */,
 				B671CA5521F0D1280034C7C9 /* Screens */,
 				B671CA5621F0D1360034C7C9 /* Components */,
 				B65BCCDE21E4BD4E005721A7 /* Fonts */,
@@ -307,6 +330,7 @@
 		B662FB2221DD4CB300EF79F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B6D4C8D422143AD6002D598A /* Game */,
 				B6F6065921FA52EB00D108E6 /* XWS */,
 				B6EC67E321F76D1F00D2BA5D /* Card */,
 				B6EC67D421F736CC00D2BA5D /* Data */,
@@ -323,14 +347,6 @@
 				B6EC67E821F8A7E800D2BA5D /* CardSearch.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		B662FB3A21DE5B9100EF79F7 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				B662FB0F21DD4C0000EF79F7 /* HomeViewController.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		B662FB4021DE657C00EF79F7 /* Frameworks */ = {
@@ -350,12 +366,12 @@
 			path = Card;
 			sourceTree = "<group>";
 		};
-		B66BE418220E3FDF0011203C /* Tabs */ = {
+		B66A14A92215F6A3001C6D8E /* Button */ = {
 			isa = PBXGroup;
 			children = (
-				B66BE419220E3FF30011203C /* Tabs.swift */,
+				B66A14AA2215F6AB001C6D8E /* XButton.swift */,
 			);
-			path = Tabs;
+			path = Button;
 			sourceTree = "<group>";
 		};
 		B66BE41B220E46550011203C /* Squads */ = {
@@ -398,7 +414,7 @@
 			children = (
 				B671C94121E7BC540034C7C9 /* SquadViewController.swift */,
 				B671C98821EBC0E50034C7C9 /* Header */,
-				B671C98321E9614D0034C7C9 /* Pilot */,
+				B671C98321E9614D0034C7C9 /* Member */,
 				B6F6067021FB614E00D108E6 /* Empty View */,
 			);
 			path = Squad;
@@ -423,12 +439,12 @@
 			path = "Cards Collection";
 			sourceTree = "<group>";
 		};
-		B671C98321E9614D0034C7C9 /* Pilot */ = {
+		B671C98321E9614D0034C7C9 /* Member */ = {
 			isa = PBXGroup;
 			children = (
-				B671C9CB21EFEF400034C7C9 /* SquadPilotView.swift */,
+				B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */,
 			);
-			path = Pilot;
+			path = Member;
 			sourceTree = "<group>";
 		};
 		B671C98821EBC0E50034C7C9 /* Header */ = {
@@ -458,9 +474,11 @@
 		B671CA5521F0D1280034C7C9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B6D4C8DB22146CA3002D598A /* Edit Squads */,
+				B6E39673220F3195001451C1 /* Game */,
+				B6E39672220F2A05001451C1 /* Search */,
 				B66BE41B220E46550011203C /* Squads */,
 				B6F6065E21FA6F7400D108E6 /* XWS */,
-				B662FB3A21DE5B9100EF79F7 /* Home */,
 				B671C93B21E76C370034C7C9 /* New Squad */,
 				B671C94021E7BC470034C7C9 /* Squad */,
 				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
@@ -475,6 +493,7 @@
 		B671CA5621F0D1360034C7C9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B66A14A92215F6A3001C6D8E /* Button */,
 				B6F60678220201A900D108E6 /* Close Button */,
 				B671CA5C21F0F4220034C7C9 /* Squad Button */,
 				B671CA5921F0D1F10034C7C9 /* Member View */,
@@ -508,6 +527,47 @@
 				B671CA5D21F0F4300034C7C9 /* SquadButton.swift */,
 			);
 			path = "Squad Button";
+			sourceTree = "<group>";
+		};
+		B6D4C8D422143AD6002D598A /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B6D4C8D522143AE3002D598A /* Game.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		B6D4C8DB22146CA3002D598A /* Edit Squads */ = {
+			isa = PBXGroup;
+			children = (
+				B6D4C8DC22146CB2002D598A /* EditSquadsViewController.swift */,
+				B6D4C8E52214840A002D598A /* EditSquadViewController.swift */,
+			);
+			path = "Edit Squads";
+			sourceTree = "<group>";
+		};
+		B6E39672220F2A05001451C1 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				B6E39670220F29FE001451C1 /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		B6E39673220F3195001451C1 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				B6E39674220F319E001451C1 /* GameViewController.swift */,
+				B6D4C8D72214634D002D598A /* NewGameViewController.swift */,
+				B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */,
+				B6D4C8E322148214002D598A /* GameSquadViewController.swift */,
+				B6D4C8E92214A4E3002D598A /* GameMemberView.swift */,
+				B6D4C8EB2214AB46002D598A /* GameSquadMemberStateView.swift */,
+				B6D4C8ED2214BAD1002D598A /* TokenView.swift */,
+				B6D4C8EF2214BE92002D598A /* TokenStackView.swift */,
+				B66A14A72215F324001C6D8E /* TimerView.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 		B6EC67D421F736CC00D2BA5D /* Data */ = {
@@ -707,14 +767,15 @@
 				B6EC67D821F73B7300D2BA5D /* Pilot.swift in Sources */,
 				B6EC67DE21F7545C00D2BA5D /* Force.swift in Sources */,
 				B671C93A21E76C2D0034C7C9 /* NewSquadViewController.swift in Sources */,
-				B662FB1021DD4C0000EF79F7 /* HomeViewController.swift in Sources */,
 				B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */,
 				B671C93D21E76DC80034C7C9 /* FactionCell.swift in Sources */,
+				B6E39675220F319E001451C1 /* GameViewController.swift in Sources */,
 				B6EC67DC21F7501B00D2BA5D /* Action.swift in Sources */,
+				B6D4C8E62214840A002D598A /* EditSquadViewController.swift in Sources */,
 				B65BCD3821E4C388005721A7 /* CostView.swift in Sources */,
 				B6F6068D220332CD00D108E6 /* DialView.swift in Sources */,
 				B662FB4521DE6CAB00EF79F7 /* CardCollectionViewLayout.swift in Sources */,
-				B671C9CC21EFEF400034C7C9 /* SquadPilotView.swift in Sources */,
+				B671C9CC21EFEF400034C7C9 /* EditMemberView.swift in Sources */,
 				B66BE41D220E46630011203C /* SquadsViewController.swift in Sources */,
 				B6EC67E721F76E9500D2BA5D /* DataStore.swift in Sources */,
 				B671C93F21E798410034C7C9 /* SquadCell.swift in Sources */,
@@ -725,6 +786,7 @@
 				B6EC67E221F75B1500D2BA5D /* Member.swift in Sources */,
 				B6F6065B21FA546300D108E6 /* XWS.swift in Sources */,
 				B662FB4E21DEB7E400EF79F7 /* SearchResultsViewController.swift in Sources */,
+				B6D4C8DD22146CB2002D598A /* EditSquadsViewController.swift in Sources */,
 				B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */,
 				B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */,
 				B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */,
@@ -737,26 +799,36 @@
 				B6F6065D21FA59DC00D108E6 /* XWSConverter.swift in Sources */,
 				B6EC67D321F736C800D2BA5D /* Faction.swift in Sources */,
 				B6F6066F21FB614A00D108E6 /* SquadEmptyView.swift in Sources */,
+				B6D4C8EC2214AB46002D598A /* GameSquadMemberStateView.swift in Sources */,
+				B6D4C8D82214634D002D598A /* NewGameViewController.swift in Sources */,
 				B6EC67E521F76D2600D2BA5D /* Card.swift in Sources */,
 				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
+				B6D4C8F02214BE92002D598A /* TokenStackView.swift in Sources */,
 				B6EC67DA21F73C0B00D2BA5D /* Upgrade.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,
 				B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */,
 				B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */,
 				B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */,
+				B6E39671220F29FE001451C1 /* SearchViewController.swift in Sources */,
 				B60E895121F14A4C00A58579 /* SquadsEmptyView.swift in Sources */,
+				B6D4C8D622143AE3002D598A /* Game.swift in Sources */,
+				B6D4C8EA2214A4E3002D598A /* GameMemberView.swift in Sources */,
 				B6EC67E021F7577200D2BA5D /* Charges.swift in Sources */,
 				B65BCD4421E4EB86005721A7 /* UpgradeButton.swift in Sources */,
+				B6D4C8EE2214BAD1002D598A /* TokenView.swift in Sources */,
+				B66A14A82215F324001C6D8E /* TimerView.swift in Sources */,
 				B65BCD4921E53DEE005721A7 /* SettingCell.swift in Sources */,
+				B66A14AB2215F6AB001C6D8E /* XButton.swift in Sources */,
 				B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */,
 				B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */,
 				B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */,
-				B66BE41A220E3FF30011203C /* Tabs.swift in Sources */,
 				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,
+				B6D4C8DA22146C27002D598A /* SelectSquadViewController.swift in Sources */,
 				B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */,
 				B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */,
 				B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */,
 				B671CA5E21F0F4310034C7C9 /* SquadButton.swift in Sources */,
+				B6D4C8E422148214002D598A /* GameSquadViewController.swift in Sources */,
 				B671C94221E7BC540034C7C9 /* SquadViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

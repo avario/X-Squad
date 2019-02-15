@@ -15,45 +15,23 @@ class SquadsViewController: UITableViewController {
 		return .lightContent
 	}
 	
-	init() {
+	let emptyMessage: String
+	
+	init(emptyMessage: String) {
+		self.emptyMessage = emptyMessage
 		super.init(style: .plain)
-		title = "Squads"
-		tabBarItem = UITabBarItem(title: "Squads", image: UIImage(named: "Squads Tab"), selectedImage: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+		fatalError()
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		navigationController?.navigationBar.barStyle = .black
-		navigationController?.navigationBar.isTranslucent = false
-		navigationController?.navigationBar.prefersLargeTitles = false
 		view.backgroundColor = UIColor(named: "XBackground")
 		
 		definesPresentationContext = true
-		
-//		let addSquadButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addSquad))
-//		navigationItem.rightBarButtonItem = addSquadButton
-//		addSquadButton.tintColor = UIColor.white.withAlphaComponent(0.5)
-
-		let addSquadButton = UIButton(type: .contactAdd)
-		addSquadButton.addTarget(self, action: #selector(addSquad), for: .touchUpInside)
-		addSquadButton.tintColor = UIColor.white.withAlphaComponent(0.5)
-		
-		let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 64))
-		headerView.addSubview(addSquadButton)
-		
-		addSquadButton.translatesAutoresizingMaskIntoConstraints = false
-		
-		addSquadButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
-		addSquadButton.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
-		addSquadButton.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-		addSquadButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-		
-		tableView.tableHeaderView = headerView
 		
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)
 		tableView.rowHeight = SquadCell.rowHeight
@@ -79,8 +57,6 @@ class SquadsViewController: UITableViewController {
 		
 		let indexPath = IndexPath(row: squadIndex, section: 0)
 		tableView.insertRows(at: [indexPath], with: .none)
-		//		tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-		
 		tableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
 		tableView.deselectRow(at: indexPath, animated: true)
 		
@@ -100,7 +76,7 @@ class SquadsViewController: UITableViewController {
 	}
 	
 	func updateEmptyView() {
-		tableView.backgroundView = squads.isEmpty ? SquadsEmptyView() : nil
+		tableView.backgroundView = squads.isEmpty ? SquadsEmptyView(message: emptyMessage) : nil
 	}
 	
 	@objc func addSquad() {
@@ -120,14 +96,6 @@ class SquadsViewController: UITableViewController {
 		squadCell.squad = squads[indexPath.row]
 		
 		return squadCell
-	}
-	
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let squad = squads[indexPath.row]
-		let squadViewController = SquadViewController(for: squad)
-		tabBarController!.present(squadViewController, animated: true, completion: nil)
-		
-		tableView.deselectRow(at: indexPath, animated: true)
 	}
 	
 }

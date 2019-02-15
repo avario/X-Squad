@@ -239,67 +239,63 @@ class Upgrade: Codable {
 			let ordnance: Bool
 		}
 		
-		struct Grant: Codable {
-			let type: GrantType
+		enum Grant: Codable {
+			case action(Action)
+			case slot(UpgradeType, Int)
+			case force(Force)
+			case stat(Ship.Stat.StatType, Int)
 			
-			enum GrantType {
-				case action(Action)
-				case slot(UpgradeType, Int)
-				case force(Force)
-				case stat(Ship.Stat.StatType, Int)
-				
-				enum Name: String, Codable {
-					case action
-					case slot
-					case force
-					case stat
-				}
+			enum Name: String, Codable {
+				case action
+				case slot
+				case force
+				case stat
 			}
 			
 			init(from decoder: Decoder) throws {
 				let values = try decoder.container(keyedBy: CodingKeys.self)
-				let typeName = try values.decode(GrantType.Name.self, forKey: .type)
+				let name = try values.decode(Grant.Name.self, forKey: .type)
 				
-				switch typeName {
+				switch name {
 				case .action:
 					let action = try values.decode(Action.self, forKey: .value)
-					self.type = .action(action)
+					self = .action(action)
 					
 				case .slot:
 					let slot = try values.decode(UpgradeType.self, forKey: .value)
 					let amount = try values.decode(Int.self, forKey: .amount)
-					self.type = .slot(slot, amount)
+					self = .slot(slot, amount)
 					
 				case .force:
 					let force = try values.decode(Force.self, forKey: .value)
-					self.type = .force(force)
+					self = .force(force)
 					
 				case .stat:
 					let statType = try values.decode(Ship.Stat.StatType.self, forKey: .value)
 					let amount = try values.decode(Int.self, forKey: .amount)
-					self.type = .stat(statType, amount)
+					self = .stat(statType, amount)
 				}
 			}
 			
 			func encode(to encoder: Encoder) throws {
 				var container = encoder.container(keyedBy: CodingKeys.self)
 				
-				switch self.type {
+				switch self {
 				case .action(let action):
-					try container.encode(GrantType.Name.action, forKey: .type)
+					try container.encode(Grant.Name.action, forKey: .type)
 					try container.encode(action, forKey: .value)
 					
 				case .slot(let slot, let amount):
-					try container.encode(GrantType.Name.slot, forKey: .type)
+					try container.encode(Grant.Name.slot, forKey: .type)
 					try container.encode(slot, forKey: .value)
 					try container.encode(amount, forKey: .amount)
 					
 				case .force(let force):
-					try container.encode(GrantType.Name.force, forKey: .type)
+					try container.encode(Grant.Name.force, forKey: .type)
 					try container.encode(force, forKey: .value)
 					
 				case .stat(let stat, let amount):
-					try container.encode(GrantType.Name.stat, forKey: .type)
+					try container.encode(Grant.Name.stat, forKey: .type)
 					try container.encode(stat, forKey: .value)
 					try container.encode(amount, forKey: .amount)
 				}
