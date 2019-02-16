@@ -47,10 +47,10 @@ extension Squad {
 
 extension XWS {
 	init(squad: Squad) {
-		name = squad.name
+		name = squad.name ?? "X-Squad"
 		description = squad.description
 		points = nil
-		version = XWS.currentVersion
+		version = nil//XWS.currentVersion
 		obstacles = squad.obstacles
 		vendor = squad.vendor
 		pilots = squad.members.map(Pilot.init(member:))
@@ -83,6 +83,7 @@ extension XWS.Pilot {
 	init(member: Squad.Member) {
 		id = member.pilot.xws
 		points = nil
+		ship = member.ship.xws
 		
 		var upgrades = [String: [String]]()
 		for upgradeType in DataUpgrade.UpgradeType.allCases {

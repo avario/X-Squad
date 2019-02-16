@@ -15,7 +15,7 @@ struct XWS: Codable {
 	let name: String?
 	let faction: Faction
 	let points: Int?
-	let version: String
+	let version: String?
 	let description: String?
 	let obstacles: [Obstacle]?
 	let pilots: [Pilot]
@@ -36,6 +36,7 @@ struct XWS: Codable {
 		let id: String
 		let upgrades: [String: [String]]
 		let points: Int?
+		let ship: String
 		
 		enum Upgrade: String, Codable {
 			case talent
