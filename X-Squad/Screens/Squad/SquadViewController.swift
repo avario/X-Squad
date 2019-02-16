@@ -5,6 +5,7 @@
 //  Created by Avario on 10/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is an abstract screen that display a squad (with the pilots stacked vertically). The pilots are displayed in a scrollable stack view.
 
 import Foundation
 import UIKit
@@ -62,6 +63,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
 		stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
 		
+		// The header displays the Close button, the point cost, and the info button
 		let header = SquadHeaderView(squad: squad)
 		header.infoButton.addTarget(self, action: #selector(showSquadInfo), for: .touchUpInside)
 		header.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -77,6 +79,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		updateEmptyView()
 		
 		for (index, member) in squad.members.enumerated() {
+			// Member views are only removed in the EditSquadViewController subclass.
 			let squadMemberView = memberView(for: member)
 			
 			// +1 for header view
@@ -85,6 +88,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		}
 	}
 	
+	// The empty view is shown when there are no pilots in the squad.
 	var emptyView: SquadEmptyView?
 	
 	func updateEmptyView() {
@@ -104,6 +108,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 	}
 	
 	func memberView(for member: Squad.Member) -> UIView {
+		// This method will be overriden by subclasses.
 		fatalError()
 	}
 	
@@ -126,6 +131,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		}))
 	}
 	
+	// Copy XWS text for the squad to the user's clipboard.
 	func copyXWS() {
 		let xws = XWS(squad: squad)
 		
@@ -147,7 +153,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 	}
 	
 	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		
+		// Implemented in subclass.
 	}
 	
 }
@@ -176,6 +182,7 @@ extension SquadViewController: MemberViewDelegate {
 extension SquadViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+		// Don't do a fancy transition if the squad is empty.
 		if squad.members.isEmpty {
 			return nil
 		}

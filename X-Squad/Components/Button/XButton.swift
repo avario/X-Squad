@@ -5,6 +5,7 @@
 //  Created by Avario on 14/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// A simple rounded button with a border.
 
 import Foundation
 import UIKit

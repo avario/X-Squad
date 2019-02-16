@@ -5,6 +5,7 @@
 //  Created by Avario on 16/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view displays a squad member and their equipped upgrades. It also diplays buttons for upgrade slots to allow upgrades to be added.
 
 import Foundation
 import UIKit

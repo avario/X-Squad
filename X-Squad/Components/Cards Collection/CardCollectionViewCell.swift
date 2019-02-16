@@ -5,6 +5,7 @@
 //  Created by Avario on 03/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// A collection view cell that displays a single card.
 
 import Foundation
 import UIKit
@@ -28,6 +29,7 @@ class CardCollectionViewCell: UICollectionViewCell {
 	
 	var status: Status = .default {
 		didSet {
+			// .selected is currently treated the same as .default
 			cardView.alpha = status == .unavailable ? 0.5 : 1.0
 		}
 	}

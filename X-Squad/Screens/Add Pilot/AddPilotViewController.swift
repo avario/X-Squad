@@ -5,6 +5,7 @@
 //  Created by Avario on 11/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This Screen allows user's to add a pilot to squad by presenting a collection of all pilot cards.
 
 import Foundation
 import UIKit
@@ -24,6 +25,7 @@ class AddPilotViewController: CardsViewController {
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
 		
+		// The ships are sorted by how many pilots they have, then by name.
 		let ships = DataStore.ships.filter({ $0.faction == squad.faction }).sorted {
 			if $0.pilots.count == $1.pilots.count {
 				return $0.name < $1.name
@@ -32,7 +34,9 @@ class AddPilotViewController: CardsViewController {
 			}
 		}
 		
+		// Pilots are sorted into sections by their ship.
 		for ship in ships {
+			// Within a ship section, pilots are sorted according to PS and cost.
 			let sortedPilots = ship.pilots.sorted(by: Squad.rankPilots)
 			
 			cardSections.append(
@@ -54,6 +58,7 @@ class AddPilotViewController: CardsViewController {
 		fatalError()
 	}
 
+	// The pull to dismiss methods must be forwarded because this view must be the delegate (because it's a collection view).
 	override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
 		pullToDismissController?.scrollViewWillBeginDragging(scrollView)
 	}
@@ -70,12 +75,14 @@ class AddPilotViewController: CardsViewController {
 		return status(for: cardViewController.card) == .default ? .add("Add to Squad") : nil
 	}
 	
+	// Add the pilot to the squad.
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
 		let pilot = cardViewController.card as! Pilot
 		let member = squad.addMember(for: pilot)
 		
 		cardViewController.cardView.member = member
 		
+		// The squad view controller is set as the target and this screen is set to hidden so it looks like the presented card screen transitions directly to the squad screen.
 		cardViewController.dismissTargetViewController = self.presentingViewController
 		self.view.isHidden = true
 		cardViewController.dismiss(animated: true) {
@@ -84,6 +91,7 @@ class AddPilotViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
+		// Show cards the have reached their limit in the squad as dimmed.
 		switch squad.limitStatus(for: card) {
 		case .available:
 			return .default

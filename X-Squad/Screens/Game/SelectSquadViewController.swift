@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen allows the user to select a quad that they want to use in a game.
 
 import Foundation
 import UIKit

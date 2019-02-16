@@ -5,6 +5,7 @@
 //  Created by Avario on 08/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is an abstract class that displays a list of the user's squads.
 
 import Foundation
 import UIKit
@@ -15,6 +16,7 @@ class SquadsViewController: UITableViewController {
 		return .lightContent
 	}
 	
+	// The empty message is shown when the user has no squads.
 	let emptyMessage: String
 	
 	init(emptyMessage: String) {

@@ -5,6 +5,7 @@
 //  Created by Avario on 08/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is the screen for the "Settings" tab.
 
 import Foundation
 import UIKit
@@ -111,6 +112,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 				navigationController?.pushViewController(disclaimerViewController, animated: true)
 				
 			case .feedback:
+				// Send an email
 				let composeVC = MFMailComposeViewController()
 				composeVC.mailComposeDelegate = self
 				

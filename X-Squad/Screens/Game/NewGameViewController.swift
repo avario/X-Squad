@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen allows the user to start a new game.
 
 import Foundation
 import UIKit

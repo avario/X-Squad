@@ -5,6 +5,7 @@
 //  Created by Avario on 08/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is the simple cell used on the settings screen.
 
 import Foundation
 import UIKit

@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen displays a squad (with the pilots stacked vertically) and allows the user to edit it.
 
 import Foundation
 import UIKit

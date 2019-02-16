@@ -5,6 +5,7 @@
 //  Created by Avario on 07/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This handles the custom transition when dismissing cards (the card animate from their previous positions and sizes to their new ones).
 
 import Foundation
 import UIKit

@@ -5,6 +5,7 @@
 //  Created by Avario on 08/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen displays the FFG disclaimer.
 
 import Foundation
 import UIKit

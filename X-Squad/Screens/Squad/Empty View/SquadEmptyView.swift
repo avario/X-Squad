@@ -5,6 +5,7 @@
 //  Created by Avario on 25/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view is shown on the Squad screen when there are no pilots in the squad.
 
 import Foundation
 import UIKit

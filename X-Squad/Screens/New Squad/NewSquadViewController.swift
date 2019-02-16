@@ -5,6 +5,7 @@
 //  Created by Avario on 10/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen allows a user to create a new squad, either by selecting a faction or by importing a from XWS text/QR code.
 
 import Foundation
 import UIKit
@@ -113,6 +114,7 @@ class NewSquadViewController: UITableViewController {
 		}
 	}
 	
+	// Get the content of the user's clipboard and try to decode it to an XWS object.
 	func importXWS() {
 		guard let xwsData = UIPasteboard.general.string?.data(using: .utf8) else {
 			let alert = UIAlertController(title: "Empty Clipboard", message: "Your clipboard is empty. Copy the XWS text to your clipboard and try again.", preferredStyle: .alert)

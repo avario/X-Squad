@@ -5,6 +5,7 @@
 //  Created by Avario on 11/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is the view that lays out a pilot card horizontally with all of its upgrade cards.
 
 import Foundation
 import UIKit
@@ -55,6 +56,7 @@ class MemberView: UIView {
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
 		
+		// This view updates itself from notifications from the Squad Store.
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidAddUpgradeToMember, object: member)
 		NotificationCenter.default.addObserver(self, selector: #selector(updatePilot), name: .squadStoreDidRemoveUpgradeFromMember, object: member)
 	}
@@ -89,8 +91,10 @@ class MemberView: UIView {
 		updatePilot()
 	}
 	
+	// This adds and lays out the card images and buttons.
 	@objc func updatePilot() {
 		if mode == .edit {
+			// Only show upgrade slot buttons in the edit mode.
 			for upgradeButton in self.upgradeButtons {
 				upgradeButton.removeFromSuperview()
 			}

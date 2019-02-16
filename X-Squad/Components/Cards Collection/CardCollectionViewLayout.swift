@@ -5,6 +5,7 @@
 //  Created by Avario on 03/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// A custom layout that lays out cards in a cascading vertical collection.
 
 import Foundation
 import UIKit

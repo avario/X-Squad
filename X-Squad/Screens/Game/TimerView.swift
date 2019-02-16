@@ -5,6 +5,7 @@
 //  Created by Avario on 14/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view displays the timer used on the Game screen (the minutes/seconds remaining and a pause/resume button).
 
 import Foundation
 import UIKit
@@ -58,19 +59,21 @@ class TimerView: UIView {
 		
 		button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(tick), name: UIApplication.willEnterForegroundNotification, object: nil)
+		// When the app foregrounds the time remaining must be updated because the timer will not fire when the app is backgrounded.
+		NotificationCenter.default.addObserver(self, selector: #selector(updateTimeRemaining), name: UIApplication.willEnterForegroundNotification, object: nil)
 	}
 	
 	required init(coder aDecoder: NSCoder) {
 		fatalError()
 	}
 	
+	// Pause/resume the timer.
 	@objc func buttonPressed() {
 		if isTimerRunning {
 			timer?.invalidate()
 			button.setTitle("Resume", for: .normal)
 		} else {
-			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
+			timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimeRemaining), userInfo: nil, repeats: true)
 		
 			timerStarted = Date()
 			secondsRemainingWhenTimerStarted = secondsRemaining
@@ -81,7 +84,7 @@ class TimerView: UIView {
 		isTimerRunning.toggle()
 	}
 	
-	@objc func tick() {
+	@objc func updateTimeRemaining() {
 		guard let timerStarted = timerStarted else {
 			return
 		}

@@ -5,6 +5,7 @@
 //  Created by Avario on 30/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// The "Close" button shown on many of the screens.
 
 import Foundation
 import UIKit

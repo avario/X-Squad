@@ -5,6 +5,7 @@
 //  Created by Avario on 03/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen displays a single card enlarged to fill the screen width, with its point cost (and upgrade slots for pilot cards).
 
 import Foundation
 import UIKit
@@ -17,7 +18,10 @@ protocol CardViewControllerDelegate: AnyObject {
 class CardViewController: UIViewController {
 	
 	let card: Card
+	
+	// The member is needed so that the current point cost can be shown (for upgrades that have variable costs).
 	let member: Squad.Member?
+	
 	let cardView = CardView()
 	
 	weak var delegate: CardViewControllerDelegate?
@@ -25,6 +29,7 @@ class CardViewController: UIViewController {
 	private lazy var animator: UIDynamicAnimator = UIDynamicAnimator(referenceView: view)
 	private var attach: UIAttachmentBehavior?
 	
+	// This is the button that is used to modify a squad ("Add to Squad", "Remove from Pilot", etc).
 	let squadButton = SquadButton()
 	
 	let closeButton = CloseButton()
@@ -61,12 +66,13 @@ class CardViewController: UIViewController {
 		cardView.card = card
 		cardView.snap.snapPoint = cardView.center
 		
+		// Used to drag the card around.
 		let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCard(recognizer:)))
 		panGesture.maximumNumberOfTouches = 1
 		cardView.addGestureRecognizer(panGesture)
 		cardView.isUserInteractionEnabled = true
 		
-		// Layout guide for the card's resting position
+		// Layout guide for the card's resting position.
 		let cardLayoutGuide = UILayoutGuide()
 		view.addLayoutGuide(cardLayoutGuide)
 		cardLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor, constant: cardView.frame.minY).isActive = true
@@ -225,6 +231,7 @@ class CardViewController: UIViewController {
 			let velocityLength = hypot(velocity.x, velocity.y)
 			
 			if distance > 200 || velocityLength > 1000 {
+				// Dismisses the view if the card has been swiped down.
 				dismiss(animated: true, completion: nil)
 			} else {
 				animator.addBehavior(cardView.snap)

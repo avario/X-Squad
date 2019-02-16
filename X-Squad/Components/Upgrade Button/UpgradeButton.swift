@@ -5,6 +5,7 @@
 //  Created by Avario on 08/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// A simple button that displays the icon for an upgrade slot.
 
 import Foundation
 import UIKit

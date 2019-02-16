@@ -5,6 +5,7 @@
 //  Created by Avario on 10/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// Persitantly stores user's squads.
 
 import Foundation
 

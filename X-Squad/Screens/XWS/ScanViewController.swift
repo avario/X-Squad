@@ -5,6 +5,7 @@
 //  Created by Avario on 25/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen shows a camera view that can be used to scan XWS QR codes.
 
 import Foundation
 import UIKit
@@ -71,6 +72,7 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
 	var didFindSquad = false
 	
 	func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+		// Whenever data is detected in the camera view, check if it's a QR code and that the data can be decoded into an XWS object.
 		guard didFindSquad == false,
 			let metadata = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
 			metadata.type == AVMetadataObject.ObjectType.qr,
@@ -80,7 +82,9 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
 			return
 		}
 		
+		// This is just set to make sure QR codes are not scanned more than once.
 		didFindSquad = true
+		
 		let squad = Squad(xws: xws)
 		SquadStore.add(squad: squad)
 		

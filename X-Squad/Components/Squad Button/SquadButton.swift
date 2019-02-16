@@ -5,6 +5,7 @@
 //  Created by Avario on 17/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// A rounded button used to modify squads ("Add to Squad", "Remove from Pilot", etc).
 
 import Foundation
 import UIKit

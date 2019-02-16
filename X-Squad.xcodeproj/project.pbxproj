@@ -80,7 +80,6 @@
 		B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066621FB518100D108E6 /* ScanViewController.swift */; };
 		B6F6066F21FB614A00D108E6 /* SquadEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */; };
 		B6F6067A220201B300D108E6 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F60679220201B300D108E6 /* CloseButton.swift */; };
-		B6F606882203175900D108E6 /* DialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F606872203175900D108E6 /* DialButton.swift */; };
 		B6F6068D220332CD00D108E6 /* DialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6068C220332CD00D108E6 /* DialView.swift */; };
 /* End PBXBuildFile section */
 
@@ -184,7 +183,6 @@
 		B6F6066621FB518100D108E6 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadEmptyView.swift; sourceTree = "<group>"; };
 		B6F60679220201B300D108E6 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
-		B6F606872203175900D108E6 /* DialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialButton.swift; sourceTree = "<group>"; };
 		B6F6068C220332CD00D108E6 /* DialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -414,7 +412,6 @@
 			children = (
 				B671C94121E7BC540034C7C9 /* SquadViewController.swift */,
 				B671C98821EBC0E50034C7C9 /* Header */,
-				B671C98321E9614D0034C7C9 /* Member */,
 				B6F6067021FB614E00D108E6 /* Empty View */,
 			);
 			path = Squad;
@@ -483,7 +480,6 @@
 				B671C94021E7BC470034C7C9 /* Squad */,
 				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
 				B671C98B21EBC53B0034C7C9 /* Select Upgrade */,
-				B671C93821E76B950034C7C9 /* SearchResults */,
 				B65BCD4521E53C4A005721A7 /* Settings */,
 				B662FB4621DE75A400EF79F7 /* Card */,
 			);
@@ -542,6 +538,7 @@
 			children = (
 				B6D4C8DC22146CB2002D598A /* EditSquadsViewController.swift */,
 				B6D4C8E52214840A002D598A /* EditSquadViewController.swift */,
+				B671C98321E9614D0034C7C9 /* Member */,
 			);
 			path = "Edit Squads";
 			sourceTree = "<group>";
@@ -550,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				B6E39670220F29FE001451C1 /* SearchViewController.swift */,
+				B671C93821E76B950034C7C9 /* SearchResults */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -638,7 +636,6 @@
 		B6F6068B220332BE00D108E6 /* Dial */ = {
 			isa = PBXGroup;
 			children = (
-				B6F606872203175900D108E6 /* DialButton.swift */,
 				B6F6068C220332CD00D108E6 /* DialView.swift */,
 			);
 			path = Dial;
@@ -791,7 +788,6 @@
 				B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */,
 				B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
-				B6F606882203175900D108E6 /* DialButton.swift in Sources */,
 				B6F6067A220201B300D108E6 /* CloseButton.swift in Sources */,
 				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
 				B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */,

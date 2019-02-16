@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		tabBarController.selectedIndex = 1
 		tabBarController.delegate = tabBarController
 		
-		window?.rootViewController = tabBarController//UINavigationController(rootViewController: _HomeViewController())
+		window?.rootViewController = tabBarController
 		
 		window?.makeKeyAndVisible()
 		
@@ -46,7 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension UITabBarController: UITabBarControllerDelegate {
 	public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-		return viewController != tabBarController.selectedViewController
+		// Don't go back to the "New Game" view controller when the tab bar button is pressed (because this would end the current game).
+		return (tabBarController.selectedIndex != 0 || viewController != tabBarController.selectedViewController)
 	}
 }
 

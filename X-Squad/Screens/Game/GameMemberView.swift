@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This displays a squad member (pilot) and all of it's upgrades along with all tokens that the user can toggle.
 
 import Foundation
 import UIKit
@@ -44,6 +45,7 @@ class GameMemberView: UIScrollView {
 			contentInset.right = 200
 		}
 		
+		// Add all of the charges for upgrade cards.
 		for cardView in memberView.cardViews {
 			guard let upgrade = cardView.card as? Upgrade,
 			 	let upgradeState = state.upgradeStates[upgrade.xws],

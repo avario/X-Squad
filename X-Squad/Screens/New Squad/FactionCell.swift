@@ -5,6 +5,7 @@
 //  Created by Avario on 10/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This cell displays a faction that the user can select on the "New Squad" screen.
 
 import Foundation
 import UIKit

@@ -5,6 +5,7 @@
 //  Created by Avario on 09/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen displays a current game (with the user's squad and a timer).
 
 import Foundation
 import UIKit

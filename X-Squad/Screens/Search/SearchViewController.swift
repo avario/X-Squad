@@ -5,6 +5,7 @@
 //  Created by Avario on 09/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is the Search tab screen which shows the search bar and a few suggestions for search.
 
 import Foundation
 import UIKit

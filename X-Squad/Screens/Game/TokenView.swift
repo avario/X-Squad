@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view displays a token which can be flipped by tapping on it.
 
 import Foundation
 import UIKit
@@ -35,9 +36,9 @@ class TokenView: UIButton {
 			case .hull:
 				return UIColor(red: 0.95, green: 0.8, blue: 0.25, alpha: 1.0)
 			case .shield:
-				return UIColor(red: 0.40, green: 0.77, blue: 0.87, alpha: 1.0)//UIColor(red: 0.44, green: 0.79, blue: 0.86, alpha: 1.0)
+				return UIColor(red: 0.40, green: 0.77, blue: 0.87, alpha: 1.0)
 			case .charge:
-				return UIColor(red: 0.87, green: 0.68, blue: 0.11, alpha: 1.0)//UIColor(red: 0.99, green: 0.71, blue: 0.07, alpha: 1.0)
+				return UIColor(red: 0.87, green: 0.68, blue: 0.11, alpha: 1.0)
 			case .force:
 				return UIColor(red: 0.61 * 1.2, green: 0.40 * 1.2, blue: 0.66 * 1.2, alpha: 1.0)
 			}
@@ -57,12 +58,14 @@ class TokenView: UIButton {
 		}
 	}
 	
-	static let inActiveColor = UIColor(red: 0.91, green: 0.00, blue: 0.12, alpha: 1.0)
+	// The red color of the icon when it's flipped.
+	static let inactiveColor = UIColor(red: 0.91, green: 0.00, blue: 0.12, alpha: 1.0)
 	
 	let token: Game.Token
 	
+	// The token is flipped between these two views to change it's state.
 	let activeView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-	let inActiveView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+	let inactiveView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 	
 	init(token: Game.Token, type: TokenType) {
 		self.token = token
@@ -76,10 +79,12 @@ class TokenView: UIButton {
 		addSubview(activeView)
 		activeView.isUserInteractionEnabled = false
 		
+		// The background shape of the token.
 		let shapeImageView = UIImageView(image: UIImage(named: "Token Shape")!)
 		shapeImageView.tintColor = UIColor(white: 0.15, alpha: 1.0)
 		activeView.addSubview(shapeImageView)
 		
+		// The decorative lines shown on the active side of the token.
 		let linesImageView = UIImageView(image: UIImage(named: "Token Lines")!)
 		linesImageView.tintColor = type.color
 		linesImageView.alpha = 0.7
@@ -92,22 +97,22 @@ class TokenView: UIButton {
 		icon.text = type.characterCode
 		activeView.addSubview(icon)
 		
-		addSubview(inActiveView)
-		inActiveView.isUserInteractionEnabled = false
+		addSubview(inactiveView)
+		inactiveView.isUserInteractionEnabled = false
 		
 		let inactiveShapeImageView = UIImageView(image: UIImage(named: "Token Shape")!)
 		inactiveShapeImageView.tintColor = UIColor(white: 0.15, alpha: 1.0)
-		inActiveView.addSubview(inactiveShapeImageView)
+		inactiveView.addSubview(inactiveShapeImageView)
 		
 		let inactiveIcon = UILabel(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 		inactiveIcon.textAlignment = .center
 		inactiveIcon.font = UIFont.xWingIcon(type.iconSize)
-		inactiveIcon.textColor = TokenView.inActiveColor
+		inactiveIcon.textColor = TokenView.inactiveColor
 		inactiveIcon.text = type.characterCode
-		inActiveView.addSubview(inactiveIcon)
+		inactiveView.addSubview(inactiveIcon)
 		
 		activeView.isHidden = !token.isActive
-		inActiveView.isHidden = token.isActive
+		inactiveView.isHidden = token.isActive
 		
 		addTarget(self, action: #selector(flip), for: .touchUpInside)
 	}
@@ -123,7 +128,7 @@ class TokenView: UIButton {
 		
 		UIView.transition(with: self, duration: 0.4, options: transitionOptions, animations: {
 			self.activeView.isHidden = !self.token.isActive
-			self.inActiveView.isHidden = self.token.isActive
+			self.inactiveView.isHidden = self.token.isActive
 		})
 	}
 	

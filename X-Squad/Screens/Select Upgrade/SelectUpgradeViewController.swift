@@ -5,6 +5,7 @@
 //  Created by Avario on 13/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen allows user's to select an upgrade to add to a pilot.
 
 import Foundation
 import UIKit
@@ -46,6 +47,7 @@ class SelectUpgradeViewController: CardsViewController {
 			}
 		}
 		
+		// Sort upgrades by point cost, then by name.
 		let upgradeSort: (Upgrade, Upgrade) -> Bool = {
 			if $0.pointCost(for: member) == $1.pointCost(for: member) {
 				return $0.name < $1.name
@@ -66,6 +68,7 @@ class SelectUpgradeViewController: CardsViewController {
 			)
 		)
 		
+		// Restricted upgrades will be shown in a section at the bottom of the list.
 		cardSections.append(
 			CardSection(
 				header: .header(
@@ -133,6 +136,7 @@ class SelectUpgradeViewController: CardsViewController {
 		return nil
 	}
 	
+	// Add the upgrade to the pilot.
 	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
 		if let currentUpgrade = currentUpgrade {
 			member.remove(upgrade: currentUpgrade)
@@ -143,6 +147,7 @@ class SelectUpgradeViewController: CardsViewController {
 			cardViewController.cardView.member = member
 		}
 		
+		// The squad view controller is set as the target and this screen is set to hidden so it looks like the presented card screen transitions directly to the squad screen.
 		cardViewController.dismissTargetViewController = self.presentingViewController
 		self.view.isHidden = true
 		cardViewController.dismiss(animated: true) {
@@ -151,9 +156,7 @@ class SelectUpgradeViewController: CardsViewController {
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
-		guard let upgrade = card as? Upgrade else {
-			fatalError()
-		}
+		let upgrade = card as! Upgrade
 		
 		guard validity(of: upgrade) == .valid else {
 			return .unavailable

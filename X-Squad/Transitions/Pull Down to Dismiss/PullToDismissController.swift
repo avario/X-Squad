@@ -5,6 +5,7 @@
 //  Created by Avario on 15/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This manages the "pull to dimiss" gesture used on several screens. It will dimiss the screen if the scroll view is swiped down quickly or pulled down and released past a threshold.
 
 import Foundation
 import UIKit

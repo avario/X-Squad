@@ -5,6 +5,7 @@
 //  Created by Avario on 09/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen is downloads all of the images for cards in the app and caches them. It also displays the progress for this.
 
 import Foundation
 import UIKit

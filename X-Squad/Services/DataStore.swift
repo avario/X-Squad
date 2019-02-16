@@ -5,6 +5,7 @@
 //  Created by Avario on 22/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// Loads X-Wing Data 2 JSON files into model objects.
 
 import Foundation
 

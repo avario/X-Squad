@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view shows all of a pilot's tokens that can be toggled during a game (it does not show charge tokens for upgrades). It is designed to be shown to the left of the pilot card.
 
 import Foundation
 import UIKit
@@ -24,6 +25,7 @@ class GameSquadMemberStateView: UIStackView {
 		layoutMargins = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
 		isLayoutMarginsRelativeArrangement = true
 		
+		// This shows the number to be associated with target locks.
 		let numberLabel = NumberLabel(number: state.number)
 		let costView = CostView()
 		costView.cost = member.pointCost
@@ -56,6 +58,7 @@ class GameSquadMemberStateView: UIStackView {
 		fatalError()
 	}
 	
+	// This label shows the member's ID number (associated with target locks).
 	class NumberLabel: UILabel {
 		static let size: CGFloat = 44
 		

@@ -5,6 +5,7 @@
 //  Created by Avario on 10/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// Displays a squad in a cell (with pilots stacked horizontally).
 
 import Foundation
 import UIKit
@@ -22,7 +23,7 @@ class SquadCell: UITableViewCell {
 				return
 			}
 			
-			iconLabel.text = squad.faction.characterCode
+			factionIconLabel.text = squad.faction.characterCode
 			updateMemberViews()
 			updateCost()
 			
@@ -32,10 +33,11 @@ class SquadCell: UITableViewCell {
 		}
 	}
 	
-	let iconLabel = UILabel()
+	let factionIconLabel = UILabel()
 	let scrollView = UIScrollView()
 	let stackView = UIStackView()
 	
+	// Shown when the squad is empty
 	var emptyLabel: UILabel?
 	
 	let costView = CostView()
@@ -61,16 +63,16 @@ class SquadCell: UITableViewCell {
 		scrollView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
 		scrollView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
 		
-		scrollView.addSubview(iconLabel)
-		iconLabel.textAlignment = .center
-		iconLabel.translatesAutoresizingMaskIntoConstraints = false
-		iconLabel.textColor = UIColor.white.withAlphaComponent(0.5)
-		iconLabel.font = UIFont.xWingIcon(32)
+		scrollView.addSubview(factionIconLabel)
+		factionIconLabel.textAlignment = .center
+		factionIconLabel.translatesAutoresizingMaskIntoConstraints = false
+		factionIconLabel.textColor = UIColor.white.withAlphaComponent(0.5)
+		factionIconLabel.font = UIFont.xWingIcon(32)
 		
-		iconLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
-		iconLabel.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
-		iconLabel.widthAnchor.constraint(equalToConstant: 44).isActive = true
-		iconLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
+		factionIconLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
+		factionIconLabel.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+		factionIconLabel.widthAnchor.constraint(equalToConstant: 44).isActive = true
+		factionIconLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
 		
 		scrollView.addSubview(stackView)
 		stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +81,7 @@ class SquadCell: UITableViewCell {
 		
 		stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
 		stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -16).isActive = true
-		stackView.leftAnchor.constraint(equalTo: iconLabel.rightAnchor).isActive = true
+		stackView.leftAnchor.constraint(equalTo: factionIconLabel.rightAnchor).isActive = true
 		
 		scrollView.addSubview(costView)
 		costView.translatesAutoresizingMaskIntoConstraints = false
@@ -87,12 +89,12 @@ class SquadCell: UITableViewCell {
 		costView.rightAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 0).isActive = true
 	}
 	
-	@objc func updateCost() {
-		costView.cost = squad?.pointCost ?? 0
-	}
-	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
+	}
+	
+	@objc func updateCost() {
+		costView.cost = squad?.pointCost ?? 0
 	}
 	
 	func updateEmptyLabel() {
@@ -101,6 +103,7 @@ class SquadCell: UITableViewCell {
 			self.emptyLabel = nil
 		}
 		
+		// Shown the empty label if the squad is empty.
 		if let squad = squad, squad.members.isEmpty {
 			emptyLabel = UILabel()
 			emptyLabel?.translatesAutoresizingMaskIntoConstraints = false
@@ -120,6 +123,7 @@ class SquadCell: UITableViewCell {
 	
 	var memberViews: [MemberView] = []
 	
+	// Update the squad's members whenever a member is added/removed (upgrades are managed within the member views themselves).
 	@objc func updateMemberViews() {
 		guard let squad = squad else {
 			return
@@ -131,6 +135,7 @@ class SquadCell: UITableViewCell {
 			if let existingMemberView = memberViews.first(where: { $0.member.uuid == member.uuid }) {
 				return existingMemberView
 			} else {
+				// A member view for any member added to the squad.
 				let squadMemberView = MemberView(member: member, height: SquadCell.rowHeight, mode: .display)
 				memberViews.append(squadMemberView)
 				
@@ -138,7 +143,7 @@ class SquadCell: UITableViewCell {
 			}
 		}
 		
-		// Remove any members that are no longer in the squad
+		// Remove any members that are no longer in the squad.
 		for memberView in memberViews {
 			if !squad.members.contains(where: { $0.uuid == memberView.member.uuid }) {
 				memberView.removeFromSuperview()
@@ -146,6 +151,7 @@ class SquadCell: UITableViewCell {
 		}
 		memberViews = memberViews.filter({ $0.superview != nil })
 		
+		// Make sure the member views are arranged in the right order
 		for (index, member) in squad.members.enumerated() {
 			let squadMemberView = memberView(for: member)
 			stackView.insertArrangedSubview(squadMemberView, at: index)

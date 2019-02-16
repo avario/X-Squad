@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This displays a set of tokens of the same type in a horizontal row.
 
 import Foundation
 import UIKit

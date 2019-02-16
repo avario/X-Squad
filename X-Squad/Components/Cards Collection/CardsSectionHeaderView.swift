@@ -5,6 +5,7 @@
 //  Created by Avario on 11/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This is the header used for sections within the card collection view.
 
 import Foundation
 import UIKit

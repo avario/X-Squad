@@ -5,6 +5,7 @@
 //  Created by Avario on 13/02/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This screen displays the user's squads in a table where they can select any of them to edit it.
 
 import Foundation
 import UIKit
@@ -25,6 +26,7 @@ class EditSquadsViewController: SquadsViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		// There is a header view added to the top of the table to show the Add button in.
 		let addSquadButton = UIButton(type: .contactAdd)
 		addSquadButton.addTarget(self, action: #selector(addSquad), for: .touchUpInside)
 		addSquadButton.tintColor = UIColor.white.withAlphaComponent(0.5)
@@ -43,6 +45,7 @@ class EditSquadsViewController: SquadsViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		// When a squad is selected, go to the edit screen for the squad.
 		let squad = squads[indexPath.row]
 		tableView.deselectRow(at: indexPath, animated: true)
 

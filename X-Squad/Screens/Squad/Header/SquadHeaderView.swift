@@ -5,6 +5,7 @@
 //  Created by Avario on 13/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view shows a header for the Squad view with a Close button, point cost, and Info button.
 
 import Foundation
 import UIKit

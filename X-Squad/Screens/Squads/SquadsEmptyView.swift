@@ -5,6 +5,7 @@
 //  Created by Avario on 17/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// This view is shown on the Squads screen when the user has no squads.
 
 import Foundation
 import UIKit
