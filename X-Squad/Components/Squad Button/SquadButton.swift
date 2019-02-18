@@ -56,7 +56,7 @@ class SquadButton: UIButton {
 		circleView.heightAnchor.constraint(equalToConstant: SquadButton.circleSize).isActive = true
 		circleView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
 		circleView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10).isActive = true
-		circleView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
+		circleView.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
 		circleView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
 		
 		circleView.addSubview(horizontalLine)
@@ -84,7 +84,7 @@ class SquadButton: UIButton {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.centerYAnchor.constraint(equalTo: circleView.centerYAnchor).isActive = true
 		label.leftAnchor.constraint(equalTo: circleView.leftAnchor, constant: SquadButton.circleSize).isActive = true
-		label.rightAnchor.constraint(equalTo: circleView.rightAnchor, constant: -(SquadButton.circleSize/2)).isActive = true
+		label.rightAnchor.constraint(equalTo: circleView.rightAnchor, constant: -(SquadButton.circleSize * 0.75)).isActive = true
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

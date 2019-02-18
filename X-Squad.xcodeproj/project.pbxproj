@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B606AFFA221B4D5D009056E3 /* UpgradeSlotsBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B606AFF9221B4D5D009056E3 /* UpgradeSlotsBar.swift */; };
 		B60E895121F14A4C00A58579 /* SquadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */; };
 		B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */; };
 		B65BCCA021E3BA37005721A7 /* CardsDismissAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */; };
@@ -108,6 +109,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B606AFF9221B4D5D009056E3 /* UpgradeSlotsBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeSlotsBar.swift; sourceTree = "<group>"; };
 		B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadsEmptyView.swift; sourceTree = "<group>"; };
 		B65BCC9D21E3BA25005721A7 /* CardsPresentAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsPresentAnimationController.swift; sourceTree = "<group>"; };
 		B65BCC9F21E3BA37005721A7 /* CardsDismissAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsDismissAnimationController.swift; sourceTree = "<group>"; };
@@ -198,6 +200,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B606AFF8221B4D39009056E3 /* Upgrades */ = {
+			isa = PBXGroup;
+			children = (
+				B606AFF9221B4D5D009056E3 /* UpgradeSlotsBar.swift */,
+			);
+			path = Upgrades;
+			sourceTree = "<group>";
+		};
 		B65BCC9C21E3BA06005721A7 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -358,7 +368,9 @@
 		B662FB4621DE75A400EF79F7 /* Card */ = {
 			isa = PBXGroup;
 			children = (
+				B671CA5821F0D16D0034C7C9 /* Card View */,
 				B6F6068B220332BE00D108E6 /* Dial */,
+				B606AFF8221B4D39009056E3 /* Upgrades */,
 				B662FB4721DE75EA00EF79F7 /* CardViewController.swift */,
 			);
 			path = Card;
@@ -494,7 +506,6 @@
 				B671CA5C21F0F4220034C7C9 /* Squad Button */,
 				B671CA5921F0D1F10034C7C9 /* Member View */,
 				B671C97C21E8FEBF0034C7C9 /* Cards Collection */,
-				B671CA5821F0D16D0034C7C9 /* Card View */,
 				B65BCD4221E4EB77005721A7 /* Upgrade Button */,
 				B65BCD3621E4C37E005721A7 /* Cost */,
 			);
@@ -821,6 +832,7 @@
 				B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */,
 				B6D4C8DA22146C27002D598A /* SelectSquadViewController.swift in Sources */,
 				B671C93721E767AD0034C7C9 /* SquadStore.swift in Sources */,
+				B606AFFA221B4D5D009056E3 /* UpgradeSlotsBar.swift in Sources */,
 				B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */,
 				B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */,
 				B671CA5E21F0F4310034C7C9 /* SquadButton.swift in Sources */,

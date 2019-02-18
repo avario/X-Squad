@@ -75,6 +75,15 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		updateMemberViews()
 	}
 	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		
+		// Spacing on the top looks a bit better on devices without a notch
+		if view.safeAreaInsets.top <= 30 {
+			scrollView.contentInset.top = 10
+		}
+	}
+	
 	@objc func updateMemberViews() {
 		updateEmptyView()
 		
@@ -138,7 +147,8 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		let membersStackView = UIStackView()
 		membersStackView.axis = .vertical
 		membersStackView.spacing = 10
-		membersStackView.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 20, right: 40)
+		membersStackView.layoutMargins = UIEdgeInsets(top: 30, left: 40, bottom: 30, right: 40)
+		membersStackView.insetsLayoutMarginsFromSafeArea = false
 		membersStackView.isLayoutMarginsRelativeArrangement = true
 		membersStackView.translatesAutoresizingMaskIntoConstraints = false
 		membersStackView.alignment = .leading
@@ -175,30 +185,28 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		membersStackView.layoutIfNeeded()
 		
 		// Just to make sure the images have loaded
-		_ = stackView.snapshotView(afterScreenUpdates: true)!
-		
-		membersStackView.removeFromSuperview()
-
-		let size = membersStackView.bounds.size
-
-		UIGraphicsBeginImageContextWithOptions(size, true, 2.0)
-		let context = UIGraphicsGetCurrentContext()!
-
-		UIColor.black.setFill()
-		context.fill(CGRect(origin: .zero, size: size))
-
-		membersStackView.layer.render(in: context)
-		let image = UIGraphicsGetImageFromCurrentImageContext()
-
-		UIGraphicsEndImageContext()
-
-		let imageToShare = [image!]
-		let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
-		activityViewController.popoverPresentationController?.sourceView = self.view
-
-//		activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
-
-		self.present(activityViewController, animated: true, completion: nil)
+		DispatchQueue.main.async {
+			let size = membersStackView.bounds.size
+			
+			UIGraphicsBeginImageContextWithOptions(size, true, 2.0)
+			let context = UIGraphicsGetCurrentContext()!
+			
+			UIColor.black.setFill()
+			context.fill(CGRect(origin: .zero, size: size))
+			
+			membersStackView.layer.render(in: context)
+			let image = UIGraphicsGetImageFromCurrentImageContext()
+			
+			UIGraphicsEndImageContext()
+			
+			membersStackView.removeFromSuperview()
+			
+			let imageToShare = [image!]
+			let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+			activityViewController.popoverPresentationController?.sourceView = self.view
+			
+			self.present(activityViewController, animated: true, completion: nil)
+		}
 	}
 	
 	// Copy XWS text for the squad to the user's clipboard.

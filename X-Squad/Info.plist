@@ -17,13 +17,15 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5</string>
+	<string>1.6</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>X-Squad uses your camera to scan XWS QR codes.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>X-Squad can save images of your squads to your photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>kimberley bl.ttf</string>
@@ -38,8 +40,6 @@
 	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>X-Squad can save images of your squads to your photo library.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

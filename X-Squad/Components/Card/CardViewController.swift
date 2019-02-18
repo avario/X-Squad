@@ -86,7 +86,7 @@ class CardViewController: UIViewController {
 			squadButton.action = action
 			squadButton.addTarget(self, action: #selector(squadButtonPressed), for: .touchUpInside)
 			
-			squadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
+			squadButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0).isActive = true
 			squadButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		}
 		
@@ -138,20 +138,14 @@ class CardViewController: UIViewController {
 				hyperspaceLabel.bottomAnchor.constraint(equalTo: shipSizeLabel.topAnchor,  constant: -10).isActive = true
 				
 				// Upgrades
-				let upgradeBar = UIStackView()
-				upgradeBar.translatesAutoresizingMaskIntoConstraints = false
-				upgradeBar.axis = .horizontal
-				view.insertSubview(upgradeBar, belowSubview: cardView)
-				
-				upgradeBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
-				upgradeBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
-				
-				for upgrade in pilot.slots ?? [] {
-					let upgradeButton = UpgradeButton()
-					upgradeButton.isUserInteractionEnabled = false
-					upgradeButton.upgradeType = upgrade
+				if let upgradSlots = pilot.slots {
+					let upgradeSlotsBar = UpgradeSlotsBar(upgradSlots: upgradSlots)
+					upgradeSlotsBar.translatesAutoresizingMaskIntoConstraints = false
+					view.insertSubview(upgradeSlotsBar, belowSubview: cardView)
 					
-					upgradeBar.addArrangedSubview(upgradeButton)
+					upgradeSlotsBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+					upgradeSlotsBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+					upgradeSlotsBar.rightAnchor.constraint(equalTo: costView.leftAnchor, constant: -10).isActive = true
 				}
 			} else {
 				// Hyperspace
