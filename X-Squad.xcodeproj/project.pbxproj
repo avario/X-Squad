@@ -375,6 +375,12 @@
 		B66BE41B220E46550011203C /* Squads */ = {
 			isa = PBXGroup;
 			children = (
+				B671C94021E7BC470034C7C9 /* Squad */,
+				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
+				B671C98B21EBC53B0034C7C9 /* Select Upgrade */,
+				B6F6065E21FA6F7400D108E6 /* XWS */,
+				B671C93B21E76C370034C7C9 /* New Squad */,
+				B6D4C8DB22146CA3002D598A /* Edit Squads */,
 				B66BE41C220E46630011203C /* SquadsViewController.swift */,
 				B671C93E21E798410034C7C9 /* SquadCell.swift */,
 				B60E895021F14A4C00A58579 /* SquadsEmptyView.swift */,
@@ -471,17 +477,10 @@
 		B671CA5521F0D1280034C7C9 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				B6D4C8DB22146CA3002D598A /* Edit Squads */,
 				B6E39673220F3195001451C1 /* Game */,
-				B6E39672220F2A05001451C1 /* Search */,
 				B66BE41B220E46550011203C /* Squads */,
-				B6F6065E21FA6F7400D108E6 /* XWS */,
-				B671C93B21E76C370034C7C9 /* New Squad */,
-				B671C94021E7BC470034C7C9 /* Squad */,
-				B671C94721E8E3AD0034C7C9 /* Add Pilot */,
-				B671C98B21EBC53B0034C7C9 /* Select Upgrade */,
+				B6E39672220F2A05001451C1 /* Search */,
 				B65BCD4521E53C4A005721A7 /* Settings */,
-				B662FB4621DE75A400EF79F7 /* Card */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -489,6 +488,7 @@
 		B671CA5621F0D1360034C7C9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B662FB4621DE75A400EF79F7 /* Card */,
 				B66A14A92215F6A3001C6D8E /* Button */,
 				B6F60678220201A900D108E6 /* Close Button */,
 				B671CA5C21F0F4220034C7C9 /* Squad Button */,

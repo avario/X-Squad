@@ -34,7 +34,7 @@ class MemberView: UIView {
 	
 	let mode: Mode
 	
-	private var widthConstraint: NSLayoutConstraint! = nil
+	var widthConstraint: NSLayoutConstraint! = nil
 	
 	init(member: Squad.Member, height: CGFloat, mode: Mode = .display) {
 		self.member = member

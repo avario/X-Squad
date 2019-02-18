@@ -129,6 +129,76 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .default, handler: { _ in
 			self.showXWSQRCode()
 		}))
+		alert.addAction(UIAlertAction(title: "Export Image", style: .default, handler: { _ in
+			self.exportImage()
+		}))
+	}
+	
+	func exportImage() {
+		let membersStackView = UIStackView()
+		membersStackView.axis = .vertical
+		membersStackView.spacing = 10
+		membersStackView.layoutMargins = UIEdgeInsets(top: 0, left: 40, bottom: 20, right: 40)
+		membersStackView.isLayoutMarginsRelativeArrangement = true
+		membersStackView.translatesAutoresizingMaskIntoConstraints = false
+		membersStackView.alignment = .leading
+		
+		var previousMember: Squad.Member?
+		var previousMemberRow: UIStackView?
+		for member in squad.members {
+			let memberView = MemberView(member: member, height: 300, mode: .display)
+			
+			if let previousMember = previousMember,
+				previousMember.upgrades.isEmpty,
+				member.upgrades.isEmpty,
+				let previousMemberRow = previousMemberRow {
+				
+				previousMemberRow.addArrangedSubview(memberView)
+				
+			} else {
+				let memberRow = UIStackView(arrangedSubviews: [memberView])
+				memberRow.axis = .horizontal
+				memberRow.spacing = 30
+				
+				membersStackView.addArrangedSubview(memberRow)
+				
+				previousMemberRow = memberRow
+			}
+			
+			previousMember = member
+		}
+		
+		UIApplication.shared.keyWindow!.insertSubview(membersStackView, at: 0)
+		
+		membersStackView.setNeedsLayout()
+		membersStackView.layoutSubviews()
+		membersStackView.layoutIfNeeded()
+		
+		// Just to make sure the images have loaded
+		_ = stackView.snapshotView(afterScreenUpdates: true)!
+		
+		membersStackView.removeFromSuperview()
+
+		let size = membersStackView.bounds.size
+
+		UIGraphicsBeginImageContextWithOptions(size, true, 2.0)
+		let context = UIGraphicsGetCurrentContext()!
+
+		UIColor.black.setFill()
+		context.fill(CGRect(origin: .zero, size: size))
+
+		membersStackView.layer.render(in: context)
+		let image = UIGraphicsGetImageFromCurrentImageContext()
+
+		UIGraphicsEndImageContext()
+
+		let imageToShare = [image!]
+		let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+		activityViewController.popoverPresentationController?.sourceView = self.view
+
+//		activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+
+		self.present(activityViewController, animated: true, completion: nil)
 	}
 	
 	// Copy XWS text for the squad to the user's clipboard.
