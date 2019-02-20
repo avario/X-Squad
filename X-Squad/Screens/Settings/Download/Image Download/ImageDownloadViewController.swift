@@ -42,10 +42,15 @@ class ImageDownloadViewController: DownloadViewController {
 	
 	func downloadCardImages() {
 		activityIndicator.startAnimating()
-		downloadCardImage(for: 0)
+		downloadCardImage(for: 0, side: .front)
 	}
 	
-	func downloadCardImage(for index: Int) {
+	enum ImageSide {
+		case front
+		case back
+	}
+	
+	func downloadCardImage(for index: Int, side: ImageSide) {
 		guard DataStore.allCards.count > index else {
 			finishDownload()
 			return
@@ -53,8 +58,16 @@ class ImageDownloadViewController: DownloadViewController {
 		
 		let card = DataStore.allCards[index]
 		
-		guard let imageURL = card.image else {
-			self.downloadCardImage(for: index + 1)
+		let sideImageURL: URL?
+		switch side {
+		case .front:
+			sideImageURL = card.frontImage
+		case .back:
+			sideImageURL = card.backImage
+		}
+		
+		guard let imageURL = sideImageURL else {
+			self.downloadCardImage(for: index + 1, side: .front)
 			return
 		}
 		
@@ -69,8 +82,13 @@ class ImageDownloadViewController: DownloadViewController {
 					}
 					
 					self.progressView.progress = Float(index + 1)/Float(DataStore.allCards.count)
-					self.downloadCardImage(for: index + 1)
 					
+					switch side {
+					case .front:
+						self.downloadCardImage(for: index, side: .back)
+					case .back:
+						self.downloadCardImage(for: index + 1, side: .front)
+					}
 				case .failure(let error):
 					switch error {
 					case .requestError:

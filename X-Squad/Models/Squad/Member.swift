@@ -38,8 +38,8 @@ extension Squad {
 		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
 			let upgradeSlots = self.pilot.slots ?? []
 
-			let lhsType = lhs.primarySide.type
-			let rhsType = rhs.primarySide.type
+			let lhsType = lhs.frontSide.type
+			let rhsType = rhs.frontSide.type
 
 			let lhsIndex = upgradeSlots.firstIndex(of: lhsType) ?? 999
 			let rhsIndex = upgradeSlots.firstIndex(of: rhsType) ?? 999
@@ -179,7 +179,7 @@ extension Squad {
 					return availablelots
 				}
 				
-				return upgrade.primarySide.slots.reduce(availablelots) {
+				return upgrade.frontSide.slots.reduce(availablelots) {
 					var availablelots = $0
 					if let index = availablelots.index(of: $1) {
 						availablelots.remove(at: index)
@@ -188,7 +188,7 @@ extension Squad {
 				}
 			}
 			
-			for slot in upgrade.primarySide.slots {
+			for slot in upgrade.frontSide.slots {
 				guard let index = availablelots.index(of: slot) else {
 					return .slotsNotAvailable
 				}
@@ -262,7 +262,7 @@ extension Squad.Member {
 		if pilot.shipAbility?.name == "Weapon Hardpoint" {
 			let hardpointUpgrades: [Upgrade.UpgradeType] = [.cannon, .torpedo, .missile]
 			if let equippedHardpointUpgrade = upgrades.first(where: { $0.sides.contains(where: { hardpointUpgrades.contains($0.type) })}) {
-				upgradeSlots.append(equippedHardpointUpgrade.primarySide.type)
+				upgradeSlots.append(equippedHardpointUpgrade.frontSide.type)
 			} else {
 				upgradeSlots.append(contentsOf: hardpointUpgrades)
 			}

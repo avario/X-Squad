@@ -36,12 +36,37 @@ class CardView: UIView {
 	
 	var card: Card? {
 		didSet {
-			guard let card = card else {
-				return
-			}
-			
-			imageView.kf.setImage(with: card.image)
+			side = .front
 		}
+	}
+	
+	enum Side {
+		case front
+		case back
+	}
+	
+	var side: Side = .front {
+		didSet {
+			switch side {
+			case.front:
+				imageView.kf.setImage(with: card?.frontImage)
+			case .back:
+				imageView.kf.setImage(with: card?.backImage)
+			}
+		}
+	}
+	
+	func flip() {
+		let transitionOptions: UIView.AnimationOptions = [.transitionFlipFromRight, .showHideTransitionViews]
+		
+		UIView.transition(with: self, duration: 0.4, options: transitionOptions, animations: {
+			switch self.side {
+			case.front:
+				self.side = .back
+			case .back:
+				self.side = .front
+			}
+		})
 	}
 	
 	// The member is used to distinguish cards that might be the same but attached to different pilots during transitions.

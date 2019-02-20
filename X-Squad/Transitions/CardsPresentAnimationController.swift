@@ -59,6 +59,7 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				toCardView.alpha = matchingFromCardView.alpha
 				
 				matchingFromCardView.isHidden = true
+				toCardView.side = matchingFromCardView.side
 			
 				animator.addBehavior(toCardView.snap)
 				animator.addBehavior(toCardView.behaviour)

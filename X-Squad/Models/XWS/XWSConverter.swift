@@ -88,7 +88,7 @@ extension XWS.Pilot {
 		var upgrades = [String: [String]]()
 		for upgradeType in DataUpgrade.UpgradeType.allCases {
 			
-			let upgradesForSlot = member.upgrades.filter({ $0.primarySide.type == upgradeType })
+			let upgradesForSlot = member.upgrades.filter({ $0.frontSide.type == upgradeType })
 			guard upgradesForSlot.isEmpty == false else {
 				continue
 			}

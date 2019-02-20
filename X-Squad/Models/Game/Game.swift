@@ -44,11 +44,11 @@ class Game: Codable {
 			let numberOfCharges = member.pilot.charges?.value ?? 0
 			
 			for upgrade in member.upgrades {
-				if let force = upgrade.primarySide.force?.value {
+				if let force = upgrade.frontSide.force?.value {
 					numberOfForce += force
 				}
 				
-				guard let grants = upgrade.primarySide.grants else {
+				guard let grants = upgrade.frontSide.grants else {
 					continue
 				}
 				
@@ -86,7 +86,7 @@ class Game: Codable {
 			let chargeTokens: [Token]
 			
 			init(upgrade: Upgrade) {
-				let numberOfCharges = upgrade.primarySide.charges?.value ?? 0
+				let numberOfCharges = upgrade.frontSide.charges?.value ?? 0
 				self.chargeTokens = (0 ..< numberOfCharges).map { _ in Token() }
 			}
 		}

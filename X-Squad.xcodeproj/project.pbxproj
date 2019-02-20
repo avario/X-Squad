@@ -80,7 +80,7 @@
 		B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */; };
 		B6F6066721FB518100D108E6 /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066621FB518100D108E6 /* ScanViewController.swift */; };
 		B6F6066F21FB614A00D108E6 /* SquadEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */; };
-		B6F6067A220201B300D108E6 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F60679220201B300D108E6 /* CloseButton.swift */; };
+		B6F6067A220201B300D108E6 /* SmallButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F60679220201B300D108E6 /* SmallButton.swift */; };
 		B6F6068D220332CD00D108E6 /* DialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F6068C220332CD00D108E6 /* DialView.swift */; };
 /* End PBXBuildFile section */
 
@@ -184,7 +184,7 @@
 		B6F6065F21FA72ED00D108E6 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
 		B6F6066621FB518100D108E6 /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
 		B6F6066E21FB614A00D108E6 /* SquadEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadEmptyView.swift; sourceTree = "<group>"; };
-		B6F60679220201B300D108E6 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
+		B6F60679220201B300D108E6 /* SmallButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallButton.swift; sourceTree = "<group>"; };
 		B6F6068C220332CD00D108E6 /* DialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -502,7 +502,7 @@
 			children = (
 				B662FB4621DE75A400EF79F7 /* Card */,
 				B66A14A92215F6A3001C6D8E /* Button */,
-				B6F60678220201A900D108E6 /* Close Button */,
+				B6F60678220201A900D108E6 /* Small Button */,
 				B671CA5C21F0F4220034C7C9 /* Squad Button */,
 				B671CA5921F0D1F10034C7C9 /* Member View */,
 				B671C97C21E8FEBF0034C7C9 /* Cards Collection */,
@@ -636,12 +636,12 @@
 			path = "Empty View";
 			sourceTree = "<group>";
 		};
-		B6F60678220201A900D108E6 /* Close Button */ = {
+		B6F60678220201A900D108E6 /* Small Button */ = {
 			isa = PBXGroup;
 			children = (
-				B6F60679220201B300D108E6 /* CloseButton.swift */,
+				B6F60679220201B300D108E6 /* SmallButton.swift */,
 			);
-			path = "Close Button";
+			path = "Small Button";
 			sourceTree = "<group>";
 		};
 		B6F6068B220332BE00D108E6 /* Dial */ = {
@@ -799,7 +799,7 @@
 				B6F6066021FA72ED00D108E6 /* QRCodeViewController.swift in Sources */,
 				B6EC67D121F7361700D2BA5D /* Ship.swift in Sources */,
 				B662FB3C21DE5F2900EF79F7 /* CardCollectionViewCell.swift in Sources */,
-				B6F6067A220201B300D108E6 /* CloseButton.swift in Sources */,
+				B6F6067A220201B300D108E6 /* SmallButton.swift in Sources */,
 				B662FB4A21DE79F900EF79F7 /* CardView.swift in Sources */,
 				B662FB4821DE75EA00EF79F7 /* CardViewController.swift in Sources */,
 				B671C90E21E651AE0034C7C9 /* ImageDownloadViewController.swift in Sources */,

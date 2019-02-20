@@ -331,8 +331,16 @@ class Upgrade: Codable {
 }
 
 extension Upgrade: Hashable {
-	var primarySide: Upgrade.Side {
+	
+	var frontSide: Upgrade.Side {
 		return sides.first!
+	}
+	
+	var backSide: Upgrade.Side? {
+		if sides.count == 1 {
+			return nil
+		}
+		return sides.last
 	}
 	
 	static func == (lhs: Upgrade, rhs: Upgrade) -> Bool {

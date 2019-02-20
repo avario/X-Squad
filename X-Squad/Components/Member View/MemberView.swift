@@ -134,7 +134,7 @@ class MemberView: UIView {
 		// Return the upgrade button for the upgrade and remove it from the available upgrade buttons
 		func upgradeButtons(for upgrade: Upgrade) -> [UpgradeButton] {
 			var upgradeButtons: [UpgradeButton] = []
-			for upgradeType in upgrade.primarySide.slots {
+			for upgradeType in upgrade.frontSide.slots {
 				guard let upgradeButton = availableUpgradeButtons.first(where: { $0.upgradeType == upgradeType }) else {
 					continue
 				}
@@ -174,7 +174,7 @@ class MemberView: UIView {
 		}
 		
 		// Position the configuration card to the left of the pilot
-		if let configuration = member.upgrades.first(where: { $0.primarySide.type == .configuration }) {
+		if let configuration = member.upgrades.first(where: { $0.frontSide.type == .configuration }) {
 			let configurationCardView = cardView(for: configuration)
 			
 			configurationCardView.frame = CGRect(
@@ -201,7 +201,7 @@ class MemberView: UIView {
 		var previousCardView = pilotCardView
 		
 		for upgrade in member.upgrades {
-			guard upgrade.primarySide.type != .configuration else {
+			guard upgrade.frontSide.type != .configuration else {
 				continue
 			}
 			

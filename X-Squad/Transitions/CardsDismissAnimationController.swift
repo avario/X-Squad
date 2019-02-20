@@ -61,6 +61,8 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				
 				matchingToCardView.isHidden = true
 				matchedToCardViews.append(matchingToCardView)
+				
+				matchingToCardView.side = fromCardView.side
 			
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
 					fromCardView.cardContainer.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
@@ -68,8 +70,6 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				}, completion: nil)
 			} else {
 				viewsToAnimateOut.append(fromCardView)
-				
-				
 			}
 		}
 		

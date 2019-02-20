@@ -36,7 +36,7 @@ class SelectUpgradeViewController: CardsViewController {
 		var restrictedUpgrades: [Upgrade] = []
 		
 		for upgrade in DataStore.upgrades {
-			guard upgrade.primarySide.slots.contains(upgradeType) else {
+			guard upgrade.frontSide.slots.contains(upgradeType) else {
 					continue
 			}
 			

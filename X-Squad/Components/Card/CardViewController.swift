@@ -32,7 +32,7 @@ class CardViewController: UIViewController {
 	// This is the button that is used to modify a squad ("Add to Squad", "Remove from Pilot", etc).
 	let squadButton = SquadButton()
 	
-	let closeButton = CloseButton()
+	let closeButton = SmallButton()
 	
 	init(card: Card, member: Squad.Member? = nil) {
 		self.card = card
@@ -112,7 +112,8 @@ class CardViewController: UIViewController {
 			view.insertSubview(hyperspaceLabel, belowSubview: cardView)
 			hyperspaceLabel.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 			
-			if let pilot = card as? Pilot {
+			switch card {
+			case let pilot as Pilot:
 				// Dial
 				let ship = DataStore.ships.first(where: { $0.pilots.contains(pilot) })!
 				let dialView = DialView(ship: ship)
@@ -147,10 +148,28 @@ class CardViewController: UIViewController {
 					upgradeSlotsBar.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 					upgradeSlotsBar.rightAnchor.constraint(equalTo: costView.leftAnchor, constant: -10).isActive = true
 				}
-			} else {
+				
+			case let upgrade as Upgrade:
 				// Hyperspace
 				hyperspaceLabel.bottomAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor,  constant: -10).isActive = true
+				
+				// Flip button
+				if upgrade.backSide != nil {
+					let flipButton = SmallButton()
+					flipButton.setTitle("Flip", for: .normal)
+					
+					view.addSubview(flipButton)
+					flipButton.translatesAutoresizingMaskIntoConstraints = false
+					flipButton.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+					flipButton.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
+					
+					flipButton.addTarget(self, action: #selector(flipCard), for: .touchUpInside)
+				}
+				
+			default:
+				fatalError()
 			}
+
 		} else {
 			let unreleasedLabel = UILabel()
 			unreleasedLabel.textColor = UIColor.white.withAlphaComponent(0.5)
@@ -165,12 +184,17 @@ class CardViewController: UIViewController {
 		
 		// Close button
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
+		closeButton.setTitle("Close", for: .normal)
 		
 		view.addSubview(closeButton)
 		closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
 		closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
 		
 		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+	}
+	
+	@objc func flipCard() {
+		cardView.flip()
 	}
 	
 	@objc func close() {

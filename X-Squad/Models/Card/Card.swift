@@ -11,7 +11,8 @@ import Foundation
 protocol Card {
 	var name: String { get }
 	var limited: Int { get }
-	var image: URL? { get }
+	var frontImage: URL? { get }
+	var backImage: URL? { get }
 	var hyperspace: Bool? { get }
 	var orientation: CardOrientation { get }
 }
@@ -70,12 +71,24 @@ extension Card {
 }
 
 extension Pilot: Card {
+	var frontImage: URL? {
+		return image
+	}
+	
+	var backImage: URL? {
+		return nil
+	}
+	
 	var orientation: CardOrientation { return .portrait }
 }
 
 extension Upgrade: Card {
-	var image: URL? {
-		return sides.first!.image
+	var frontImage: URL? {
+		return frontSide.image
+	}
+	
+	var backImage: URL? {
+		return backSide?.image
 	}
 	
 	var orientation: CardOrientation { return .landscape }
