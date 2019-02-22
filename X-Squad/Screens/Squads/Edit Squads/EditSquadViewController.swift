@@ -89,30 +89,4 @@ class EditSquadViewController: SquadViewController {
 		}))
 	}
 	
-	override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		switch cardViewController.card {
-		case _ as Pilot:
-			return .remove("Remove from Squad")
-		case _ as Upgrade:
-			return .remove("Remove from Pilot")
-		default:
-			fatalError()
-		}
-	}
-	
-	override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		let member = cardViewController.member!
-		
-		switch cardViewController.card {
-		case _ as Pilot:
-			squad.remove(member: member)
-		case let upgrade as Upgrade:
-			member.remove(upgrade: upgrade)
-		default:
-			fatalError()
-		}
-		
-		dismiss(animated: true, completion: nil)
-	}
-	
 }

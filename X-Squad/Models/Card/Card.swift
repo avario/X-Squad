@@ -9,6 +9,7 @@
 import Foundation
 
 protocol Card {
+	var xws: XWSID { get }
 	var name: String { get }
 	var limited: Int { get }
 	var frontImage: URL? { get }
@@ -67,6 +68,20 @@ extension Card {
 		default:
 			fatalError()
 		}
+	}
+	
+	func matches(_ card: Card) -> Bool {
+		if let upgrade = self as? Upgrade,
+			let upgradeToMatch = card as? Upgrade,
+			upgrade == upgradeToMatch  {
+			return true
+			
+		} else if let pilot = self as? Pilot,
+			let pilotToMatch = card as? Pilot,
+			pilot == pilotToMatch {
+			return true
+		}
+		return false
 	}
 }
 

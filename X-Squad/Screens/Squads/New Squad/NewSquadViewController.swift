@@ -41,7 +41,7 @@ class NewSquadViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		navigationController?.navigationBar.barStyle = .black
 		navigationController?.navigationBar.prefersLargeTitles = true
 		

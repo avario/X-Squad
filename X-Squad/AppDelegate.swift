@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			UINavigationController(rootViewController: SearchViewController()),
 			UINavigationController(rootViewController: SettingsViewController())]
 
-		tabBarController.selectedIndex = 1
+		tabBarController.selectedIndex = tabBarController.viewControllers!.firstIndex(where: { $0 is EditSquadsViewController })!
 		tabBarController.delegate = tabBarController
 		
 		window?.rootViewController = tabBarController

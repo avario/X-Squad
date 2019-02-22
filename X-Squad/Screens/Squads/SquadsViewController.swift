@@ -31,7 +31,7 @@ class SquadsViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		
 		definesPresentationContext = true
 		

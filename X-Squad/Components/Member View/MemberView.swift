@@ -16,7 +16,7 @@ protocol MemberViewDelegate: AnyObject {
 	func memberView(_ memberView: MemberView, didPress button: UpgradeButton)
 }
 
-class MemberView: UIView {
+class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
 	
 	weak var delegate: MemberViewDelegate?
 	
@@ -52,6 +52,8 @@ class MemberView: UIView {
 		pilotCardView.card = member.pilot
 		pilotCardView.member = member
 		addSubview(pilotCardView)
+		
+		cardViews.append(pilotCardView)
 		
 		let cardTapGesture = UITapGestureRecognizer(target: self, action: #selector(selectCard(tapGesture:)))
 		pilotCardView.addGestureRecognizer(cardTapGesture)
@@ -244,4 +246,51 @@ class MemberView: UIView {
 		widthConstraint.constant = leadingEdge
 	}
 	
+	var cards: [Card] {
+		return [member.pilot] + member.upgrades
+	}
+	
+	func member(for card: Card) -> Squad.Member? {
+		return member
+	}
+	
+	func squadAction(for card: Card) -> SquadButton.Action? {
+		guard mode == .edit else {
+			return nil
+		}
+		
+		switch card {
+		case _ as Pilot:
+			return .remove("Remove from Squad")
+		case _ as Upgrade:
+			return .remove("Remove from Pilot")
+		default:
+			fatalError()
+		}
+	}
+	
+	func cost(for card: Card) -> Int {
+		return card.pointCost(for: member)
+	}
+	
+	func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didPressSquadButtonFor card: Card) {
+		let squad = member.squad
+		
+		switch card {
+		case _ as Pilot:
+			squad.remove(member: member)
+		case let upgrade as Upgrade:
+			member.remove(upgrade: upgrade)
+		default:
+			fatalError()
+		}
+		
+		cardDetailsCollectionViewController.dismiss(animated: true, completion: nil)
+	}
+	
+	func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didChangeFocusFrom fromCard: Card, to toCard: Card) {
+		for cardView in cardViews {
+			cardView.isHidden = cardView.card?.matches(toCard) ?? false
+		}
+	}
 }

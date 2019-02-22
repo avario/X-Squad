@@ -14,9 +14,7 @@ class PullToDismissController: NSObject {
 	
 	weak var viewController: UIViewController?
 	
-	init(viewController: UIViewController, scrollView: UIScrollView? = nil) {
-		self.viewController = viewController
-		
+	init(scrollView: UIScrollView? = nil) {
 		super.init()
 
 		scrollView?.delegate = self

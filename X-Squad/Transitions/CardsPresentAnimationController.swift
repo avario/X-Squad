@@ -97,9 +97,9 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 			}, completion: nil)
 		}
 		
-		toVC.view.backgroundColor = UIColor(named: "XBackground")!.withAlphaComponent(0)
+		toVC.view.backgroundColor = UIColor.black.withAlphaComponent(0)
 		UIView.animate(withDuration: transitionTime, animations: {
-			toVC.view.backgroundColor = UIColor(named: "XBackground")
+			toVC.view.backgroundColor = .black
 		}) { (_) in
 			transitionContext.completeTransition(true)
 			

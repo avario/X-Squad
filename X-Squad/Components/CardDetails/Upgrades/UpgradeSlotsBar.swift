@@ -11,7 +11,35 @@ import UIKit
 
 class UpgradeSlotsBar: UIView {
 	
-	init(upgradSlots: [Upgrade.UpgradeType]) {
+	let upgradeBar = UIStackView()
+	
+	var upgradeSlots: [Upgrade.UpgradeType]? {
+		didSet {
+			guard let upgradeSlots = upgradeSlots else {
+				return
+			}
+			
+			for subview in upgradeBar.subviews {
+				subview.removeFromSuperview()
+			}
+			
+			if upgradeSlots.count <= 6 {
+				upgradeBar.spacing = 5
+			} else {
+				upgradeBar.spacing = 0
+			}
+			
+			for upgrade in upgradeSlots {
+				let upgradeButton = UpgradeButton()
+				upgradeButton.isUserInteractionEnabled = false
+				upgradeButton.upgradeType = upgrade
+				
+				upgradeBar.addArrangedSubview(upgradeButton)
+			}
+		}
+	}
+	
+	init() {
 		super.init(frame: .zero)
 		
 		let scrollView = UIScrollView()
@@ -25,28 +53,15 @@ class UpgradeSlotsBar: UIView {
 		scrollView.contentInset.left = 20
 		scrollView.contentInset.right = 20
 		
-		let upgradeBar = UIStackView()
 		upgradeBar.translatesAutoresizingMaskIntoConstraints = false
 		upgradeBar.axis = .horizontal
 		scrollView.addSubview(upgradeBar)
-		
-		if upgradSlots.count <= 6 {
-			upgradeBar.spacing = 5
-		}
 		
 		upgradeBar.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
 		upgradeBar.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
 		upgradeBar.rightAnchor.constraint(equalTo: scrollView.rightAnchor).isActive = true
 		upgradeBar.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
 		upgradeBar.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
-		
-		for upgrade in upgradSlots {
-			let upgradeButton = UpgradeButton()
-			upgradeButton.isUserInteractionEnabled = false
-			upgradeButton.upgradeType = upgrade
-			
-			upgradeBar.addArrangedSubview(upgradeButton)
-		}
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

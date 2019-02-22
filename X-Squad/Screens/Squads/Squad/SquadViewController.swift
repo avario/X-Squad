@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class SquadViewController: UIViewController, CardViewControllerDelegate {
+class SquadViewController: UIViewController {
 	
 	let squad: Squad
 	
@@ -38,7 +38,7 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		
 		view.addSubview(scrollView)
 		scrollView.contentInsetAdjustmentBehavior = .always
@@ -70,7 +70,8 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		stackView.addArrangedSubview(header)
 		header.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
 		
-		pullToDismissController = PullToDismissController(viewController: self, scrollView: scrollView)
+		pullToDismissController = PullToDismissController(scrollView: scrollView)
+		pullToDismissController.viewController = self
 		
 		updateMemberViews()
 	}
@@ -226,29 +227,23 @@ class SquadViewController: UIViewController, CardViewControllerDelegate {
 		present(UINavigationController(rootViewController: QRCodeViewController(squad: squad)), animated: true, completion: nil)
 	}
 	
-	func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		return nil
-	}
-	
-	func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		// Implemented in subclass.
-	}
-	
 }
 
 extension SquadViewController: MemberViewDelegate {
 	func memberView(_ memberView: MemberView, didSelect pilot: Pilot) {
-		let cardViewController = CardViewController(card: pilot, member: memberView.member)
-		cardViewController.cardView.member = memberView.member
-		cardViewController.delegate = self
-		present(cardViewController, animated: true, completion: nil)
+		let cardDetailsCollectionViewController = CardDetailsCollectionViewController(initialCard: pilot)
+		cardDetailsCollectionViewController.dataSource = memberView
+		cardDetailsCollectionViewController.delegate = memberView
+		
+		present(cardDetailsCollectionViewController, animated: true, completion: nil)
 	}
 	
 	func memberView(_ memberView: MemberView, didSelect upgrade: Upgrade) {
-		let cardViewController = CardViewController(card: upgrade, member: memberView.member)
-		cardViewController.cardView.member = memberView.member
-		cardViewController.delegate = self
-		present(cardViewController, animated: true, completion: nil)
+		let cardDetailsCollectionViewController = CardDetailsCollectionViewController(initialCard: upgrade)
+		cardDetailsCollectionViewController.dataSource = memberView
+		cardDetailsCollectionViewController.delegate = memberView
+		
+		present(cardDetailsCollectionViewController, animated: true, completion: nil)
 	}
 	
 	func memberView(_ memberView: MemberView, didPress button: UpgradeButton) {

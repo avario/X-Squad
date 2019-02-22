@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class CardsViewController: UICollectionViewController, CardViewControllerDelegate, CardViewDelegate {
+class CardsViewController: UICollectionViewController, CardViewDelegate, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
 	
 	// This represents a section of cards. A section can have a header and then a number of cards.
 	struct CardSection {
@@ -51,7 +51,7 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		
 		collectionView.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: CardCollectionViewCell.identifier)
 		collectionView.register(CardsSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CardsSectionHeaderView.reuseIdentifier)
@@ -83,22 +83,20 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let card = cardSections[indexPath.section].cards[indexPath.row]
-		let cardViewController = self.cardViewController(for: card)
-		cardViewController.delegate = self
+		
+		let cardDetailsCollectionViewController = CardDetailsCollectionViewController(initialCard: card)
+		cardDetailsCollectionViewController.dataSource = self
+		cardDetailsCollectionViewController.delegate = self
+		
 		if let topViewController = self.presentingViewController?.navigationController?.tabBarController {
-			topViewController.present(cardViewController, animated: true, completion: nil)
+			topViewController.present(cardDetailsCollectionViewController, animated: true, completion: nil)
 		} else {
-			self.present(cardViewController, animated: true, completion: nil)
+			self.present(cardDetailsCollectionViewController, animated: true, completion: nil)
 		}
 		
 		// Scrol the collection view to make the selected card fully visible.
 		let cellFrame = collectionView.layoutAttributesForItem(at: indexPath)!.frame
 		collectionView.scrollRectToVisible(cellFrame, animated: true)
-	}
-	
-	open func cardViewController(for card: Card) -> CardViewController {
-		// This can be overriden by subclasses to customise the view that is shown for a card.
-		return CardViewController(card: card, member: nil)
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -136,15 +134,6 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 		self.dismiss(animated: true, completion: nil)
 	}
 	
-	open func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		// Used by subclasses.
-		return nil
-	}
-	
-	open func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		// Used by subclasses.
-	}
-	
 	open func status(for card: Card) -> CardCollectionViewCell.Status {
 		// Used by subclasses.
 		return .default
@@ -152,6 +141,54 @@ class CardsViewController: UICollectionViewController, CardViewControllerDelegat
 	
 	open func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
 		// Used by subclasses.
+	}
+	
+	var cards: [Card] {
+		return cardSections.reduce([Card](), { cards, cardSection in
+			var cards = cards
+			cards.append(contentsOf: cardSection.cards)
+			return cards
+		})
+	}
+	
+	func member(for card: Card) -> Squad.Member? {
+		return nil
+	}
+	
+	func squadAction(for card: Card) -> SquadButton.Action? {
+		return nil
+	}
+	
+	func cost(for card: Card) -> Int {
+		return card.pointCost()
+	}
+	
+	func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didPressSquadButtonFor card: Card) {
+		
+	}
+	
+	func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didChangeFocusFrom fromCard: Card, to toCard: Card) {
+		let fromCardIndex = indexPath(for: fromCard)!
+		if let fromCardCell = collectionView.cellForItem(at: fromCardIndex) as? CardCollectionViewCell {
+			fromCardCell.cardView.isHidden = false
+		}
+		
+		let toCardIndex = indexPath(for: toCard)!
+		let cellFrame = collectionView.layoutAttributesForItem(at: toCardIndex)!.frame
+		collectionView.scrollRectToVisible(cellFrame, animated: false)
+		
+		if let toCardCell = collectionView.cellForItem(at: toCardIndex) as? CardCollectionViewCell {
+			toCardCell.cardView.isHidden = true
+		}
+	}
+	
+	func indexPath(for card: Card) -> IndexPath? {
+		for (sectionIndex, section) in cardSections.enumerated() {
+			if let cardIndex = section.cards.firstIndex(where: { $0.matches(card) }) {
+				return IndexPath(item: cardIndex, section: sectionIndex)
+			}
+		}
+		return nil
 	}
 }
 

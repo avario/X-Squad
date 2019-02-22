@@ -39,13 +39,22 @@ class GameSquadViewControler: SquadViewController {
 		}
 	}
 	
+	var hasInsetMemberViews = false
+	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		
 		// This scrolls all of the members views to a consistent offset (because the scrollview content size depends on the number of tokens show in the state view).
+		guard hasInsetMemberViews == false,
+			memberViews.contains(where: { $0.stateView.bounds.width > 0}) else {
+			return
+		}
+		
 		for memberView in memberViews {
 			memberView.contentOffset.x = memberView.stateView.bounds.width - 36
 		}
+		
+		hasInsetMemberViews = true
 	}
 	
 }

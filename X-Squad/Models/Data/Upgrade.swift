@@ -344,10 +344,12 @@ extension Upgrade: Hashable {
 	}
 	
 	static func == (lhs: Upgrade, rhs: Upgrade) -> Bool {
-		return lhs.xws == rhs.xws
+		return  lhs.xws == rhs.xws
+			&& lhs.frontSide.type == rhs.frontSide.type
 	}
 	
 	public func hash(into hasher: inout Hasher) {
 		xws.hash(into: &hasher)
+		frontSide.type.hash(into: &hasher)
 	}
 }

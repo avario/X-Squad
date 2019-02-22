@@ -135,17 +135,9 @@ class CardView: UIView {
 	}
 	
 	func matches(_ cardView: CardView) -> Bool {
-		if let upgrade = card as? Upgrade,
-			let upgradeToMatch = cardView.card as? Upgrade {
-			guard upgrade == upgradeToMatch else {
-				return false
-			}
-		} else if let pilot = card as? Pilot,
-			let pilotToMatch = cardView.card as? Pilot {
-			guard pilot == pilotToMatch else {
-				return false
-			}
-		} else {
+		guard let card = card,
+			let cardToMatch = cardView.card,
+			card.matches(cardToMatch) else {
 			return false
 		}
 		

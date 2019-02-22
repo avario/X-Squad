@@ -20,7 +20,8 @@ class AddPilotViewController: CardsViewController {
 		self.squad = squad
 		super.init(numberOfColumns: 4)
 		
-		pullToDismissController = PullToDismissController(viewController: self)
+		pullToDismissController = PullToDismissController()
+		pullToDismissController?.viewController = self
 		
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
@@ -71,21 +72,20 @@ class AddPilotViewController: CardsViewController {
 		pullToDismissController?.scrollViewWillEndDragging(scrollView, withVelocity: velocity, targetContentOffset: targetContentOffset)
 	}
 	
-	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		return status(for: cardViewController.card) == .default ? .add("Add to Squad") : nil
+	override func squadAction(for card: Card) -> SquadButton.Action? {
+		return status(for: card) == .default ? .add("Add to Squad") : nil
 	}
 	
-	// Add the pilot to the squad.
-	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
-		let pilot = cardViewController.card as! Pilot
+	override func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didPressSquadButtonFor card: Card) {
+		let pilot = card as! Pilot
 		let member = squad.addMember(for: pilot)
 		
-		cardViewController.cardView.member = member
+		cardDetailsCollectionViewController.currentCell?.member = member
 		
 		// The squad view controller is set as the target and this screen is set to hidden so it looks like the presented card screen transitions directly to the squad screen.
-		cardViewController.dismissTargetViewController = self.presentingViewController
 		self.view.isHidden = true
-		cardViewController.dismiss(animated: true) {
+		cardDetailsCollectionViewController.dismissTargetViewController = self.presentingViewController
+		cardDetailsCollectionViewController.dismiss(animated: true) {
 			self.dismiss(animated: false, completion: nil)
 		}
 	}

@@ -25,7 +25,7 @@ class NewGameViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		navigationController?.navigationBar.barStyle = .black
 		navigationController?.navigationBar.isTranslucent = true
 		navigationController?.navigationBar.prefersLargeTitles = true

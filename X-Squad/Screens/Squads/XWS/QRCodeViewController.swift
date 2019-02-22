@@ -36,7 +36,7 @@ class QRCodeViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		view.backgroundColor = UIColor(named: "XBackground")
+		view.backgroundColor = .black
 		navigationController?.navigationBar.barStyle = .black
 		
 		tableView.separatorColor = UIColor.white.withAlphaComponent(0.2)

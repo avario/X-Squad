@@ -27,7 +27,8 @@ class SelectUpgradeViewController: CardsViewController {
 		
 		super.init(numberOfColumns: 3)
 		
-		pullToDismissController = PullToDismissController(viewController: self)
+		pullToDismissController = PullToDismissController()
+		pullToDismissController?.viewController = self
 		
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
@@ -116,43 +117,38 @@ class SelectUpgradeViewController: CardsViewController {
 		return cardCell
 	}
 	
-	override func cardViewController(for card: Card) -> CardViewController {
-		let cardViewController = CardViewController(card: card, member: member)
-		if (card as! Upgrade) == currentUpgrade {
-			cardViewController.cardView.member = member
-		}
-		return cardViewController
-	}
-	
-	open override func squadActionForCardViewController(_ cardViewController: CardViewController) -> SquadButton.Action? {
-		if cardViewController.card as? Upgrade == currentUpgrade {
+	override func squadAction(for card: Card) -> SquadButton.Action? {
+		if card as? Upgrade == currentUpgrade {
 			return .remove("Remove from Pilot")
 		}
 		
-		if validity(of: cardViewController.card as! Upgrade) == .valid {
+		if validity(of: card as! Upgrade) == .valid {
 			return .add("Add to Pilot")
 		}
 		
 		return nil
 	}
 	
-	// Add the upgrade to the pilot.
-	open override func cardViewControllerDidPressSquadButton(_ cardViewController: CardViewController) {
+	override func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didPressSquadButtonFor card: Card) {
 		if let currentUpgrade = currentUpgrade {
 			member.remove(upgrade: currentUpgrade)
 		}
 		
-		if cardViewController.card as? Upgrade != currentUpgrade {
-			member.addUpgrade(cardViewController.card as! Upgrade)
-			cardViewController.cardView.member = member
+		if card as? Upgrade != currentUpgrade {
+			member.addUpgrade(card as! Upgrade)
+			cardDetailsCollectionViewController.currentCell?.member = member
 		}
 		
 		// The squad view controller is set as the target and this screen is set to hidden so it looks like the presented card screen transitions directly to the squad screen.
-		cardViewController.dismissTargetViewController = self.presentingViewController
 		self.view.isHidden = true
-		cardViewController.dismiss(animated: true) {
+		cardDetailsCollectionViewController.dismissTargetViewController = self.presentingViewController
+		cardDetailsCollectionViewController.dismiss(animated: true) {
 			self.dismiss(animated: false, completion: nil)
 		}
+	}
+	
+	override func cost(for card: Card) -> Int {
+		return card.pointCost(for: member)
 	}
 	
 	override func status(for card: Card) -> CardCollectionViewCell.Status {
