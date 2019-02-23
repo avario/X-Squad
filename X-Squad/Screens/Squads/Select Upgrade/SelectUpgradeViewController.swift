@@ -41,7 +41,9 @@ class SelectUpgradeViewController: CardsViewController {
 					continue
 			}
 			
-			if validity(of: upgrade) == .restrictionsNotMet {
+			let validity = self.validity(of: upgrade)
+			
+			if validity == .restrictionsNotMet || validity == .notHyperspace {
 				restrictedUpgrades.append(upgrade)
 			} else {
 				upgrades.append(upgrade)
@@ -189,6 +191,13 @@ class SelectUpgradeViewController: CardsViewController {
 	
 	func validity(of upgrade: Upgrade) -> Squad.Member.UpgradeValidity {
 		return member.validity(of: upgrade, replacing: currentUpgrade)
+	}
+	
+	override func member(for card: Card) -> Squad.Member? {
+		if let currentUpgrade = currentUpgrade, card.matches(currentUpgrade) {
+			return member
+		}
+		return nil
 	}
 	
 }

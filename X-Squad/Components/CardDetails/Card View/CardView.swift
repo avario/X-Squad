@@ -102,6 +102,10 @@ class CardView: UIView {
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFit
 		imageView.kf.indicatorType = .activity
+		if let activityIndicator = imageView.kf.indicator?.view as? UIActivityIndicatorView {
+			activityIndicator.style = .white
+			activityIndicator.alpha = 0.25
+		}
 		
 		imageView.centerXAnchor.constraint(equalTo: cardContainer.centerXAnchor).isActive = true
 		imageView.centerYAnchor.constraint(equalTo: cardContainer.centerYAnchor).isActive = true

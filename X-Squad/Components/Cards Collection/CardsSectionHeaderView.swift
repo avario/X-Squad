@@ -45,7 +45,7 @@ class CardsSectionHeaderView: UICollectionReusableView {
 		closeButton.setTitle("Close", for: .normal)
 		
 		addSubview(closeButton)
-		closeButton.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+		closeButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
 		closeButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
 	}
 	

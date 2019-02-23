@@ -13,6 +13,7 @@ import UIKit
 class PullToDismissController: NSObject {
 	
 	weak var viewController: UIViewController?
+	var dimmingView: UIView?
 	
 	init(scrollView: UIScrollView? = nil) {
 		super.init()
@@ -54,8 +55,10 @@ extension PullToDismissController: UIScrollViewDelegate {
 			hudPercent = 1
 		}
 		
-		viewController!.view.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
-		for view in viewController!.view.allHUDViews() {
+		let dimmingView = self.dimmingView ?? viewController!.view!
+		
+		dimmingView.backgroundColor = UIColor.black.withAlphaComponent(backgroundPercent)
+		for view in dimmingView.allHUDViews() {
 			view.alpha = hudPercent
 		}
 	}

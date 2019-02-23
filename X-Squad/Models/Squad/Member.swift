@@ -55,7 +55,7 @@ extension Squad {
 			upgradesXWS.append(upgrade.xws)
 			upgrades.append(upgrade)
 			
-			removeInValidUpgrades()
+			removeInvalidUpgrades()
 			
 			upgrades.sort(by: upgradeSort)
 			
@@ -71,14 +71,14 @@ extension Squad {
 				upgradesXWS.remove(at: indexXWS)
 			}
 			
-			removeInValidUpgrades()
+			removeInvalidUpgrades()
 			
 			SquadStore.save()
 			NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromMember, object: self)
 			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
 		}
 		
-		func removeInValidUpgrades(shouldNotify: Bool = false, notify: Bool = false) {
+		func removeInvalidUpgrades(shouldNotify: Bool = false, notify: Bool = false) {
 			var invalidUpgrade: Upgrade? = nil
 			
 			for upgrade in upgrades {
@@ -93,7 +93,7 @@ extension Squad {
 				let indexXWS = upgradesXWS.firstIndex(of: invalidUpgrade.xws){
 				upgrades.remove(at: index)
 				upgradesXWS.remove(at: indexXWS)
-				removeInValidUpgrades(shouldNotify: shouldNotify, notify: true)
+				removeInvalidUpgrades(shouldNotify: shouldNotify, notify: true)
 			}
 			
 			if shouldNotify, notify {
@@ -108,6 +108,7 @@ extension Squad {
 			case slotsNotAvailable
 			case limitExceeded
 			case restrictionsNotMet
+			case notHyperspace
 		}
 		
 		func validity(of upgrade: Upgrade, replacing: Upgrade?) -> UpgradeValidity {
@@ -171,6 +172,11 @@ extension Squad {
 					
 					return .restrictionsNotMet
 				}
+			}
+			
+			// Make sure the upgrade is Hyperspace
+			if squad.isHyperspaceOnly, upgrade.hyperspace != true {
+				return .notHyperspace
 			}
 			
 			// Ensure the the pilot has the correct upgrade slots available for the upgrade

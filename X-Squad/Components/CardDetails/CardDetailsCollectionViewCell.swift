@@ -17,8 +17,9 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 	
 	static let reuseIdentifier = "CardDetailsCollectionViewCell"
 	
+	static private let isSpaceLimited = UIScreen.main.bounds.height < 600
 	static private let horizontalPadding: CGFloat = 10
-	static private let verticalCenterOffset: CGFloat = -20
+	static private let verticalCenterOffset: CGFloat = isSpaceLimited ? -15 : -20
 	
 	private(set) var pullToDismissController: PullToDismissController!
 	
@@ -112,23 +113,9 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		
 		pullToDismissController = PullToDismissController(scrollView: cardScrollView)
 		
-		// Card scroll view
-		addSubview(cardScrollView)
-		cardScrollView.alwaysBounceVertical = true
-		cardScrollView.insetsLayoutMarginsFromSafeArea = false
-		cardScrollView.contentInsetAdjustmentBehavior = .never
-		
-		cardScrollView.translatesAutoresizingMaskIntoConstraints = false
-		cardScrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		cardScrollView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-		cardScrollView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-		cardScrollView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-		
-		cardScrollView.addSubview(cardView)
-		cardView.isVisible = false
+		// Card layout guide
 		addLayoutGuide(cardLayoutGuide)
 		
-		// Card layout guide
 		cardLayoutGuideHeightConstraint = cardLayoutGuide.heightAnchor.constraint(equalToConstant: 0)
 		cardLayoutGuideHeightConstraint.isActive = true
 		
@@ -136,18 +123,36 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		cardLayoutGuide.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
 		cardLayoutGuide.centerYAnchor.constraint(equalTo: centerYAnchor, constant: CardDetailsCollectionViewCell.verticalCenterOffset).isActive = true
 		
+		// Card scroll view
+		addSubview(cardScrollView)
+		cardScrollView.clipsToBounds = false
+		cardScrollView.alwaysBounceVertical = true
+		cardScrollView.insetsLayoutMarginsFromSafeArea = false
+		cardScrollView.contentInsetAdjustmentBehavior = .never
+		
+		cardScrollView.translatesAutoresizingMaskIntoConstraints = false
+		cardScrollView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+		cardScrollView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+		cardScrollView.bottomAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor).isActive = true
+		cardScrollView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		
+		cardScrollView.addSubview(cardView)
+		cardView.isVisible = false
+		
 		// Squad button
-		addSubview(squadButton)
+		insertSubview(squadButton, belowSubview: cardScrollView)
 		
 		squadButton.addTarget(self, action: #selector(squadButtonPressed), for: .touchUpInside)
 		squadButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
 		squadButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
 		
+		let cardBottomPadding: CGFloat = CardDetailsCollectionViewCell.isSpaceLimited ? 10 : 15
+		
 		// Cost view
 		insertSubview(costView, belowSubview: cardScrollView)
 		costView.translatesAutoresizingMaskIntoConstraints = false
 		
-		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+		costView.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: cardBottomPadding).isActive = true
 		costView.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 		
 		// Content under the card
@@ -187,15 +192,15 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		upgradeSlotsBar.translatesAutoresizingMaskIntoConstraints = false
 		insertSubview(upgradeSlotsBar, belowSubview: cardScrollView)
 		
-		upgradeSlotsBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+		upgradeSlotsBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: cardBottomPadding).isActive = true
 		upgradeSlotsBar.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
 		upgradeSlotsBar.rightAnchor.constraint(equalTo: costView.leftAnchor, constant: -10).isActive = true
 		
 		// Flip button
 		flipButton.setTitle("Flip", for: .normal)
-		addSubview(flipButton)
+		insertSubview(flipButton, belowSubview: cardScrollView)
 		flipButton.translatesAutoresizingMaskIntoConstraints = false
-		flipButton.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+		flipButton.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: cardBottomPadding).isActive = true
 		flipButton.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: 10).isActive = true
 		
 		flipButton.addTarget(self, action: #selector(flipCard), for: .touchUpInside)
@@ -207,7 +212,7 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		insertSubview(unreleasedLabel, belowSubview: cardScrollView)
 		unreleasedLabel.translatesAutoresizingMaskIntoConstraints = false
 		
-		unreleasedLabel.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: 15).isActive = true
+		unreleasedLabel.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: cardBottomPadding).isActive = true
 		unreleasedLabel.rightAnchor.constraint(equalTo: cardLayoutGuide.rightAnchor, constant: -10).isActive = true
 	}
 	

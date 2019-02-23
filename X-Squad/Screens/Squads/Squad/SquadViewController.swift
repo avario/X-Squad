@@ -18,6 +18,7 @@ class SquadViewController: UIViewController {
 	let stackView = UIStackView()
 	
 	var pullToDismissController: PullToDismissController!
+	var header: SquadHeaderView!
 	
 	init(for squad: Squad) {
 		self.squad = squad
@@ -54,7 +55,6 @@ class SquadViewController: UIViewController {
 		scrollView.addSubview(stackView)
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 		stackView.axis = .vertical
-		stackView.spacing = 10
 		stackView.alignment = .center
 		
 		stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
@@ -64,7 +64,7 @@ class SquadViewController: UIViewController {
 		stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
 		
 		// The header displays the Close button, the point cost, and the info button
-		let header = SquadHeaderView(squad: squad)
+		header = SquadHeaderView(squad: squad)
 		header.infoButton.addTarget(self, action: #selector(showSquadInfo), for: .touchUpInside)
 		header.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 		stackView.addArrangedSubview(header)
@@ -74,15 +74,6 @@ class SquadViewController: UIViewController {
 		pullToDismissController.viewController = self
 		
 		updateMemberViews()
-	}
-	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		
-		// Spacing on the top looks a bit better on devices without a notch
-		if view.safeAreaInsets.top <= 30 {
-			scrollView.contentInset.top = 10
-		}
 	}
 	
 	@objc func updateMemberViews() {
@@ -123,25 +114,28 @@ class SquadViewController: UIViewController {
 	}
 	
 	@objc func showSquadInfo() {
-		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		
-		addActions(to: alert)
-		
-		alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-		alert.view.tintColor = .black
-		self.present(alert, animated: true, completion: nil)
+		let squadInfoViewController = SquadInfoViewController(actions: infoActions())
+		self.present(squadInfoViewController, animated: true, completion: nil)
 	}
 	
-	func addActions(to alert: UIAlertController) {
-		alert.addAction(UIAlertAction(title: "Copy XWS to Clipboard", style: .default, handler: { _ in
-			self.copyXWS()
-		}))
-		alert.addAction(UIAlertAction(title: "View XWS QR Code", style: .default, handler: { _ in
-			self.showXWSQRCode()
-		}))
-		alert.addAction(UIAlertAction(title: "Export Image", style: .default, handler: { _ in
-			self.exportImage()
-		}))
+	func infoActions() -> [SquadInfoAction] {
+		return [
+			SquadInfoAction(
+				title: "Copy XWS to Clipboard",
+				image: UIImage(named: "XWS Icon")!,
+				type: .action(self.copyXWS, destructive: false)
+			),
+			SquadInfoAction(
+				title: "View XWS QR Code",
+				image: UIImage(named: "QR Code Icon")!,
+				type: .action(self.showXWSQRCode, destructive: false)
+			),
+			SquadInfoAction(
+				title: "Export Image",
+				image: UIImage(named: "Export Image Icon")!,
+				type: .action(self.exportImage, destructive: false)
+			),
+		]
 	}
 	
 	func exportImage() {

@@ -28,10 +28,21 @@ class AddPilotViewController: CardsViewController {
 		
 		// The ships are sorted by how many pilots they have, then by name.
 		let ships = DataStore.ships.filter({ $0.faction == squad.faction }).sorted {
-			if $0.pilots.count == $1.pilots.count {
+			let pilotCount0: Int
+			let pilotCount1: Int
+			
+			if squad.isHyperspaceOnly {
+				pilotCount0 = $0.pilots.filter({ $0.hyperspace == true }).count
+				pilotCount1 = $1.pilots.filter({ $0.hyperspace == true }).count
+			} else {
+				pilotCount0 = $0.pilots.count
+				pilotCount1 = $1.pilots.count
+			}
+			
+			if pilotCount0 == pilotCount1 {
 				return $0.name < $1.name
 			} else {
-				return $0.pilots.count > $1.pilots.count
+				return pilotCount0 > pilotCount1
 			}
 		}
 		
@@ -94,6 +105,11 @@ class AddPilotViewController: CardsViewController {
 		// Show cards the have reached their limit in the squad as dimmed.
 		switch squad.limitStatus(for: card) {
 		case .available:
+			if squad.isHyperspaceOnly {
+				guard card.hyperspace == true else {
+					return .unavailable
+				}
+			}
 			return .default
 		case .exceeded, .met:
 			return .unavailable

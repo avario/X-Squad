@@ -75,7 +75,7 @@ class CardDetailsCollectionViewController: UICollectionViewController, CardDetai
 		
 		view.addSubview(closeButton)
 		closeButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -20).isActive = true
-		closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+		closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
 		
 		closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
 	}
@@ -136,7 +136,7 @@ class CardDetailsCollectionViewController: UICollectionViewController, CardDetai
 		for cell in collectionView.visibleCells {
 			let cardCell = cell as! CardDetailsCollectionViewCell
 			let offsetFromCenterX = cardCell.center.x - centerX
-			cardCell.cardView.center.x = cardCell.bounds.midX + (offsetFromCenterX * 0.1)
+			cardCell.cardView.center.x = cardCell.bounds.midX + (offsetFromCenterX * 0.2)
 			
 			cardCell.underView.isHidden = true
 		}

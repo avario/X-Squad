@@ -13,6 +13,20 @@ class Squad: Codable {
 	
 	let faction: Faction
 	private(set) var members: [Member]
+	private var isHyperspace: Bool?
+	
+	var isHyperspaceOnly: Bool {
+		get {
+			return isHyperspace ?? false
+		}
+		set {
+			isHyperspace = newValue
+			
+			removeInvalidCards()
+			
+			SquadStore.save()
+		}
+	}
 	
 	let name: String?
 	let description: String?
@@ -23,6 +37,7 @@ class Squad: Codable {
 		self.uuid = UUID()
 		self.faction = faction
 		self.members = members
+		self.isHyperspace = false
 		
 		self.name = name
 		self.description = description
@@ -51,13 +66,25 @@ class Squad: Codable {
 			members.remove(at: index)
 		}
 		
-		for member in members {
-			member.removeInValidUpgrades(shouldNotify: true)
-		}
+		removeInvalidCards()
 		
 		SquadStore.save()
 		NotificationCenter.default.post(name: .squadStoreDidRemoveMemberFromSquad, object: self)
 		NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+	}
+	
+	private func removeInvalidCards() {
+		for member in members {
+			if isHyperspaceOnly {
+				guard member.pilot.hyperspace == true else {
+					remove(member: member)
+					removeInvalidCards()
+					return
+				}
+			}
+			
+			member.removeInvalidUpgrades(shouldNotify: true)
+		}
 	}
 	
 	static let rankPilots: (Pilot, Pilot) -> Bool = {

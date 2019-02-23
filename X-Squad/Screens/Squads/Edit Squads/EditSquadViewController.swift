@@ -79,14 +79,30 @@ class EditSquadViewController: SquadViewController {
 		}
 	}
 	
-	override func addActions(to alert: UIAlertController) {
-		super.addActions(to: alert)
-		alert.addAction(UIAlertAction(title: "Duplicate Squad", style: .default, handler: { _ in
-			self.duplicateSquad()
-		}))
-		alert.addAction(UIAlertAction(title: "Delete Squad", style: .destructive, handler: { _ in
-			self.deleteSquad()
-		}))
+	func toggleHyperspace(isHyperspaceOnly: Bool) {
+		squad.isHyperspaceOnly.toggle()
+		header.hyperspaceLabel.isHidden = !squad.isHyperspaceOnly
+	}
+	
+	override func infoActions() -> [SquadInfoAction] {
+		return [
+			SquadInfoAction(
+				title: "Hyperspace Only",
+				image: UIImage(named: "Hyperspace Icon")!,
+				type: .toggle(self.toggleHyperspace(isHyperspaceOnly:), isOn: squad.isHyperspaceOnly)
+				)] +
+			super.infoActions() + [
+			SquadInfoAction(
+				title: "Duplicate Squad",
+				image: UIImage(named: "Duplicate Icon")!,
+				type: .action(self.duplicateSquad, destructive: false)
+			),
+			SquadInfoAction(
+				title: "Delete Squad",
+				image: UIImage(named: "Delete Icon")!,
+				type: .action(self.deleteSquad, destructive: true)
+			)
+		]
 	}
 	
 }
