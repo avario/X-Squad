@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class AddPilotViewController: CardsViewController {
+class AddPilotViewController: CardsCollectionViewController {
 	
 	let squad: Squad
 	

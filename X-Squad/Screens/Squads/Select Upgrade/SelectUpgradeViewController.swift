@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class SelectUpgradeViewController: CardsViewController {
+class SelectUpgradeViewController: CardsCollectionViewController {
 	
 	let squad: Squad
 	let member: Squad.Member
@@ -205,11 +205,11 @@ class SelectUpgradeViewController: CardsViewController {
 extension SelectUpgradeViewController: UIViewControllerTransitioningDelegate {
 	
 	func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsPresentAnimationController()
+		return CardsPresentAnimationController(style: .smooth)
 	}
 	
 	func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-		return CardsDismissAnimationController()
+		return CardsDismissAnimationController(targetViewController: nil, style: .smooth)
 	}
 	
 	func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

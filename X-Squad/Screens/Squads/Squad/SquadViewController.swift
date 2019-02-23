@@ -218,7 +218,9 @@ class SquadViewController: UIViewController {
 	}
 	
 	func showXWSQRCode() {
-		present(UINavigationController(rootViewController: QRCodeViewController(squad: squad)), animated: true, completion: nil)
+		let qrCodeNavigationController = UINavigationController(rootViewController: QRCodeViewController(squad: squad))
+		qrCodeNavigationController.modalPresentationStyle = .overCurrentContext
+		present(qrCodeNavigationController, animated: true, completion: nil)
 	}
 	
 }

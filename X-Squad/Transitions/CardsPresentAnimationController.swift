@@ -17,6 +17,18 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 	
 	let transitionTime: TimeInterval = 0.5
 	
+	enum Style {
+		case smooth
+		case physics
+	}
+	
+	let style: Style
+	
+	init(style: Style = .physics) {
+		self.style = style
+		super.init()
+	}
+	
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
 		return transitionTime
 	}
@@ -61,10 +73,16 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				matchingFromCardView.isHidden = true
 				toCardView.side = matchingFromCardView.side
 			
-				animator.addBehavior(toCardView.snap)
-				animator.addBehavior(toCardView.behaviour)
+				if style == .physics {
+					animator.addBehavior(toCardView.snap)
+					animator.addBehavior(toCardView.behaviour)
+				}
 				
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+					if self.style == .smooth {
+						toCardView.center = self.animator.referenceView!.convert(toCardView.snap.snapPoint, to: toCardView.superview!)
+					}
+					
 					toCardView.cardContainer.transform = CGAffineTransform.identity
 					toCardView.alpha = targetAlpha
 				}, completion: nil)

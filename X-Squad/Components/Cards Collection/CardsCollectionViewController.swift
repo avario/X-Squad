@@ -1,5 +1,5 @@
 //
-//  CardsViewController.swift
+//  CardsCollectionViewController.swift
 //  X-Squad
 //
 //  Created by Avario on 11/01/2019.
@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class CardsViewController: UICollectionViewController, CardViewDelegate, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
+class CardsCollectionViewController: UICollectionViewController, CardViewDelegate, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
 	
 	// This represents a section of cards. A section can have a header and then a number of cards.
 	struct CardSection {
@@ -192,7 +192,7 @@ class CardsViewController: UICollectionViewController, CardViewDelegate, CardDet
 	}
 }
 
-extension CardsViewController: CardCollectionViewLayoutDelegate {
+extension CardsCollectionViewController: CardCollectionViewLayoutDelegate {
 	
 	func collectionView(_ collectionView: UICollectionView, orientationForCardAtIndexPath indexPath: IndexPath) -> CardOrientation {
 		let card = cardSections[indexPath.section].cards[indexPath.row]

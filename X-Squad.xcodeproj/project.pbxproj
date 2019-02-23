@@ -41,7 +41,7 @@
 		B671C94221E7BC540034C7C9 /* SquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94121E7BC540034C7C9 /* SquadViewController.swift */; };
 		B671C94621E8BBC80034C7C9 /* MemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94521E8BBC80034C7C9 /* MemberView.swift */; };
 		B671C94921E8E3BC0034C7C9 /* AddPilotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C94821E8E3BC0034C7C9 /* AddPilotViewController.swift */; };
-		B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C97D21E8FED00034C7C9 /* CardsViewController.swift */; };
+		B671C97E21E8FED00034C7C9 /* CardsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C97D21E8FED00034C7C9 /* CardsCollectionViewController.swift */; };
 		B671C98121E90BDD0034C7C9 /* CardsSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */; };
 		B671C98A21EBC0F10034C7C9 /* SquadHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */; };
 		B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */; };
@@ -148,7 +148,7 @@
 		B671C94121E7BC540034C7C9 /* SquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadViewController.swift; sourceTree = "<group>"; };
 		B671C94521E8BBC80034C7C9 /* MemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberView.swift; sourceTree = "<group>"; };
 		B671C94821E8E3BC0034C7C9 /* AddPilotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPilotViewController.swift; sourceTree = "<group>"; };
-		B671C97D21E8FED00034C7C9 /* CardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		B671C97D21E8FED00034C7C9 /* CardsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewController.swift; sourceTree = "<group>"; };
 		B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsSectionHeaderView.swift; sourceTree = "<group>"; };
 		B671C98921EBC0F10034C7C9 /* SquadHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadHeaderView.swift; sourceTree = "<group>"; };
 		B671C98C21EBC54E0034C7C9 /* SelectUpgradeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUpgradeViewController.swift; sourceTree = "<group>"; };
@@ -454,7 +454,7 @@
 		B671C97C21E8FEBF0034C7C9 /* Cards Collection */ = {
 			isa = PBXGroup;
 			children = (
-				B671C97D21E8FED00034C7C9 /* CardsViewController.swift */,
+				B671C97D21E8FED00034C7C9 /* CardsCollectionViewController.swift */,
 				B662FB4421DE6CAB00EF79F7 /* CardCollectionViewLayout.swift */,
 				B662FB3B21DE5F2900EF79F7 /* CardCollectionViewCell.swift */,
 				B671C98021E90BDD0034C7C9 /* CardsSectionHeaderView.swift */,
@@ -827,7 +827,7 @@
 				B6D4C8EC2214AB46002D598A /* GameSquadMemberStateView.swift in Sources */,
 				B6D4C8D82214634D002D598A /* NewGameViewController.swift in Sources */,
 				B6EC67E521F76D2600D2BA5D /* Card.swift in Sources */,
-				B671C97E21E8FED00034C7C9 /* CardsViewController.swift in Sources */,
+				B671C97E21E8FED00034C7C9 /* CardsCollectionViewController.swift in Sources */,
 				B6D4C8F02214BE92002D598A /* TokenStackView.swift in Sources */,
 				B6EC67DA21F73C0B00D2BA5D /* Upgrade.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,

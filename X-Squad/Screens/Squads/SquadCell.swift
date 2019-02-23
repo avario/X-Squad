@@ -49,13 +49,14 @@ class SquadCell: UITableViewCell {
 		contentView.backgroundColor = .clear
 		
 		let backgroundView = UIView()
-		backgroundView.backgroundColor = UIColor.init(white: 0.20, alpha: 1.0)
+		backgroundView.backgroundColor = UIColor.init(white: 0.10, alpha: 1.0)
 		selectedBackgroundView = backgroundView
 		
 		contentView.addSubview(scrollView)
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		scrollView.alwaysBounceHorizontal = true
 		scrollView.isUserInteractionEnabled = false
+		scrollView.showsHorizontalScrollIndicator = false
 		contentView.addGestureRecognizer(scrollView.panGestureRecognizer)
 		
 		scrollView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true

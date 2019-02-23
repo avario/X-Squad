@@ -20,7 +20,15 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	
 	let targetViewController: UIViewController?
 	
-	init(targetViewController: UIViewController? = nil) {
+	enum Style {
+		case smooth
+		case physics
+	}
+	
+	let style: Style
+	
+	init(targetViewController: UIViewController? = nil, style: Style = .physics) {
+		self.style = style
 		self.targetViewController = targetViewController
 		super.init()
 	}
@@ -53,8 +61,10 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
 				fromCardView.snap.snapPoint = cardPosition
-				animator.addBehavior(fromCardView.snap)
-				animator.addBehavior(fromCardView.behaviour)
+				if style == .physics {
+					animator.addBehavior(fromCardView.snap)
+					animator.addBehavior(fromCardView.behaviour)
+				}
 				
 				targetScale = matchingToCardView.bounds.width/fromCardView.bounds.width
 				targetAlpha = matchingToCardView.alpha
@@ -65,6 +75,10 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				matchingToCardView.side = fromCardView.side
 			
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+					if self.style == .smooth {
+						fromCardView.center = self.animator.referenceView!.convert(fromCardView.snap.snapPoint, to: fromCardView.superview!)
+					}
+					
 					fromCardView.cardContainer.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
 					fromCardView.alpha = targetAlpha
 				}, completion: nil)

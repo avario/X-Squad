@@ -9,7 +9,7 @@
 
 import UIKit
 
-class SearchResultsViewController: CardsViewController {
+class SearchResultsViewController: CardsCollectionViewController {
 	
 	init() {
 		super.init(numberOfColumns: 2)
