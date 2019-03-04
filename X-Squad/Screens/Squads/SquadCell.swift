@@ -13,7 +13,7 @@ import UIKit
 class SquadCell: UITableViewCell {
 	
 	static let reuseIdentifier = "SquadCell"
-	static let rowHeight: CGFloat = 80
+	static let rowHeight: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad ? 120 : 80)
 	
 	var squad: Squad? {
 		didSet {

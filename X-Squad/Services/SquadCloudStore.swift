@@ -21,8 +21,15 @@ class SquadCloudStore {
 		let container = CKContainer.default()
 		
 		// Squads are saved to the user's private database
-		database = container.privateCloudDatabase		
+		database = container.privateCloudDatabase
 	}
+	
+	struct SquadDeletion {
+		let uuid: UUID
+		let date: Date
+	}
+	
+	var pendingDeletions: [SquadDeletion] = []
 	
 	var didSubscribeToChanges: Bool = false
 	
@@ -35,6 +42,7 @@ class SquadCloudStore {
 		database.fetchAllSubscriptions { (subscriptions, error) in
 			if let error = error {
 				print(error)
+				return
 			}
 			
 			guard let subscriptions = subscriptions else {
@@ -58,6 +66,7 @@ class SquadCloudStore {
 				self.database.save(subscription) { (subscription, error) in
 					if let error = error {
 						print(error)
+						return
 					}
 					
 					self.didSubscribeToChanges = true
@@ -84,6 +93,8 @@ class SquadCloudStore {
 			database.fetch(withRecordID: recordID) { (record, error) in
 				if let error = error {
 					print(error)
+					completionHandler(.failed)
+					return
 				}
 				
 				guard let record = record else {
@@ -112,7 +123,7 @@ class SquadCloudStore {
 	
 	public func syncRecordsIfNeeded() {
 		// Sync if more than 15 minutes has passed since the last sync
-		if Date().timeIntervalSince(lastSync) > 15 * 60 {
+		if Date().timeIntervalSince(lastSync) > 0 {//} 15 * 60 {
 			syncRecords()
 		}
 	}
@@ -125,6 +136,7 @@ class SquadCloudStore {
 		database.perform(query, inZoneWith: nil) { results, error in
 			if let error = error {
 				print(error)
+				return
 			}
 			
 			self.lastSync = Date()
@@ -162,7 +174,12 @@ class SquadCloudStore {
 		if let data = record["data"] as? Data,
 			let recordSquad = try? JSONDecoder().decode(Squad.self, from: data) {
 			
-			if let existingSquad = SquadStore.shared.squads.first(where: { $0.uuid == recordSquad.uuid }) {
+			// Check if the squad was deleted
+			if let pendingDeletion = pendingDeletions.first(where: { $0.uuid == recordSquad.uuid }),
+				pendingDeletion.date > recordSquad.lastUpdatedDate {
+				commitDeletion(pendingDeletion)
+				
+			} else if let existingSquad = SquadStore.shared.squads.first(where: { $0.uuid == recordSquad.uuid }) {
 				// If the recorded squad was updated more recently than the local one, update the local squad.
 				if existingSquad.lastUpdatedDate < recordSquad.lastUpdatedDate {
 					existingSquad.update(from: recordSquad)
@@ -219,10 +236,24 @@ class SquadCloudStore {
 	}
 	
 	func deleteSquad(_ squad: Squad) {
-		let recordID = CKRecord.ID(recordName: squad.uuid.uuidString)
+		let deletion = SquadDeletion(
+			uuid: squad.uuid,
+			date: Date())
+		pendingDeletions.append(deletion)
+		commitDeletion(deletion)
+	}
+	
+	private func commitDeletion(_ deletion: SquadDeletion) {
+		let recordID = CKRecord.ID(recordName: deletion.uuid.uuidString)
 		database.delete(withRecordID: recordID) { (id, error) in
 			if let error = error {
 				print(error)
+			} else {
+				guard let index = self.pendingDeletions.firstIndex(where: { $0.uuid == deletion.uuid }) else {
+					return
+				}
+				
+				self.pendingDeletions.remove(at: index)
 			}
 		}
 	}

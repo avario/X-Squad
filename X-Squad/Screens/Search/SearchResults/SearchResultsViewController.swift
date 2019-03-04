@@ -12,7 +12,17 @@ import UIKit
 class SearchResultsViewController: CardsCollectionViewController {
 	
 	init() {
-		super.init(numberOfColumns: 2)
+		let columnLayout: CardCollectionViewLayout.ColumnLayout
+		switch UIDevice.current.userInterfaceIdiom {
+		case .pad:
+			columnLayout = .width(300)
+		case .phone:
+			columnLayout = .number(2)
+		default:
+			fatalError()
+		}
+		
+		super.init(columnLayout: columnLayout)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {

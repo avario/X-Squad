@@ -33,8 +33,8 @@ class CardsCollectionViewController: UICollectionViewController, CardViewDelegat
 	// This is the primary data source for the collection.
 	var cardSections: [CardSection] = []
 	
-	init(numberOfColumns: Int) {		
-		let layout = CardCollectionViewLayout(numberOfColumns: numberOfColumns)
+	init(columnLayout: CardCollectionViewLayout.ColumnLayout) {
+		let layout = CardCollectionViewLayout(columnLayout: columnLayout)
 		super.init(collectionViewLayout: layout)
 		
 		layout.delegate = self
@@ -60,6 +60,11 @@ class CardsCollectionViewController: UICollectionViewController, CardViewDelegat
 		collectionView.alwaysBounceVertical = true
 		collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 10)
 		collectionView.backgroundColor = .clear
+	}
+	
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		super.viewWillTransition(to: size, with: coordinator)
+		collectionView.collectionViewLayout.invalidateLayout()
 	}
 	
 	override func numberOfSections(in collectionView: UICollectionView) -> Int {

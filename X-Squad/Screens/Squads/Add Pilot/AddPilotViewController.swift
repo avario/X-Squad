@@ -18,7 +18,18 @@ class AddPilotViewController: CardsCollectionViewController {
 	
 	init(squad: Squad) {
 		self.squad = squad
-		super.init(numberOfColumns: 4)
+		
+		let columnLayout: CardCollectionViewLayout.ColumnLayout
+		switch UIDevice.current.userInterfaceIdiom {
+		case .pad:
+			columnLayout = .width(200)
+		case .phone:
+			columnLayout = .number(4)
+		default:
+			fatalError()
+		}
+		
+		super.init(columnLayout: columnLayout)
 		
 		pullToDismissController = PullToDismissController()
 		pullToDismissController?.viewController = self

@@ -31,11 +31,12 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 			
 			cardView.card = card
 			
-			let cardWidth = frame.width - CardDetailsCollectionViewCell.horizontalPadding * 2
+			let cardWidth = min(frame.width - CardDetailsCollectionViewCell.horizontalPadding * 2, 400)
 			cardView.frame = CGRect(origin: .zero, size: CGSize(width: cardWidth, height: cardWidth * CardView.heightMultiplier(for: card)))
 			cardView.center = CGPoint(x: bounds.midX , y: bounds.midY + CardDetailsCollectionViewCell.verticalCenterOffset)
 			
 			cardLayoutGuideHeightConstraint.constant = cardView.bounds.height
+			cardLayoutGuideWidthConstraint.constant = cardView.bounds.width
 			
 			costView.isHidden = !card.isReleased
 			unreleasedLabel.isHidden = card.isReleased
@@ -96,6 +97,7 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 	let cardScrollView = UIScrollView()
 	let cardLayoutGuide = UILayoutGuide()
 	var cardLayoutGuideHeightConstraint: NSLayoutConstraint!
+	var cardLayoutGuideWidthConstraint: NSLayoutConstraint!
 
 	let squadButton = SquadButton()
 	let costView = CostView()
@@ -116,10 +118,12 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		// Card layout guide
 		addLayoutGuide(cardLayoutGuide)
 		
-		cardLayoutGuideHeightConstraint = cardLayoutGuide.heightAnchor.constraint(equalToConstant: 0)
+		cardLayoutGuideHeightConstraint = cardLayoutGuide.heightAnchor.constraint(equalToConstant: 200)
 		cardLayoutGuideHeightConstraint.isActive = true
 		
-		cardLayoutGuide.widthAnchor.constraint(equalTo: widthAnchor, constant: -CardDetailsCollectionViewCell.horizontalPadding * 2).isActive = true
+		cardLayoutGuideWidthConstraint = cardLayoutGuide.widthAnchor.constraint(equalToConstant: 200)
+		cardLayoutGuideWidthConstraint.isActive = true
+		
 		cardLayoutGuide.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
 		cardLayoutGuide.centerYAnchor.constraint(equalTo: centerYAnchor, constant: CardDetailsCollectionViewCell.verticalCenterOffset).isActive = true
 		
@@ -193,7 +197,7 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 		insertSubview(upgradeSlotsBar, belowSubview: cardScrollView)
 		
 		upgradeSlotsBar.topAnchor.constraint(equalTo: cardLayoutGuide.bottomAnchor, constant: cardBottomPadding).isActive = true
-		upgradeSlotsBar.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		upgradeSlotsBar.leftAnchor.constraint(equalTo: cardLayoutGuide.leftAnchor, constant: -CardDetailsCollectionViewCell.horizontalPadding).isActive = true
 		upgradeSlotsBar.rightAnchor.constraint(equalTo: costView.leftAnchor, constant: -10).isActive = true
 		
 		// Flip button

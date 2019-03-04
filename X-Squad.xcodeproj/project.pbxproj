@@ -382,7 +382,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B662FB4621DE75A400EF79F7 /* CardDetails */ = {
+		B662FB4621DE75A400EF79F7 /* Card Details */ = {
 			isa = PBXGroup;
 			children = (
 				B671CA5821F0D16D0034C7C9 /* Card View */,
@@ -391,7 +391,7 @@
 				B6E3EBC1221F2B5F00EDB318 /* CardDetailsCollectionViewController.swift */,
 				B6E3EBC3221F314100EDB318 /* CardDetailsCollectionViewCell.swift */,
 			);
-			path = CardDetails;
+			path = "Card Details";
 			sourceTree = "<group>";
 		};
 		B66A14A92215F6A3001C6D8E /* Button */ = {
@@ -519,7 +519,7 @@
 		B671CA5621F0D1360034C7C9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				B662FB4621DE75A400EF79F7 /* CardDetails */,
+				B662FB4621DE75A400EF79F7 /* Card Details */,
 				B66A14A92215F6A3001C6D8E /* Button */,
 				B6F60678220201A900D108E6 /* Small Button */,
 				B671CA5C21F0F4220034C7C9 /* Squad Button */,
@@ -1033,7 +1033,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avario.XSquad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1056,7 +1056,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.avario.XSquad;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -25,7 +25,17 @@ class SelectUpgradeViewController: CardsCollectionViewController {
 		self.currentUpgrade = currentUpgrade
 		self.upgradeType = upgradeType
 		
-		super.init(numberOfColumns: 3)
+		let columnLayout: CardCollectionViewLayout.ColumnLayout
+		switch UIDevice.current.userInterfaceIdiom {
+		case .pad:
+			columnLayout = .width(300)
+		case .phone:
+			columnLayout = .number(3)
+		default:
+			fatalError()
+		}
+		
+		super.init(columnLayout: columnLayout)
 		
 		pullToDismissController = PullToDismissController()
 		pullToDismissController?.viewController = self

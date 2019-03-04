@@ -85,7 +85,9 @@ class SquadsViewController: UITableViewController {
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let squadCell = tableView.dequeueReusableCell(withIdentifier: SquadCell.reuseIdentifier) as! SquadCell
-		squadCell.squad = SquadStore.shared.squads[indexPath.row]
+		if SquadStore.shared.squads.count > indexPath.row {
+			squadCell.squad = SquadStore.shared.squads[indexPath.row]
+		}
 		
 		return squadCell
 	}

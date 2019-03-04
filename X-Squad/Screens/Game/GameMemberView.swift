@@ -18,7 +18,7 @@ class GameMemberView: UIScrollView {
 	
 	init(member: Squad.Member, state: Game.MemberState) {
 		self.member = member
-		self.memberView = MemberView(member: member, height: UIScreen.main.bounds.width * 0.75, mode: .game)
+		self.memberView = MemberView(member: member, height: min(UIScreen.main.bounds.width * 0.75, 300), mode: .game)
 		self.stateView = GameSquadMemberStateView(member: member, state: state)
 		
 		super.init(frame: .zero)

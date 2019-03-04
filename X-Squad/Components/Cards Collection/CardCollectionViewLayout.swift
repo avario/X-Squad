@@ -17,8 +17,13 @@ protocol CardCollectionViewLayoutDelegate: class {
 
 class CardCollectionViewLayout: UICollectionViewLayout {
 	
-	init(numberOfColumns: Int) {
-		self.numberOfColumns = numberOfColumns
+	enum ColumnLayout {
+		case number(Int)
+		case width(CGFloat)
+	}
+	
+	init(columnLayout: ColumnLayout) {
+		self.columnLayout = columnLayout
 		super.init()
 	}
 	
@@ -28,7 +33,7 @@ class CardCollectionViewLayout: UICollectionViewLayout {
 	
 	weak var delegate: CardCollectionViewLayoutDelegate!
 	
-	fileprivate let numberOfColumns: Int
+	fileprivate let columnLayout: ColumnLayout
 	fileprivate var cellSpacing: CGFloat = 10
 	
 	fileprivate var cache = [UICollectionViewLayoutAttributes]()
@@ -53,6 +58,14 @@ class CardCollectionViewLayout: UICollectionViewLayout {
 		
 		guard let collectionView = collectionView else {
 			return
+		}
+		
+		let numberOfColumns: Int
+		switch columnLayout {
+		case .number(let number):
+			numberOfColumns = number
+		case .width(let width):
+			numberOfColumns = Int(round(contentWidth/width))
 		}
 		
 		let columnWidth = (contentWidth - (cellSpacing * CGFloat(numberOfColumns - 1))) / CGFloat(numberOfColumns)
