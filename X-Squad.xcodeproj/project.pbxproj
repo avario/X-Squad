@@ -161,7 +161,6 @@
 		B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
 		B671CA5D21F0F4300034C7C9 /* SquadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadButton.swift; sourceTree = "<group>"; };
 		B6A48E58222C1A3E0003DB3F /* SquadCloudStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadCloudStore.swift; sourceTree = "<group>"; };
-		B6B3B42F2222B3A300F87386 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		B6D4C8D522143AE3002D598A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		B6D4C8D72214634D002D598A /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSquadViewController.swift; sourceTree = "<group>"; };
@@ -380,7 +379,6 @@
 			children = (
 				B6DCAD4B222DC924001F1DD8 /* Zip.framework */,
 				B65F92B0222ACAAB005CCBEE /* CloudKit.framework */,
-				B6B3B42F2222B3A300F87386 /* Mixpanel.framework */,
 				B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
