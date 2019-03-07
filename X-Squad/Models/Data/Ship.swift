@@ -99,10 +99,10 @@ class Ship: Codable {
 	
 	var type: ShipType {
 		guard let ffg = ffg else {
-			return .T65Xwing
+			return .unknown
 		}
 		
-		return ShipType(rawValue: ffg)!
+		return ShipType(rawValue: ffg) ?? .unknown
 	}
 	
 	enum ShipType: Int, Codable {
@@ -160,6 +160,7 @@ class Ship: Codable {
 		case MG100StarFortress = 55
 		case modifiedTIEln = 56
 		case scavengedYT1300 = 57
+		case unknown = 999
 	}
 	
 }

@@ -8,20 +8,81 @@
 // Loads X-Wing Data 2 JSON files into model objects.
 
 import Foundation
+import CloudKit
+import Zip
 
 class DataStore {
 	
-	private static var dataDirectory: URL {
-		let resourceDirectory = Bundle.main.resourceURL!
-		return resourceDirectory.appendingPathComponent("data")
+	static let shared = DataStore()
+	
+	private(set) var ships: [Ship]
+	private(set) var upgrades: [Upgrade]
+	
+	private init() {
+		guard let downloadedDataPath = DataStore.downloadedDataPath?.appendingPathComponent("data"),
+			let downloadedShips = try? DataStore.loadShips(from: downloadedDataPath),
+			let downloadedUpgrades = try? DataStore.loadUpgrades(from: downloadedDataPath),
+			downloadedShips.isEmpty == false,
+			downloadedUpgrades.isEmpty == false else {
+			
+				let bundledDirectory = Bundle.main.resourceURL!.appendingPathComponent("data")
+				ships = try! DataStore.loadShips(from: bundledDirectory)
+				upgrades = try! DataStore.loadUpgrades(from: bundledDirectory)
+				
+				return
+		}
+		
+		ships = downloadedShips
+		upgrades = downloadedUpgrades
 	}
 	
-	private static var shipsDirectory: URL {
-		return dataDirectory.appendingPathComponent("pilots")
+	static var lastUpdateDate: Date {
+		get { return UserDefaults.standard.object(forKey: "lastUpdateDate") as? Date ?? .distantPast }
+		set { UserDefaults.standard.set(newValue, forKey: "lastUpdateDate") }
 	}
 	
-	private static var upgradesDirectory: URL {
-		return dataDirectory.appendingPathComponent("upgrades")
+	static var downloadedDataPath: URL? {
+		get { return UserDefaults.standard.url(forKey: "downloadedDataPath") }
+		set { UserDefaults.standard.set(newValue, forKey: "downloadedDataPath") }
+	}
+	
+	func updateIfNeeded() {
+		let container = CKContainer.default()
+		let database = container.publicCloudDatabase
+		
+		let predicate = NSPredicate(format: "modificationDate > %@", argumentArray: [DataStore.lastUpdateDate])
+		let query = CKQuery(recordType: "Data", predicate: predicate)
+		query.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: false)]
+		database.perform(query, inZoneWith: nil) { (records, error) in
+			if let error = error {
+				print(error)
+				return
+			}
+			
+			guard
+				let records = records,
+				let mostRecentRecord = records.first,
+			 	let mostRecentData = mostRecentRecord["data"] as? CKAsset else {
+				return
+			}
+			
+			do {
+				let data = try Data(contentsOf: mostRecentData.fileURL)
+				let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("data.zip")
+				try data.write(to: fileURL)
+				
+				let zipPath = try Zip.quickUnzipFile(fileURL)
+				
+				DataStore.downloadedDataPath = zipPath
+				DataStore.lastUpdateDate = mostRecentRecord.modificationDate ?? Date()
+				
+				let dataPath = zipPath.appendingPathComponent("data")
+				self.ships = try DataStore.loadShips(from: dataPath)
+				self.upgrades = try DataStore.loadUpgrades(from: dataPath)
+			} catch {
+				print(error)
+			}
+		}
 	}
 	
 	private static func data(in directory: URL) -> [Data] {
@@ -38,41 +99,41 @@ class DataStore {
 		return data
 	}
 	
-	static let ships = loadShips()
-	
-	private static func loadShips() -> [Ship] {
-		return data(in: shipsDirectory).map({ (data) -> Ship in
-			return try! JSONDecoder().decode(Ship.self, from: data)
+	private static func loadShips(from directory: URL) throws -> [Ship] {
+		let shipsDirectory = directory.appendingPathComponent("pilots")
+		
+		return try data(in: shipsDirectory).map({ (data) -> Ship in
+			return try JSONDecoder().decode(Ship.self, from: data)
 		})
 	}
 	
-	static let upgrades = loadUpgrades()
-	
-	private static func loadUpgrades() -> [Upgrade] {
-		return data(in: upgradesDirectory).map({ (data) -> [Upgrade] in
-			return try! JSONDecoder().decode([Upgrade].self, from: data)
+	private static func loadUpgrades(from directory: URL) throws -> [Upgrade] {
+		let upgradesDirectory = directory.appendingPathComponent("upgrades")
+		
+		return try data(in: upgradesDirectory).map({ (data) -> [Upgrade] in
+			return try JSONDecoder().decode([Upgrade].self, from: data)
 		}).flatMap({ $0 }).filter({ $0.frontSide.image != nil })
 	}
 	
-	static var allCards: [Card] = (ships.map({ $0.pilots }).flatMap({ $0 }) as [Card]) + (upgrades as [Card])
+	var allCards: [Card] {
+		return (ships.map({ $0.pilots }).flatMap({ $0 }) as [Card]) + (upgrades as [Card])
+	}
 	
-	static func ship(for xws: XWSID) -> Ship? {
+	func ship(for xws: XWSID) -> Ship? {
 		return ships.first(where: { $0.xws == xws })
 	}
 	
-	static func pilot(for xws: XWSID) -> Pilot? {
+	func pilot(for xws: XWSID) -> Pilot? {
 		return ships.reduce([]) { $0 + $1.pilots }.first(where: { $0.xws == xws })
 	}
 	
-	static func upgrade(for xws: XWSID) -> Upgrade? {
+	func upgrade(for xws: XWSID) -> Upgrade? {
 		return upgrades.first(where: { $0.xws == xws })!
 	}
-	
-	private init() { }
 }
 
 extension Pilot {
 	var ship: Ship? {
-		return DataStore.ships.first(where: { $0.pilots.contains(self) })
+		return DataStore.shared.ships.first(where: { $0.pilots.contains(self) })
 	}
 }

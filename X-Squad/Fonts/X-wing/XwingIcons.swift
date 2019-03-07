@@ -77,7 +77,7 @@ extension Upgrade.UpgradeType {
 		case .configuration:
 			return "n"
 		case .tacticalRelay:
-			return "t" // This is wrong...
+			return "É" // This is wrong...
 		}
 	}
 }
@@ -215,6 +215,8 @@ extension Ship {
 			return "C"
 		case .scavengedYT1300:
 			return "Y"
+		case .unknown:
+			return ""
 		}
 	}
 }

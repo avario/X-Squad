@@ -18,18 +18,7 @@ enum Faction: String, CaseIterable, Codable {
 	case separatistAlliance = "Separatist Alliance"
 	
 	var isReleased: Bool {
-		switch self {
-		case .rebelAlliance,
-			 .galacticEmpire,
-			 .scumAndVillainy,
-			 .resistance,
-			 .firstOrder:
-			return true
-			
-		case .galacticRepublic,
-			 .separatistAlliance:
-			return false
-		}
+		return DataStore.shared.ships.contains(where: { $0.faction == self && $0.pilots.contains(where: { $0.isReleased }) })
 	}
 	
 	static var releasedFactions: [Faction] {

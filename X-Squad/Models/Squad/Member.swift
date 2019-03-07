@@ -16,9 +16,9 @@ extension Squad {
 		let pilotXWS: XWSID
 		var upgradesXWS: [XWSID]
 		
-		lazy var ship: Ship = DataStore.ship(for: shipXWS)!
-		lazy var pilot: Pilot = DataStore.pilot(for: pilotXWS)!
-		lazy var upgrades: [Upgrade] = upgradesXWS.map({ DataStore.upgrade(for: $0)! }).sorted(by: upgradeSort)
+		lazy var ship: Ship = DataStore.shared.ship(for: shipXWS) ?? DataStore.shared.ships.first!
+		lazy var pilot: Pilot = DataStore.shared.pilot(for: pilotXWS) ?? DataStore.shared.ships.first!.pilots.first!
+		lazy var upgrades: [Upgrade] = upgradesXWS.map({ DataStore.shared.upgrade(for: $0) ?? DataStore.shared.upgrades.first! }).sorted(by: upgradeSort)
 		
 		init(ship: Ship, pilot: Pilot, upgrades: [Upgrade] = []) {
 			self.uuid = UUID()

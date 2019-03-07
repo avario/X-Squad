@@ -62,6 +62,7 @@
 		B6D4C8F02214BE92002D598A /* TokenStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8EF2214BE92002D598A /* TokenStackView.swift */; };
 		B6DABABE222091450051E8DA /* SquadInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DABABD222091450051E8DA /* SquadInfoViewController.swift */; };
 		B6DABAC0222093BD0051E8DA /* SquadInfoActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6DABABF222093BD0051E8DA /* SquadInfoActionButton.swift */; };
+		B6DCAD4C222DC924001F1DD8 /* Zip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DCAD4B222DC924001F1DD8 /* Zip.framework */; };
 		B6E39671220F29FE001451C1 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E39670220F29FE001451C1 /* SearchViewController.swift */; };
 		B6E39675220F319E001451C1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E39674220F319E001451C1 /* GameViewController.swift */; };
 		B6E3EBC2221F2B5F00EDB318 /* CardDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E3EBC1221F2B5F00EDB318 /* CardDetailsCollectionViewController.swift */; };
@@ -173,6 +174,7 @@
 		B6D4C8EF2214BE92002D598A /* TokenStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStackView.swift; sourceTree = "<group>"; };
 		B6DABABD222091450051E8DA /* SquadInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadInfoViewController.swift; sourceTree = "<group>"; };
 		B6DABABF222093BD0051E8DA /* SquadInfoActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadInfoActionButton.swift; sourceTree = "<group>"; };
+		B6DCAD4B222DC924001F1DD8 /* Zip.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Zip.framework; path = Carthage/Build/iOS/Zip.framework; sourceTree = "<group>"; };
 		B6E39670220F29FE001451C1 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B6E39674220F319E001451C1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B6E3EBC1221F2B5F00EDB318 /* CardDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6DCAD4C222DC924001F1DD8 /* Zip.framework in Frameworks */,
 				B65F92B1222ACAAB005CCBEE /* CloudKit.framework in Frameworks */,
 				B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */,
 			);
@@ -375,6 +378,7 @@
 		B662FB4021DE657C00EF79F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6DCAD4B222DC924001F1DD8 /* Zip.framework */,
 				B65F92B0222ACAAB005CCBEE /* CloudKit.framework */,
 				B6B3B42F2222B3A300F87386 /* Mixpanel.framework */,
 				B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */,
@@ -773,12 +777,14 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Zip.framework",
 			);
 			name = "Copy Carthage Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Zip.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

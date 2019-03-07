@@ -13,13 +13,16 @@ class CardSearch {
 	private static let searchIndices = createSearchIndices()
 	
 	public static func createSearchIndices() -> [SearchIndex] {
-		let pilotIndices = DataStore.ships.map({ ship -> [SearchIndex] in
+		let pilotIndices = DataStore.shared.ships.map({ ship -> [SearchIndex] in
 			return ship.pilots.map({ pilot in
+				guard pilot.frontImage != nil else {
+					return nil
+				}
 				return SearchIndex(ship: ship, pilot: pilot)
-			})
+			}).compactMap({ $0 })
 		}).flatMap({ $0 })
 		
-		let upgradeIndices = DataStore.upgrades.map(SearchIndex.init(upgrade:))
+		let upgradeIndices = DataStore.shared.upgrades.map(SearchIndex.init(upgrade:))
 		
 		return pilotIndices + upgradeIndices
 	}
@@ -260,6 +263,8 @@ extension Ship {
 			return ["modified tieln", "tie fighter"]
 		case .scavengedYT1300:
 			return ["scavenged yt1300", "yt1300"]
+		case .unknown:
+			return []
 		}
 	}
 	

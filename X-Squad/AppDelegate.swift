@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	func applicationDidBecomeActive(_ application: UIApplication) {
 		SquadCloudStore.shared.syncRecordsIfNeeded()
+		DataStore.shared.updateIfNeeded()
 	}
 	
 }

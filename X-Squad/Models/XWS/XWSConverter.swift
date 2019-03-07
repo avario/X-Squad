@@ -29,13 +29,13 @@ extension Squad {
 		}
 		
 		let members = xws.pilots.map({ pilot -> Member? in
-			guard let pilotCard = DataStore.pilot(for: pilot.id),
+			guard let pilotCard = DataStore.shared.pilot(for: pilot.id),
 			 	let ship = pilotCard.ship else {
 				return nil
 			}
 			
 			let upgrades = pilot.upgrades.reduce([Upgrade?]()) { upgrades, upgrade in
-				return upgrades + upgrade.value.map({ DataStore.upgrade(for: $0) })
+				return upgrades + upgrade.value.map({ DataStore.shared.upgrade(for: $0) })
 			}.compactMap({ $0 })
 			
 			return Member(ship: ship, pilot: pilotCard, upgrades: upgrades)

@@ -38,7 +38,7 @@ class AddPilotViewController: CardsCollectionViewController {
 		modalPresentationStyle = .overCurrentContext
 		
 		// The ships are sorted by how many pilots they have, then by name.
-		let ships = DataStore.ships.filter({ $0.faction == squad.faction }).sorted {
+		let ships = DataStore.shared.ships.filter({ $0.faction == squad.faction }).sorted {
 			let pilotCount0: Int
 			let pilotCount1: Int
 			

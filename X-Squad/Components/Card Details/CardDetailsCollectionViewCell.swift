@@ -44,7 +44,7 @@ class CardDetailsCollectionViewCell: UICollectionViewCell {
 			
 			switch card {
 			case let pilot as Pilot:
-				let ship = DataStore.ships.first(where: { $0.pilots.contains(pilot) })!
+				let ship = DataStore.shared.ships.first(where: { $0.pilots.contains(pilot) })!
 				
 				dialView.isHidden = false
 				dialView.ship = ship
