@@ -126,22 +126,7 @@ class AddPilotViewController: CardsCollectionViewController {
 			return .unavailable
 		}
 	}
-	
-	override func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
-		let pilot = cardView.card as! Pilot
-		guard squad.limitStatus(for: pilot) == .available else {
-			return
-		}
-		
-		cardView.touchesCancelled(touches, with: event)
-		
-		let member = squad.addMember(for: pilot)
-		cardView.member = member
-		
-		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-		
-		dismiss(animated: true, completion: nil)
-	}
+
 }
 
 extension AddPilotViewController: UIViewControllerTransitioningDelegate {

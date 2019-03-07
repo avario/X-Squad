@@ -60,10 +60,13 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			if let matchingToCardView = toCardViews.first(where: { fromCardView.matches($0) }) {
 				let cardPosition = matchingToCardView.superview!.convert(matchingToCardView.center, to: toVC.view)
 
-				fromCardView.snap.snapPoint = cardPosition
 				if style == .physics {
-					animator.addBehavior(fromCardView.snap)
-					animator.addBehavior(fromCardView.behaviour)
+					let snap = UISnapBehavior(item: fromCardView, snapTo: cardPosition)
+					animator.addBehavior(snap)
+					
+					let behaviour = UIDynamicItemBehavior(items: [fromCardView])
+					behaviour.resistance = 10.0
+					animator.addBehavior(behaviour)
 				}
 				
 				targetScale = matchingToCardView.bounds.width/fromCardView.bounds.width
@@ -76,7 +79,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
 					if self.style == .smooth {
-						fromCardView.center = self.animator.referenceView!.convert(fromCardView.snap.snapPoint, to: fromCardView.superview!)
+						fromCardView.center = self.animator.referenceView!.convert(cardPosition, to: fromCardView.superview!)
 					}
 					
 					fromCardView.cardContainer.transform = CGAffineTransform(scaleX: targetScale, y: targetScale)
@@ -87,14 +90,14 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 			}
 		}
 		
-		for view in viewsToAnimateOut {
-			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+		UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {
+			for view in viewsToAnimateOut {
 				view.center = CGPoint(
 					x: view.center.x,
 					y: view.center.y + UIScreen.main.bounds.height)
 				view.alpha = 0
-			}, completion: nil)
-		}
+			}
+		}, completion: nil)
 		
 		for view in fromVC.view.allHUDViews() {
 			UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: {

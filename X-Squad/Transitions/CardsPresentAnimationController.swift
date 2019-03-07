@@ -24,7 +24,7 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 	
 	let style: Style
 	
-	init(style: Style = .physics) {
+	init(style: Style = .smooth) {
 		self.style = style
 		super.init()
 	}
@@ -41,8 +41,6 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				return
 		}
 		
-//		animator.setValue(true, forKey: "debugEnabled")
-		
 		let containerView = transitionContext.containerView
 		containerView.addSubview(toVC.view)
 		
@@ -57,7 +55,7 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 		
 		for toCardView in toCardViews {
 			
-			toCardView.snap.snapPoint = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
+			let position = toCardView.superview!.convert(toCardView.center, to: animator.referenceView)
 			let targetAlpha = toCardView.alpha
 			
 			if let matchingFromCardView = fromCardViews.first(where: { toCardView.matches($0) }) {
@@ -74,27 +72,36 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 				toCardView.side = matchingFromCardView.side
 			
 				if style == .physics {
-					animator.addBehavior(toCardView.snap)
-					animator.addBehavior(toCardView.behaviour)
+					let snap = UISnapBehavior(item: toCardView, snapTo: position)
+					animator.addBehavior(snap)
+
+					let behaviour = UIDynamicItemBehavior(items: [toCardView])
+					behaviour.resistance = 10.0
+					animator.addBehavior(behaviour)
 				}
 				
 				UIView.animate(withDuration: transitionTime, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
 					if self.style == .smooth {
-						toCardView.center = self.animator.referenceView!.convert(toCardView.snap.snapPoint, to: toCardView.superview!)
+						toCardView.center = self.animator.referenceView!.convert(position, to: toCardView.superview!)
 					}
 					
 					toCardView.cardContainer.transform = CGAffineTransform.identity
 					toCardView.alpha = targetAlpha
-				}, completion: nil)
+				}, completion: { _ in
+					if self.style == .physics {
+						// Sometimes the physics hasn't quite settled the card into its final position so this animation sets it straight.
+						UIView.animate(withDuration: 0.1, animations: {
+							toCardView.center = self.animator.referenceView!.convert(position, to: toCardView.superview!)
+							toCardView.transform = .identity
+						}, completion: nil)
+					}
+				})
 				
 				snappedCardViews.append(toCardView)
-				
 			} else {
 				viewsToAnimateIn.append(toCardView)
 			}
 		}
-		
-//		viewsToAnimateIn.append(contentsOf: toVC.view.allHUDViews())
 		
 		for view in viewsToAnimateIn {
 			let targetLocation = view.center
@@ -120,13 +127,6 @@ class CardsPresentAnimationController: NSObject, UIViewControllerAnimatedTransit
 			toVC.view.backgroundColor = .black
 		}) { (_) in
 			transitionContext.completeTransition(true)
-			
-			UIView.animate(withDuration: 0.1, animations: {
-				for cardView in snappedCardViews {
-					cardView.center = self.animator.referenceView!.convert(cardView.snap.snapPoint, to: cardView.superview!)
-					cardView.transform = .identity
-				}
-			})
 		}
 	}
 }

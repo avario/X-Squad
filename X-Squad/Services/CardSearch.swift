@@ -5,11 +5,13 @@
 //  Created by Avario on 23/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// Handles searching cards on the Search screen.
 
 import Foundation
 
 class CardSearch {
 	
+	// An index is created for each card to improve search performance.
 	private static let searchIndices = createSearchIndices()
 	
 	public static func createSearchIndices() -> [SearchIndex] {
@@ -40,6 +42,7 @@ class CardSearch {
 		
 		var results: [Card] = []
 		
+		// All of the terms associated with the card and checked to see if any of them begin with the target search term.
 		searchIndexLoop: for index in searchIndices {
 			for titleTerm in index.titleTerms {
 				if titleTerm.hasPrefix(validSearchTerm) {
@@ -90,6 +93,7 @@ class CardSearch {
 			
 			titleTerms.append(title)
 			
+			// The title for a card like Heavy Laser Cannon will be split up into terms "Heavy Laser Cannon", "Laser Cannon", and "Cannon" so it will match match search terms "Heavy Laser Cannon", "Heavy Laser", "Laser Cannon", "Heavy", "Laser", and "Cannon".
 			var titleComponents = title.components(separatedBy: CharacterSet.whitespaces)
 			while true {
 				titleComponents.removeFirst()

@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class CardsCollectionViewController: UICollectionViewController, CardViewDelegate, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
+class CardsCollectionViewController: UICollectionViewController, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
 	
 	// This represents a section of cards. A section can have a header and then a number of cards.
 	struct CardSection {
@@ -77,7 +77,6 @@ class CardsCollectionViewController: UICollectionViewController, CardViewDelegat
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cardCell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCollectionViewCell.identifier, for: indexPath) as! CardCollectionViewCell
-		cardCell.cardView.delegate = self
 		
 		let card = cardSections[indexPath.section].cards[indexPath.row]
 		cardCell.card = card
@@ -142,10 +141,6 @@ class CardsCollectionViewController: UICollectionViewController, CardViewDelegat
 	open func status(for card: Card) -> CardCollectionViewCell.Status {
 		// Used by subclasses.
 		return .default
-	}
-	
-	open func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?) {
-		// Used by subclasses.
 	}
 	
 	var cards: [Card] {

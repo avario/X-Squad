@@ -11,19 +11,18 @@ import Foundation
 import UIKit
 import Kingfisher
 
-protocol CardViewDelegate: AnyObject {
-	func cardViewDidForcePress(_ cardView: CardView, touches: Set<UITouch>, with event: UIEvent?)
-}
-
 class CardView: UIView {
-	
-	weak var delegate: CardViewDelegate?
 	
 	let cardContainer = UIView()
 	private var imageView = UIImageView()
+	
+	// This is used for transitions (cards that aren't visibile shouldn't be transitioned).
 	var isVisible = true
 	
+	// This is the proportion of the upgrade card hidden beneath it's adjacent card.
 	static var upgradeHiddenRatio: CGFloat = 0.395
+	
+	// Card width to height ratio
 	static var sizeRatio: CGFloat = 1.39
 	static func heightMultiplier(for card: Card) -> CGFloat {
 		switch card.orientation {
@@ -72,19 +71,6 @@ class CardView: UIView {
 	// The member is used to distinguish cards that might be the same but attached to different pilots during transitions.
 	var member: Squad.Member?
 	
-	lazy var snap: UISnapBehavior = {
-		let snap = UISnapBehavior(item: self, snapTo: self.center)
-		return snap
-	}()
-	
-	lazy var behaviour: UIDynamicItemBehavior = {
-		let behaviour = UIDynamicItemBehavior(items: [self])
-		behaviour.resistance = 10.0
-		return behaviour
-	}()
-	
-	var attachment: UIAttachmentBehavior?
-	
 	init() {
 		super.init(frame: .zero)
 		
@@ -117,16 +103,6 @@ class CardView: UIView {
 		fatalError()
 	}
 	
-	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-		guard let touch = touches.first else {
-			return
-		}
-		let percent = touch.force / touch.maximumPossibleForce
-		if percent >= 0.7 {
-			delegate?.cardViewDidForcePress(self, touches: touches, with: event)
-		}
-	}
-	
 	static func all(in view: UIView) -> [CardView] {
 		var cardViews: [CardView] = []
 		for subview in view.subviews {
@@ -138,6 +114,7 @@ class CardView: UIView {
 		return cardViews
 	}
 	
+	// Used to identify matching cards for transitions
 	func matches(_ cardView: CardView) -> Bool {
 		guard let card = card,
 			let cardToMatch = cardView.card,
