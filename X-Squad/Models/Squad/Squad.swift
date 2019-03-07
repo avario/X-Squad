@@ -14,6 +14,14 @@ class Squad: Codable {
 	let faction: Faction
 	private(set) var members: [Member]
 	private var isHyperspace: Bool?
+	private var lastUpdated: Date?
+	private var created: Date?
+	private var isSavedToCloud: Bool?
+	
+	var name: String?
+	var description: String?
+	var obstacles: [XWS.Obstacle]?
+	var vendor: XWS.Vendor?
 	
 	var isHyperspaceOnly: Bool {
 		get {
@@ -24,17 +32,41 @@ class Squad: Codable {
 			
 			removeInvalidCards()
 			
-			SquadStore.save()
+			SquadStore.shared.saveSquad(self)
 		}
 	}
 	
-	let name: String?
-	let description: String?
-	let obstacles: [XWS.Obstacle]?
-	let vendor: XWS.Vendor?
+	var lastUpdatedDate: Date {
+		get {
+			return lastUpdated ?? .distantPast
+		}
+		set {
+			lastUpdated = newValue
+		}
+	}
+	
+	var savedToCloud: Bool {
+		get {
+			return isSavedToCloud ?? false
+		}
+		set {
+			isSavedToCloud = newValue
+		}
+	}
+	
+	var createdDate: Date {
+		get {
+			return created ?? .distantPast
+		}
+		set {
+			created = newValue
+		}
+	}
 	
 	init(faction: Faction, members: [Member] = [], name: String? = nil, description: String? = nil, obstacles: [XWS.Obstacle]? = nil, vendor: XWS.Vendor? = nil) {
 		self.uuid = UUID()
+		self.created = Date()
+		self.lastUpdated = Date()
 		self.faction = faction
 		self.members = members
 		self.isHyperspace = false
@@ -49,28 +81,64 @@ class Squad: Codable {
 		return members.reduce(0, { $0 + $1.pointCost })
 	}
 	
+	func update(from record: Squad) {
+		// Delete members no longer in the record
+		for member in members {
+			if record.members.contains(member) == false {
+				remove(member: member, syncWithCloud: false)
+			}
+		}
+		
+		// Update members
+		for recordMember in record.members {
+			if let exisitingMember = members.first(where: { $0 == recordMember }) {
+				exisitingMember.update(from: recordMember)
+			} else {
+				add(member: recordMember, syncWithCloud: false)
+			}
+		}
+		
+		isHyperspace = record.isHyperspace
+		lastUpdated = record.lastUpdated
+		
+		name = record.name
+		description = record.description
+		obstacles = record.obstacles
+		vendor = record.vendor
+	}
+	
 	@discardableResult func addMember(for pilot: Pilot) -> Member {
 		let member = Member(ship: pilot.ship!, pilot: pilot)
-		members.append(member)
-		members.sort(by: { Squad.rankPilots($0.pilot, $1.pilot) })
-		
-		SquadStore.save()
-		NotificationCenter.default.post(name: .squadStoreDidAddMemberToSquad, object: self)
-		NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+		add(member: member)
 		
 		return member
 	}
 	
-	func remove(member: Member) {
+	func add(member: Member, syncWithCloud: Bool = true) {
+		members.append(member)
+		members.sort(by: { Squad.rankPilots($0.pilot, $1.pilot) })
+		
+		SquadStore.shared.saveSquad(self, syncWithCloud: syncWithCloud)
+		
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: .squadStoreDidAddMemberToSquad, object: self)
+			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+		}
+	}
+	
+	func remove(member: Member, syncWithCloud: Bool = true) {
 		if let index = members.firstIndex(of: member) {
 			members.remove(at: index)
 		}
 		
 		removeInvalidCards()
 		
-		SquadStore.save()
-		NotificationCenter.default.post(name: .squadStoreDidRemoveMemberFromSquad, object: self)
-		NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+		SquadStore.shared.saveSquad(self, syncWithCloud: syncWithCloud)
+		
+		DispatchQueue.main.async {
+			NotificationCenter.default.post(name: .squadStoreDidRemoveMemberFromSquad, object: self)
+			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self)
+		}
 	}
 	
 	private func removeInvalidCards() {

@@ -89,7 +89,6 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 	
 	override func didMoveToSuperview() {
 		super.didMoveToSuperview()
-		
 		updatePilot()
 	}
 	
@@ -280,7 +279,7 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 		case _ as Pilot:
 			squad.remove(member: member)
 		case let upgrade as Upgrade:
-			member.remove(upgrade: upgrade)
+			member.removeUpgrade(upgrade)
 		default:
 			fatalError()
 		}

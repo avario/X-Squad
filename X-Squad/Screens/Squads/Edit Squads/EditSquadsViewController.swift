@@ -46,7 +46,7 @@ class EditSquadsViewController: SquadsViewController {
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		// When a squad is selected, go to the edit screen for the squad.
-		let squad = squads[indexPath.row]
+		let squad = SquadStore.shared.squads[indexPath.row]
 		tableView.deselectRow(at: indexPath, animated: true)
 
 		let squadViewController = EditSquadViewController(for: squad)

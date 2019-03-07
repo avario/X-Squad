@@ -57,7 +57,7 @@ class EditSquadViewController: SquadViewController {
 	}
 	
 	func deleteSquad() {
-		SquadStore.delete(squad: squad)
+		SquadStore.shared.delete(squad: squad)
 		
 		for cardView in CardView.all(in: view) {
 			cardView.member = nil
@@ -70,7 +70,7 @@ class EditSquadViewController: SquadViewController {
 		let duplicateMembers = squad.members.map({ Squad.Member(ship: $0.ship, pilot: $0.pilot, upgrades: $0.upgrades) })
 		let duplicateSquad = Squad(faction: squad.faction, members: duplicateMembers, name: squad.name, description: squad.description, obstacles: squad.obstacles, vendor: squad.vendor)
 		
-		SquadStore.add(squad: duplicateSquad)
+		SquadStore.shared.add(squad: duplicateSquad)
 		
 		let tabViewController = self.presentingViewController!
 		dismiss(animated: true) {

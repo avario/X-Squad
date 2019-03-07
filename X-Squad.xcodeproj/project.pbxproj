@@ -21,6 +21,7 @@
 		B65BCD4C21E543EC005721A7 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */; };
 		B65BCD4F21E54852005721A7 /* DisclaimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */; };
 		B65BCD5521E561AF005721A7 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65BCD5421E561AF005721A7 /* DownloadViewController.swift */; };
+		B65F92B1222ACAAB005CCBEE /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65F92B0222ACAAB005CCBEE /* CloudKit.framework */; };
 		B662FB0E21DD4C0000EF79F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */; };
 		B662FB1521DD4C0400EF79F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1421DD4C0400EF79F7 /* Assets.xcassets */; };
 		B662FB1821DD4C0400EF79F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B662FB1621DD4C0400EF79F7 /* LaunchScreen.storyboard */; };
@@ -48,6 +49,7 @@
 		B671C9C921EE11740034C7C9 /* PullToDismissController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9C821EE11740034C7C9 /* PullToDismissController.swift */; };
 		B671C9CC21EFEF400034C7C9 /* EditMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */; };
 		B671CA5E21F0F4310034C7C9 /* SquadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B671CA5D21F0F4300034C7C9 /* SquadButton.swift */; };
+		B6A48E59222C1A3E0003DB3F /* SquadCloudStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A48E58222C1A3E0003DB3F /* SquadCloudStore.swift */; };
 		B6D4C8D622143AE3002D598A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D522143AE3002D598A /* Game.swift */; };
 		B6D4C8D82214634D002D598A /* NewGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D72214634D002D598A /* NewGameViewController.swift */; };
 		B6D4C8DA22146C27002D598A /* SelectSquadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */; };
@@ -126,6 +128,8 @@
 		B65BCD4B21E543EC005721A7 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
 		B65BCD4E21E54852005721A7 /* DisclaimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerViewController.swift; sourceTree = "<group>"; };
 		B65BCD5421E561AF005721A7 /* DownloadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		B65F92AF222ACAA2005CCBEE /* X-Squad.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "X-Squad.entitlements"; sourceTree = "<group>"; };
+		B65F92B0222ACAAB005CCBEE /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		B662FB0A21DD4C0000EF79F7 /* X-Squad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "X-Squad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B662FB1421DD4C0400EF79F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 		B671C9C821EE11740034C7C9 /* PullToDismissController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToDismissController.swift; sourceTree = "<group>"; };
 		B671C9CB21EFEF400034C7C9 /* EditMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMemberView.swift; sourceTree = "<group>"; };
 		B671CA5D21F0F4300034C7C9 /* SquadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadButton.swift; sourceTree = "<group>"; };
+		B6A48E58222C1A3E0003DB3F /* SquadCloudStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquadCloudStore.swift; sourceTree = "<group>"; };
+		B6B3B42F2222B3A300F87386 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
 		B6D4C8D522143AE3002D598A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		B6D4C8D72214634D002D598A /* NewGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameViewController.swift; sourceTree = "<group>"; };
 		B6D4C8D922146C27002D598A /* SelectSquadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSquadViewController.swift; sourceTree = "<group>"; };
@@ -199,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65F92B1222ACAAB005CCBEE /* CloudKit.framework in Frameworks */,
 				B662FB5221DFC3A400EF79F7 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,6 +334,7 @@
 		B662FB0C21DD4C0000EF79F7 /* X-Squad */ = {
 			isa = PBXGroup;
 			children = (
+				B65F92AF222ACAA2005CCBEE /* X-Squad.entitlements */,
 				B662FB0D21DD4C0000EF79F7 /* AppDelegate.swift */,
 				B671CA5521F0D1280034C7C9 /* Screens */,
 				B671CA5621F0D1360034C7C9 /* Components */,
@@ -357,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				B671C93621E767AD0034C7C9 /* SquadStore.swift */,
+				B6A48E58222C1A3E0003DB3F /* SquadCloudStore.swift */,
 				B6EC67E621F76E9500D2BA5D /* DataStore.swift */,
 				B6EC67E821F8A7E800D2BA5D /* CardSearch.swift */,
 			);
@@ -366,6 +375,8 @@
 		B662FB4021DE657C00EF79F7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B65F92B0222ACAAB005CCBEE /* CloudKit.framework */,
+				B6B3B42F2222B3A300F87386 /* Mixpanel.framework */,
 				B662FB5121DFC3A400EF79F7 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -705,6 +716,17 @@
 				TargetAttributes = {
 					B662FB0921DD4C0000EF79F7 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -829,6 +851,7 @@
 				B6EC67E521F76D2600D2BA5D /* Card.swift in Sources */,
 				B671C97E21E8FED00034C7C9 /* CardsCollectionViewController.swift in Sources */,
 				B6D4C8F02214BE92002D598A /* TokenStackView.swift in Sources */,
+				B6A48E59222C1A3E0003DB3F /* SquadCloudStore.swift in Sources */,
 				B6EC67DA21F73C0B00D2BA5D /* Upgrade.swift in Sources */,
 				B65BCC9E21E3BA25005721A7 /* CardsPresentAnimationController.swift in Sources */,
 				B671C98D21EBC54E0034C7C9 /* SelectUpgradeViewController.swift in Sources */,
@@ -995,6 +1018,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "X-Squad/X-Squad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2Z2X63L8Q;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1017,6 +1041,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "X-Squad/X-Squad.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J2Z2X63L8Q;
 				FRAMEWORK_SEARCH_PATHS = (

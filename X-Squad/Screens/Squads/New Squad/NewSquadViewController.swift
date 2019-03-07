@@ -100,7 +100,7 @@ class NewSquadViewController: UITableViewController {
 		case .factions:
 			let faction = Faction.releasedFactions[indexPath.row]
 			let squad = Squad(faction: faction)
-			SquadStore.add(squad: squad)
+			SquadStore.shared.add(squad: squad)
 			
 			dismiss(animated: true, completion: nil)
 		case .xws:
@@ -126,7 +126,7 @@ class NewSquadViewController: UITableViewController {
 		do {
 			let xws = try JSONDecoder().decode(XWS.self, from: xwsData)
 			let squad = Squad(xws: xws)
-			SquadStore.add(squad: squad)
+			SquadStore.shared.add(squad: squad)
 			
 			let tabViewController = self.presentingViewController!
 			dismiss(animated: true) {

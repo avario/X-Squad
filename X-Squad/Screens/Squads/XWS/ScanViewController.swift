@@ -86,7 +86,7 @@ class ScanViewController: UIViewController, AVCaptureMetadataOutputObjectsDelega
 		didFindSquad = true
 		
 		let squad = Squad(xws: xws)
-		SquadStore.add(squad: squad)
+		SquadStore.shared.add(squad: squad)
 		
 		UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
 		

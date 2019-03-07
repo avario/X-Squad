@@ -15,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+		SquadCloudStore.shared.syncRecords()
+		
+		UIApplication.shared.registerForRemoteNotifications()
+		SquadCloudStore.shared.subscribeToChanges()
 		
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.tintColor = UIColor(named: "XRed")
@@ -40,6 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.makeKeyAndVisible()
 		
 		return true
+	}
+	
+	func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+		SquadCloudStore.shared.handleNotification(userInfo: userInfo, fetchCompletionHandler: completionHandler)
+	}
+	
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		SquadCloudStore.shared.syncRecordsIfNeeded()
 	}
 	
 }

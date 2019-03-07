@@ -47,18 +47,15 @@ class SquadsViewController: UITableViewController {
 		NotificationCenter.default.addObserver(self, selector: #selector(squadDeleted), name: .squadStoreDidDeleteSquad, object: nil)
 	}
 	
-	var squads = SquadStore.squads
-	
 	@objc func squadAdded(notification: Notification) {
 		guard let squad = notification.object as? Squad,
-			let squadIndex = SquadStore.squads.firstIndex(of: squad) else {
+			let squadIndex = SquadStore.shared.squads.firstIndex(of: squad) else {
 				return
 		}
 		
-		squads = SquadStore.squads
+		tableView.reloadData()
 		
 		let indexPath = IndexPath(row: squadIndex, section: 0)
-		tableView.insertRows(at: [indexPath], with: .none)
 		tableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
 		tableView.deselectRow(at: indexPath, animated: true)
 		
@@ -66,19 +63,12 @@ class SquadsViewController: UITableViewController {
 	}
 	
 	@objc func squadDeleted(notification: Notification) {
-		guard let squad = notification.object as? Squad,
-			let squadIndex = squads.firstIndex(of: squad) else {
-				return
-		}
-		
-		squads = SquadStore.squads
-		tableView.deleteRows(at: [IndexPath(row: squadIndex, section: 0)], with: .none)
-		
+		tableView.reloadData()
 		updateEmptyView()
 	}
 	
 	func updateEmptyView() {
-		tableView.backgroundView = squads.isEmpty ? SquadsEmptyView(message: emptyMessage) : nil
+		tableView.backgroundView = SquadStore.shared.squads.isEmpty ? SquadsEmptyView(message: emptyMessage) : nil
 	}
 	
 	@objc func addSquad() {
@@ -90,12 +80,12 @@ class SquadsViewController: UITableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return squads.count
+		return SquadStore.shared.squads.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let squadCell = tableView.dequeueReusableCell(withIdentifier: SquadCell.reuseIdentifier) as! SquadCell
-		squadCell.squad = squads[indexPath.row]
+		squadCell.squad = SquadStore.shared.squads[indexPath.row]
 		
 		return squadCell
 	}

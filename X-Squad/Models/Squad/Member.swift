@@ -18,7 +18,7 @@ extension Squad {
 		
 		lazy var ship: Ship = DataStore.ship(for: shipXWS)!
 		lazy var pilot: Pilot = DataStore.pilot(for: pilotXWS)!
-		lazy var upgrades: [Upgrade] = upgradesXWS.map({  DataStore.upgrade(for: $0)! }).sorted(by: upgradeSort)
+		lazy var upgrades: [Upgrade] = upgradesXWS.map({ DataStore.upgrade(for: $0)! }).sorted(by: upgradeSort)
 		
 		init(ship: Ship, pilot: Pilot, upgrades: [Upgrade] = []) {
 			self.uuid = UUID()
@@ -27,8 +27,22 @@ extension Squad {
 			self.upgradesXWS = upgrades.map({ $0.xws })
 		}
 		
+		func update(from record: Member) {
+			for upgrade in upgrades {
+				if record.upgrades.contains(upgrade) == false {
+					removeUpgrade(upgrade, syncWithCloud: false)
+				}
+			}
+			
+			for upgrade in record.upgrades {
+				if upgrades.contains(upgrade) == false {
+					addUpgrade(upgrade)
+				}
+			}
+		}
+		
 		var squad: Squad {
-			return SquadStore.squads.first(where: { $0.members.contains(self) })!
+			return SquadStore.shared.squads.first(where: { $0.members.contains(self) })!
 		}
 		
 		var pointCost: Int {
@@ -51,7 +65,7 @@ extension Squad {
 			}
 		}
 		
-		func addUpgrade(_ upgrade: Upgrade) {
+		func addUpgrade(_ upgrade: Upgrade, syncWithCloud: Bool = true) {
 			upgradesXWS.append(upgrade.xws)
 			upgrades.append(upgrade)
 			
@@ -59,12 +73,15 @@ extension Squad {
 			
 			upgrades.sort(by: upgradeSort)
 			
-			SquadStore.save()
-			NotificationCenter.default.post(name: .squadStoreDidAddUpgradeToMember, object: self)
-			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+			SquadStore.shared.saveSquad(self.squad, syncWithCloud: syncWithCloud)
+			
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .squadStoreDidAddUpgradeToMember, object: self)
+				NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self.squad)
+			}
 		}
 		
-		func remove(upgrade: Upgrade) {
+		func removeUpgrade(_ upgrade: Upgrade, syncWithCloud: Bool = true) {
 			if let index = upgrades.firstIndex(of: upgrade),
 				let indexXWS = upgradesXWS.firstIndex(of: upgrade.xws) {
 				upgrades.remove(at: index)
@@ -73,9 +90,11 @@ extension Squad {
 			
 			removeInvalidUpgrades()
 			
-			SquadStore.save()
-			NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromMember, object: self)
-			NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+			SquadStore.shared.saveSquad(self.squad, syncWithCloud: syncWithCloud)
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromMember, object: self)
+				NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self.squad)
+			}
 		}
 		
 		func removeInvalidUpgrades(shouldNotify: Bool = false, notify: Bool = false) {
@@ -97,8 +116,10 @@ extension Squad {
 			}
 			
 			if shouldNotify, notify {
-				NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromMember, object: self)
-				NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: squad)
+				DispatchQueue.main.async {
+					NotificationCenter.default.post(name: .squadStoreDidRemoveUpgradeFromMember, object: self)
+					NotificationCenter.default.post(name: .squadStoreDidUpdateSquad, object: self.squad)
+				}
 			}
 		}
 		

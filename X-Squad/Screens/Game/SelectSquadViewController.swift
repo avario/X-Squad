@@ -23,7 +23,7 @@ class SelectSquadViewController: SquadsViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let squad = squads[indexPath.row]
+		let squad = SquadStore.shared.squads[indexPath.row]
 		
 		let game = Game(squad: squad)
 		

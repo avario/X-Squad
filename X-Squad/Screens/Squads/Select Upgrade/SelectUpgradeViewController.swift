@@ -133,7 +133,7 @@ class SelectUpgradeViewController: CardsCollectionViewController {
 	
 	override func cardDetailsCollectionViewController(_ cardDetailsCollectionViewController: CardDetailsCollectionViewController, didPressSquadButtonFor card: Card) {
 		if let currentUpgrade = currentUpgrade {
-			member.remove(upgrade: currentUpgrade)
+			member.removeUpgrade(currentUpgrade)
 		}
 		
 		if card as? Upgrade != currentUpgrade {
@@ -177,7 +177,7 @@ class SelectUpgradeViewController: CardsCollectionViewController {
 		
 		if upgrade != currentUpgrade {
 			if let currentUpgrade = currentUpgrade {
-				member.remove(upgrade: currentUpgrade)
+				member.removeUpgrade(currentUpgrade)
 			}
 			
 			member.addUpgrade(upgrade)
