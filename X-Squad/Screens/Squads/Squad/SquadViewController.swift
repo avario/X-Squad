@@ -139,6 +139,13 @@ class SquadViewController: UIViewController {
 	}
 	
 	func exportImage() {
+		guard squad.members.isEmpty == false else {
+			let alert = UIAlertController(title: "Empty Squad", message: "You can't export an image of an empty squad. Add pilots and try again.", preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Okay", style: .default) { _ in })
+			self.present(alert, animated: true, completion: nil)
+			return
+		}
+		
 		let membersStackView = UIStackView()
 		membersStackView.axis = .vertical
 		membersStackView.spacing = 10

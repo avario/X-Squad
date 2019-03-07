@@ -38,7 +38,7 @@ class EditSquadsViewController: SquadsViewController {
 		
 		addSquadButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
 		addSquadButton.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
-		addSquadButton.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
+		addSquadButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -8).isActive = true
 		addSquadButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
 		
 		tableView.tableHeaderView = headerView
