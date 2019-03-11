@@ -15,6 +15,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 	
 	enum Section: Int, CaseIterable {
 		case downloadImages
+		case openSource
 		case developer
 	}
 	
@@ -58,6 +59,8 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		switch Section(rawValue: section)! {
 		case .downloadImages:
 			return 1
+		case .openSource:
+			return 1
 		case .developer:
 			return DeveloperCell.allCases.count
 		}
@@ -70,6 +73,9 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		switch Section(rawValue: indexPath.section)! {
 		case .downloadImages:
 			settingCell.textLabel?.text = "Download All Card Images"
+		case .openSource:
+			settingCell.textLabel?.text = "Github"
+			settingCell.accessoryType = .disclosureIndicator
 		case .developer:
 			switch DeveloperCell(rawValue: indexPath.row)! {
 			case .acknowledgements:
@@ -86,10 +92,21 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		return settingCell
 	}
 	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch Section(rawValue: section)! {
+		case .openSource:
+			return "Open Source"
+		case .downloadImages, .developer:
+			return nil
+		}
+	}
+	
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		switch Section(rawValue: section)! {
 		case .downloadImages:
 			return "Download all card images so that they can be viewed offline. This may use up to 100MB of data."
+		case .openSource:
+			return "X-Squad is an open source app that anyone can help improve."
 		case .developer:
 			let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 			return "X-Squad Version \(appVersion)"
@@ -100,6 +117,10 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		switch Section(rawValue: indexPath.section)! {			
 		case .downloadImages:
 			present(UINavigationController(rootViewController: ImageDownloadViewController()), animated: true, completion: nil)
+			
+		case .openSource:
+			UIApplication.shared.open(URL(string: "https://github.com/avario/X-Squad")!)
+			tableView.deselectRow(at: indexPath, animated: true)
 			
 		case .developer:
 			switch DeveloperCell(rawValue: indexPath.row)! {

@@ -1,6 +1,4 @@
-<p align="center">
-<img src="Images/Screenshots.png" alt="App Icon" height="480" />
-</p>
+![Screenshots](Images/Screenshots.png)
 
 # X-Squad
 X-Squad is an open source iOS app for building squads for [X-Wing: The Miniatures Game (Second Edition)](https://www.fantasyflightgames.com/en/products/x-wing-second-edition/). It's a native Swift app built using mostly first-party Apple tools and APIs.
