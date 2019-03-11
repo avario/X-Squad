@@ -15,7 +15,7 @@ class CardsSectionHeaderView: UICollectionReusableView {
 	static let reuseIdentifier = "CardsSectionHeaderView"
 	
 	let iconLabel = UILabel()
-	let nameLabel = UILabel()
+	let imageView = UIImageView()
 	
 	let closeButton = SmallButton()
 	
@@ -25,7 +25,7 @@ class CardsSectionHeaderView: UICollectionReusableView {
 		addSubview(iconLabel)
 		iconLabel.textAlignment = .center
 		iconLabel.translatesAutoresizingMaskIntoConstraints = false
-		iconLabel.textColor = UIColor.white.withAlphaComponent(0.5)//UIColor(named: "XRed")
+		iconLabel.textColor = UIColor.white.withAlphaComponent(0.5)
 		iconLabel.font = UIFont.xWingIcon(32)
 		
 		iconLabel.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
@@ -33,14 +33,17 @@ class CardsSectionHeaderView: UICollectionReusableView {
 		iconLabel.widthAnchor.constraint(equalToConstant: 66).isActive = true
 		iconLabel.heightAnchor.constraint(equalToConstant: 44).isActive = true
 		
-		addSubview(nameLabel)
-		nameLabel.textColor = .white
-		nameLabel.translatesAutoresizingMaskIntoConstraints = false
+		addSubview(imageView)
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.contentMode = .scaleAspectFit
+		imageView.tintColor = UIColor.white.withAlphaComponent(0.5)
 		
-		nameLabel.leftAnchor.constraint(equalTo: iconLabel.rightAnchor).isActive = true
-		nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-		nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -10).isActive = true
-			
+		imageView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+		imageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+		imageView.widthAnchor.constraint(equalToConstant: 66).isActive = true
+		imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+		
+		// Close button
 		closeButton.translatesAutoresizingMaskIntoConstraints = false
 		closeButton.setTitle("Close", for: .normal)
 		

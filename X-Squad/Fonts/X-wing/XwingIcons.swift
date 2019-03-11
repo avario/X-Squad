@@ -105,118 +105,118 @@ extension Faction {
 
 extension Ship {
 	
-	var characterCode: String {
-		switch type {
-		case .modifiedYT1300:
+	var characterCode: String? {
+		switch xws {
+		case "modifiedyt1300lightfreighter":
 			return "m"
-		case .starViper:
+		case "starviperclassattackplatform":
 			return "v"
-		case .scurrgH6Bomber:
+		case "scurrgh6bomber":
 			return "H"
-		case .YT2400:
+		case "yt2400lightfreighter":
 			return "o"
-		case .auzituckGunship:
+		case "auzituckgunship":
 			return "@"
-		case .kihraxzFighter:
+		case "kihraxzfighter":
 			return "r"
-		case .sheathipede:
+		case "sheathipedeclassshuttle":
 			return "%"
-		case .quadrijetSpacetug:
+		case "quadrijettransferspacetug":
 			return "q"
-		case .firespray:
+		case "firesprayclasspatrolcraft":
 			return "f"
-		case .TIElnFighter:
+		case "tielnfighter":
 			return "F"
-		case .BTLA4Ywing:
+		case "btla4ywing":
 			return "y"
-		case .TIEAdvancedx1:
+		case "tieadvancedx1":
 			return "A"
-		case .alphaclassStarWing:
+		case "alphaclassstarwing":
 			return "&"
-		case .UT60DUwing:
+		case "ut60duwing":
 			return "u"
-		case .TIEskStriker:
+		case "tieskstriker":
 			return "T"
-		case .ASF01Bwing:
+		case "asf01bwing":
 			return "b"
-		case .TIEDDefender:
+		case "tieddefender":
 			return "D"
-		case .TIEsaBomber:
+		case "tiesabomber":
 			return "B"
-		case .TIEcsPunisher:
+		case "tiecapunisher":
 			return "N"
-		case .aggressor:
+		case "aggressorassaultfighter":
 			return "i"
-		case .G1AStarfighter:
+		case "g1astarfighter":
 			return "n"
-		case .VCX100:
+		case "vcx100lightfreighter":
 			return "G"
-		case .YV666:
+		case "yv666lightfreighter":
 			return "t"
-		case .TIEAdvancedv1:
+		case "tieadvancedv1":
 			return "R"
-		case .lambdaShuttle:
+		case "lambdaclasst4ashuttle":
 			return "l"
-		case .TIEphPhantom:
+		case "tiephphantom":
 			return "P"
-		case .VT49Decimator:
+		case "vt49decimator":
 			return "d"
-		case .TIEagAggressor:
+		case "tieagaggressor":
 			return "`"
-		case .BTLS8Kwing:
+		case "btls8kwing":
 			return "k"
-		case .ARC170Starfighter:
+		case "arc170starfighter":
 			return "c"
-		case .attackShuttle:
+		case "attackshuttle":
 			return "g"
-		case .T65Xwing:
+		case "t65xwing":
 			return "x"
-		case .HWK290:
+		case "hwk290lightfreighter":
 			return "h"
-		case .RZ1Awing:
+		case "rz1awing":
 			return "a"
-		case .fangFighter:
+		case "fangfighter":
 			return "M"
-		case .Z95AF4Headhunter:
+		case "z95af4headhunter":
 			return "z"
-		case .M12LKimogila:
+		case "m12lkimogilafighter":
 			return "K"
-		case .Ewing:
+		case "ewing":
 			return "e"
-		case .TIEInterceptor:
+		case "tieininterceptor":
 			return "I"
-		case .lancerPursuitCraft:
+		case "lancerclasspursuitcraft":
 			return "L"
-		case .TIEReaper:
+		case "tiereaper":
 			return "V"
-		case .M3AInterceptor:
+		case "m3ainterceptor":
 			return "s"
-		case .jumpMaster5000:
+		case "jumpmaster5000":
 			return "p"
-		case .customizedYT1300:
+		case "customizedyt1300lightfreighter":
 			return "W"
-		case .escapeCraft:
+		case "escapecraft":
 			return "X"
-		case .TIEfoFighter:
+		case "tiefofighter":
 			return "O"
-		case .TIEsfFighter:
+		case "tiesffighter":
 			return "S"
-		case .upsilonclassCommandShuttle:
+		case "upsilonclassshuttle":
 			return "U"
-		case .TIEvnSilencer:
+		case "tievnsilencer":
 			return "$"
-		case .T70Xwing:
+		case "t70xwing":
 			return "w"
-		case .RZ2Awing:
+		case "rz2awing":
 			return "E"
-		case .MG100StarFortress:
+		case "mg100starfortress":
 			return "Z"
-		case .modifiedTIEln:
+		case "modifiedtielnfighter":
 			return "C"
-		case .scavengedYT1300:
+		case "scavengedyt1300":
 			return "Y"
-		case .unknown:
-			return ""
+		default:
+			return nil
 		}
 	}
 }

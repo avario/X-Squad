@@ -62,15 +62,21 @@ class AddPilotViewController: CardsCollectionViewController {
 			// Within a ship section, pilots are sorted according to PS and cost.
 			let sortedPilots = ship.pilots.sorted(by: Squad.rankPilots)
 			
+			let header: CardSection.Header
+			if let characterCode = ship.characterCode {
+				header = .iconHeader(
+					characterCode,
+					UIFont.xWingShip(48)
+				)
+			} else if let icon = ship.icon {
+				header = .imageHeader(icon)
+			} else {
+				header = .empty
+			}
+			
 			cardSections.append(
 				CardSection(
-					header: .header(
-						CardSection.HeaderInfo(
-							title: "",//shipType.title,
-							icon: ship.characterCode,
-							iconFont: UIFont.xWingShip(48)
-						)
-					),
+					header: header,
 					cards: sortedPilots
 				)
 			)

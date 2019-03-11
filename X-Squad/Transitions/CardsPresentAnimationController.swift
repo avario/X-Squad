@@ -136,9 +136,9 @@ extension UIView {
 	func allHUDViews() -> [UIView] {
 		var views: [UIView] = []
 		for subview in subviews {
-			if subview is UIButton || subview is CostView || subview is UILabel {
+			if subview is UIButton || subview is CostView || subview is UILabel || subview is UIImageView {
 				views.append(subview)
-			} else {
+			} else if subview is CardView == false {
 				views.append(contentsOf: subview.allHUDViews())
 			}
 		}

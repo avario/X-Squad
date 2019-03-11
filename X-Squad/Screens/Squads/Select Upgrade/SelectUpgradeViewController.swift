@@ -70,12 +70,9 @@ class SelectUpgradeViewController: CardsCollectionViewController {
 		
 		cardSections.append(
 			CardSection(
-				header: .header(
-					CardSection.HeaderInfo(
-						title: "",
-						icon: upgradeType.characterCode,
-						iconFont: UIFont.xWingIcon(32)
-					)
+				header: .iconHeader(
+					upgradeType.characterCode,
+					UIFont.xWingIcon(32)
 				),
 				cards: upgrades.sorted(by: upgradeSort)
 			)
@@ -84,12 +81,9 @@ class SelectUpgradeViewController: CardsCollectionViewController {
 		// Restricted upgrades will be shown in a section at the bottom of the list.
 		cardSections.append(
 			CardSection(
-				header: .header(
-					CardSection.HeaderInfo(
-						title: "",
-						icon: "",
-						iconFont: UIFont.xWingIcon(32)
-					)
+				header: .iconHeader(
+					"",
+					UIFont.xWingIcon(32)
 				),
 				cards: restrictedUpgrades.sorted(by: upgradeSort)
 			)

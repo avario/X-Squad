@@ -9,6 +9,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class CardsCollectionViewController: UICollectionViewController, CardDetailsCollectionViewControllerDataSource, CardDetailsCollectionViewControllerDelegate {
 	
@@ -20,13 +21,9 @@ class CardsCollectionViewController: UICollectionViewController, CardDetailsColl
 		
 		enum Header {
 			case none
-			case header(HeaderInfo)
-		}
-		
-		struct HeaderInfo {
-			let title: String
-			let icon: String
-			let iconFont: UIFont
+			case empty
+			case iconHeader(String, UIFont)
+			case imageHeader(URL)
 		}
 	}
 	
@@ -119,16 +116,29 @@ class CardsCollectionViewController: UICollectionViewController, CardDetailsColl
 	override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CardsSectionHeaderView.reuseIdentifier, for: indexPath) as! CardsSectionHeaderView
 		
+		sectionHeader.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+		sectionHeader.closeButton.isHidden = indexPath.section != 0
+		
 		let cardSection = cardSections[indexPath.section]
 		switch cardSection.header {
 		case .none:
 			break
-		case .header(let headerInfo):
-			sectionHeader.nameLabel.text = headerInfo.title
-			sectionHeader.iconLabel.text = headerInfo.icon
-			sectionHeader.iconLabel.font = headerInfo.iconFont
-			sectionHeader.closeButton.isHidden = indexPath.section != 0
-			sectionHeader.closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+		
+		case .empty:
+			sectionHeader.iconLabel.isHidden = true
+			sectionHeader.imageView.isHidden = true
+		
+		case .iconHeader(let icon, let font):
+			sectionHeader.iconLabel.text = icon
+			sectionHeader.iconLabel.font = font
+			sectionHeader.iconLabel.isHidden = false
+			sectionHeader.imageView.isHidden = true
+			
+		case .imageHeader(let url):
+			let modifier = AnyImageModifier { return $0.withRenderingMode(.alwaysTemplate) }
+			sectionHeader.imageView.kf.setImage(with: url, options: [.imageModifier(modifier)])
+			sectionHeader.iconLabel.isHidden = true
+			sectionHeader.imageView.isHidden = false
 		}
 		
 		return sectionHeader

@@ -15,6 +15,7 @@ class Ship: Codable {
 	let name: String
 	let xws: XWSID
 	let ffg: Int?
+	let icon: URL?
 	let size: Size
 	let faction: Faction
 	let dial: [Maneuver]
@@ -95,72 +96,6 @@ class Ship: Codable {
 			let string = String(speed) + bearing.rawValue + difficulty.rawValue
 			try container.encode(string)
 		}
-	}
-	
-	var type: ShipType {
-		guard let ffg = ffg else {
-			return .unknown
-		}
-		
-		return ShipType(rawValue: ffg) ?? .unknown
-	}
-	
-	enum ShipType: Int, Codable {
-		case modifiedYT1300 = 1
-		case starViper = 3
-		case scurrgH6Bomber = 4
-		case YT2400 = 5
-		case auzituckGunship = 6
-		case kihraxzFighter = 7
-		case sheathipede = 8
-		case quadrijetSpacetug = 9
-		case firespray = 10
-		case TIElnFighter = 11
-		case BTLA4Ywing = 12
-		case TIEAdvancedx1 = 13
-		case alphaclassStarWing = 14
-		case UT60DUwing = 15
-		case TIEskStriker = 16
-		case ASF01Bwing = 17
-		case TIEDDefender = 18
-		case TIEsaBomber = 19
-		case TIEcsPunisher = 20
-		case aggressor = 21
-		case G1AStarfighter = 22
-		case VCX100 = 23
-		case YV666 = 24
-		case TIEAdvancedv1 = 25
-		case lambdaShuttle = 26
-		case TIEphPhantom = 27
-		case VT49Decimator = 28
-		case TIEagAggressor = 29
-		case BTLS8Kwing = 30
-		case ARC170Starfighter = 31
-		case attackShuttle = 32
-		case T65Xwing = 33
-		case HWK290 = 34
-		case RZ1Awing = 35
-		case fangFighter = 36
-		case Z95AF4Headhunter = 38
-		case M12LKimogila = 39
-		case Ewing = 40
-		case TIEInterceptor = 41
-		case lancerPursuitCraft = 42
-		case TIEReaper = 43
-		case M3AInterceptor = 44
-		case jumpMaster5000 = 45
-		case customizedYT1300 = 47
-		case escapeCraft = 48
-		case TIEfoFighter = 49
-		case TIEsfFighter = 50
-		case upsilonclassCommandShuttle = 51
-		case TIEvnSilencer = 52
-		case T70Xwing = 53
-		case RZ2Awing = 54
-		case MG100StarFortress = 55
-		case modifiedTIEln = 56
-		case scavengedYT1300 = 57
-		case unknown = 999
 	}
 	
 }
