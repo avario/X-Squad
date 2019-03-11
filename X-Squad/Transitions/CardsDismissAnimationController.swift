@@ -13,8 +13,6 @@ import UIKit
 class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 	
 	let animator = UIDynamicAnimator(referenceView: UIApplication.shared.keyWindow!)
-	var transitionContext: UIViewControllerContextTransitioning?
-	var matchedToCardViews: [CardView] = []
 	
 	let transitionTime: TimeInterval = 0.5
 	
@@ -27,19 +25,17 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 	
 	let style: Style
 	
-	init(targetViewController: UIViewController? = nil, style: Style = .physics) {
+	init(targetViewController: UIViewController? = nil, style: Style = .smooth) {
 		self.style = style
 		self.targetViewController = targetViewController
 		super.init()
 	}
-	
 	
 	func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
 		return transitionTime
 	}
 	
 	func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-		self.transitionContext = transitionContext
 		guard let fromVC = transitionContext.viewController(forKey: .from),
 			let toVC = targetViewController ?? transitionContext.viewController(forKey: .to)
 			else {
@@ -52,6 +48,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		let toCardViews = CardView.all(in: toVC.view)
 		
 		var viewsToAnimateOut: [UIView] = []
+		var matchedToCardViews: [CardView] = []
 		
 		for fromCardView in fromCardViews {
 			var targetAlpha: CGFloat = 1.0
@@ -108,12 +105,12 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 		UIView.animate(withDuration: transitionTime, animations: {
 			fromVC.view.backgroundColor = UIColor.black.withAlphaComponent(0)
 		}) { (_) in
-			for matchingToCardView in self.matchedToCardViews {
+			for matchingToCardView in matchedToCardViews {
 				matchingToCardView.isHidden = false
 			}
 			
 			if toVC is SquadViewController,
-				let matchedCardView = self.matchedToCardViews.first,
+				let matchedCardView = matchedToCardViews.first,
 				matchedCardView.card is Upgrade,
 				let snapshot = matchedCardView.snapshotView(afterScreenUpdates: true) {
 				matchedCardView.superview?.addSubview(snapshot)
@@ -127,7 +124,7 @@ class CardsDismissAnimationController: NSObject, UIViewControllerAnimatedTransit
 				})
 			}
 			
-			self.transitionContext?.completeTransition(true)
+			transitionContext.completeTransition(true)
 		}
 	}
 }

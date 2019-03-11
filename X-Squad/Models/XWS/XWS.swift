@@ -5,6 +5,8 @@
 //  Created by Avario on 24/01/2019.
 //  Copyright © 2019 Avario. All rights reserved.
 //
+// Standardised XWS format codable.
+// See https://github.com/elistevens/xws-spec
 
 import Foundation
 

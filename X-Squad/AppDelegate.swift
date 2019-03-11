@@ -14,8 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 	
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
-		SquadCloudStore.shared.syncRecords()
 		
 		UIApplication.shared.registerForRemoteNotifications()
 		SquadCloudStore.shared.subscribeToChanges()
@@ -23,9 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window!.tintColor = UIColor(named: "XRed")
 		
-		UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
-		UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
-		UIToolbar.appearance().isTranslucent = false
+		UINavigationBar.appearance().titleTextAttributes = [
+			.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
+		UINavigationBar.appearance().largeTitleTextAttributes = [
+			.foregroundColor: UIColor.init(white: 0.8, alpha: 1.0)]
 		
 		let tabBarController = UITabBarController()
 		tabBarController.tabBar.barStyle = .black
@@ -36,11 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			UINavigationController(rootViewController: SearchViewController()),
 			UINavigationController(rootViewController: SettingsViewController())]
 
-		tabBarController.selectedIndex = tabBarController.viewControllers!.firstIndex(where: { $0 is EditSquadsViewController })!
 		tabBarController.delegate = tabBarController
+		tabBarController.selectedIndex = tabBarController.viewControllers!
+			.firstIndex(where: { $0 is EditSquadsViewController })!
 		
 		window?.rootViewController = tabBarController
-		
 		window?.makeKeyAndVisible()
 		
 		return true

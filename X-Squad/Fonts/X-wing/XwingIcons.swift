@@ -77,7 +77,7 @@ extension Upgrade.UpgradeType {
 		case .configuration:
 			return "n"
 		case .tacticalRelay:
-			return "É" // This is wrong...
+			return "Z"
 		}
 	}
 }
