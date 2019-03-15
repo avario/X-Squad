@@ -94,6 +94,15 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 	
 	// This adds and lays out the card images and buttons.
 	@objc func updatePilot() {
+		// Constants
+		let pilotCardTopPadding: CGFloat = 10
+		let cardLength: CGFloat = bounds.height - pilotCardTopPadding * 2
+		let cardWidth: CGFloat = cardLength / CardView.sizeRatio
+		let upgradeCardTopPadding: CGFloat = pilotCardTopPadding + cardLength * 0.08
+		let upgradeButtonSize: CGFloat = 44
+		
+		var leadingEdge: CGFloat = 0
+		
 		if mode == .edit {
 			// Only show upgrade slot buttons in the edit mode.
 			for upgradeButton in self.upgradeButtons {
@@ -102,7 +111,7 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 			self.upgradeButtons.removeAll()
 			
 			for upgrade in member.allSlots {
-				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: 44, height: 44)))
+				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: upgradeButtonSize, height: upgradeButtonSize)))
 				upgradeButton.upgradeType = upgrade
 				
 				insertSubview(upgradeButton, at: 0)
@@ -111,14 +120,6 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 				upgradeButton.addTarget(self, action: #selector(addUpgrade(button:)), for: .touchUpInside)
 			}
 		}
-		
-		// Constants
-		let pilotCardTopPadding: CGFloat = 10
-		let cardLength: CGFloat = bounds.height - pilotCardTopPadding * 2
-		let cardWidth: CGFloat = cardLength / CardView.sizeRatio
-		let upgradeCardTopPadding: CGFloat = pilotCardTopPadding + cardLength * 0.08
-		
-		var leadingEdge: CGFloat = 0
 		
 		// Remove any card views for upgrades that are no longer equipped
 		for cardView in cardViews {
@@ -227,19 +228,20 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 		// Any buttons that weren't used by an upgrade should be positioned at the end of the list
 		if mode == .edit, availableUpgradeButtons.isEmpty == false {
 			let buttonsInColumn = 4
+			let leftSpacing: CGFloat = 10
 			
 			for (index, upgradeButton) in availableUpgradeButtons.enumerated() {
 				let column = floor(Double(index)/Double(buttonsInColumn))
 				let row = index % buttonsInColumn
 				
 				upgradeButton.frame = CGRect(
-					origin: CGPoint(x: leadingEdge + 10 + upgradeButton.frame.width * CGFloat(column), y: upgradeCardTopPadding + upgradeButton.frame.height * CGFloat(row)),
+					origin: CGPoint(x: leadingEdge + leftSpacing + upgradeButton.frame.width * CGFloat(column), y: upgradeCardTopPadding + upgradeButton.frame.height * CGFloat(row)),
 					size: upgradeButton.bounds.size)
 				upgradeButton.associatedUpgrade = nil
 			}
 			
 			let numberOfColumns = ceil(Double(availableUpgradeButtons.count)/Double(buttonsInColumn))
-			leadingEdge += 32 * CGFloat(numberOfColumns) + 20
+			leadingEdge += leftSpacing + upgradeButtonSize * CGFloat(numberOfColumns)
 		}
 		
 		widthConstraint.constant = leadingEdge
