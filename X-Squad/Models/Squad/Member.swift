@@ -188,6 +188,30 @@ extension Squad {
 									continue checkingRestrictionSets
 								}
 							}
+							
+						case .equipped(let upgradeTypes):
+							for upgradeType in upgradeTypes {
+								guard upgrades.contains(where: { $0.frontSide.slots.contains(upgradeType) }) else {
+									return .restrictionsNotMet
+								}
+							}
+
+							continue checkingRestrictionSets
+							
+						case .solitary:
+							for member in squad.members where member != self {
+								guard member.upgrades.contains(upgrade) ||
+									member.upgrades.contains(where: { $0.frontSide.slots.contains(upgrade.frontSide.slots.first!) }) == false else {
+										return .restrictionsNotMet
+								}
+							}
+							
+							continue checkingRestrictionSets
+							
+						case .nonLimited:
+							if pilot.limited == 0 {
+								continue checkingRestrictionSets
+							}
 						}
 					}
 					

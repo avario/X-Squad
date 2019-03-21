@@ -30,6 +30,9 @@ class Upgrade: Codable {
 			case forceSides([Force.Side])
 			case arcs([Ship.Stat.Arc])
 			case action(Action)
+			case equipped([UpgradeType])
+			case solitary
+			case nonLimited
 		}
 		
 		init(from decoder: Decoder) throws {
@@ -65,6 +68,18 @@ class Upgrade: Codable {
 					if let action = try? values.decode(Action.self, forKey: .action) {
 						return restrictions + [.action(action)]
 					}
+				case .equipped:
+					if let upgradeTypes = try? values.decode([UpgradeType].self, forKey: .equipped) {
+						return restrictions + [.equipped(upgradeTypes)]
+					}
+				case .solitary:
+					if (try? values.decode(Bool.self, forKey: .solitary)) == true {
+						return restrictions + [.solitary]
+					}
+				case .nonLimited:
+					if (try? values.decode(Bool.self, forKey: .nonLimited)) == true {
+						return restrictions + [.nonLimited]
+					}
 				}
 				
 				return restrictions
@@ -96,6 +111,15 @@ class Upgrade: Codable {
 					
 				case .action(let action):
 					try container.encode(action, forKey: .action)
+					
+				case .equipped(let upgradeTypes):
+					try container.encode(upgradeTypes, forKey: .equipped)
+					
+				case .solitary:
+					try container.encode(true, forKey: .solitary)
+					
+				case .nonLimited:
+					try container.encode(true, forKey: .nonLimited)
 				}
 			}
 		}
@@ -108,6 +132,9 @@ class Upgrade: Codable {
 			case forceSides = "force_side"
 			case arcs
 			case action
+			case equipped
+			case solitary
+			case nonLimited = "non-limited"
 		}
 	}
 	
