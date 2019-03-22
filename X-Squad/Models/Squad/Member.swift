@@ -136,6 +136,10 @@ extension Squad {
 			// Ensure the any restrictions of the upgrade are met
 			if let restrictionSets = upgrade.restrictions {
 				checkingRestrictionSets: for restrictionSet in restrictionSets {
+					guard restrictionSet.restrictions.isEmpty == false else {
+						continue
+					}
+					
 					for restriction in restrictionSet.restrictions {
 						switch restriction {
 						case .factions(let factions):
