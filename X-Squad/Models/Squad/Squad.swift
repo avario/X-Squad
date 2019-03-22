@@ -63,13 +63,13 @@ class Squad: Codable {
 		}
 	}
 	
-	init(faction: Faction, members: [Member] = [], name: String? = nil, description: String? = nil, obstacles: [XWS.Obstacle]? = nil, vendor: XWS.Vendor? = nil) {
+	init(faction: Faction, members: [Member] = [], name: String? = nil, description: String? = nil, obstacles: [XWS.Obstacle]? = nil, vendor: XWS.Vendor? = nil, isHyperspace: Bool = false) {
 		self.uuid = UUID()
 		self.created = Date()
 		self.lastUpdated = Date()
 		self.faction = faction
 		self.members = members
-		self.isHyperspace = false
+		self.isHyperspace = isHyperspace
 		
 		self.name = name
 		self.description = description

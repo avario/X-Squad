@@ -68,7 +68,14 @@ class EditSquadViewController: SquadViewController {
 	
 	func duplicateSquad() {
 		let duplicateMembers = squad.members.map({ Squad.Member(ship: $0.ship, pilot: $0.pilot, upgrades: $0.upgrades) })
-		let duplicateSquad = Squad(faction: squad.faction, members: duplicateMembers, name: squad.name, description: squad.description, obstacles: squad.obstacles, vendor: squad.vendor)
+		let duplicateSquad = Squad(
+			faction: squad.faction,
+			members: duplicateMembers,
+			name: squad.name,
+			description: squad.description,
+			obstacles: squad.obstacles,
+			vendor: squad.vendor,
+			isHyperspace: squad.isHyperspaceOnly)
 		
 		SquadStore.shared.add(squad: duplicateSquad)
 		
