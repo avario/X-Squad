@@ -14,9 +14,13 @@ class CardSearch {
 	static let shared = CardSearch()
 	
 	// An index is created for each card to improve search performance.
-	private let searchIndices: [SearchIndex]
+	private var searchIndices: [SearchIndex]
 	
 	private init() {
+		searchIndices = CardSearch.createSearchIndices()
+	}
+	
+	public static func createSearchIndices() -> [SearchIndex] {
 		let pilotIndices = DataStore.shared.ships.map({ ship -> [SearchIndex] in
 			return ship.pilots.map({ pilot in
 				guard pilot.frontImage != nil else {
@@ -28,7 +32,11 @@ class CardSearch {
 		
 		let upgradeIndices = DataStore.shared.upgrades.map(SearchIndex.init(upgrade:))
 		
-		searchIndices = pilotIndices + upgradeIndices
+		return pilotIndices + upgradeIndices
+	}
+	
+	func updateSearchIndices() {
+		searchIndices = CardSearch.createSearchIndices()
 	}
 	
 	func searchResults(for term: String) -> [Card] {

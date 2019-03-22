@@ -79,6 +79,8 @@ class DataStore {
 				let dataPath = zipPath.appendingPathComponent("data")
 				self.ships = try DataStore.loadShips(from: dataPath)
 				self.upgrades = try DataStore.loadUpgrades(from: dataPath)
+				
+				CardSearch.shared.updateSearchIndices()
 			} catch {
 				print(error)
 			}
