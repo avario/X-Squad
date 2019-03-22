@@ -199,9 +199,13 @@ extension Squad {
 							continue checkingRestrictionSets
 							
 						case .solitary:
-							for member in squad.members where member != self {
-								guard member.upgrades.contains(upgrade) ||
-									member.upgrades.contains(where: { $0.frontSide.slots.contains(upgrade.frontSide.slots.first!) }) == false else {
+							if let replacing = replacing,
+								replacing.frontSide.type == upgrade.frontSide.type {
+								continue checkingRestrictionSets
+							}
+							
+							for member in squad.members {
+								guard member.upgrades.contains(where: { $0.frontSide.slots.contains(upgrade.frontSide.type) }) == false else {
 										return .restrictionsNotMet
 								}
 							}
