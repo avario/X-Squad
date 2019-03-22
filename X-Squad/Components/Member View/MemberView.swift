@@ -185,9 +185,9 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 			
 			leadingEdge = configurationCardView.frame.maxX - cardLength * CardView.upgradeHiddenRatio
 			
-			if let upgradeButton = upgradeButtons(for: configuration).first {
+			for (index, upgradeButton) in upgradeButtons(for: configuration).enumerated() {
 				upgradeButton.frame = CGRect(
-					origin: CGPoint(x: leadingEdge - 10 - upgradeButton.bounds.width, y: configurationCardView.frame.maxY),
+					origin: CGPoint(x: leadingEdge - 10 - CGFloat(index + 1) * upgradeButton.bounds.width, y: configurationCardView.frame.maxY),
 					size: upgradeButton.bounds.size)
 			}
 		}
@@ -217,7 +217,7 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 			
 			for (index, upgradeButton) in upgradeButtons(for: upgrade).enumerated() {
 				upgradeButton.frame = CGRect(
-					origin: CGPoint(x: leadingEdge + 10 + CGFloat(index) * (upgradeButton.bounds.width), y: upgradeCardView.frame.maxY),
+					origin: CGPoint(x: leadingEdge + 10 + CGFloat(index) * upgradeButton.bounds.width, y: upgradeCardView.frame.maxY),
 					size: upgradeButton.bounds.size)
 			}
 			
