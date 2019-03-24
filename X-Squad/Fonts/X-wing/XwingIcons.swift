@@ -32,11 +32,11 @@ extension Action.ActionType {
 		case .reinforce:
 			return "i"
 		case .rotate:
-			return "a"
+			return "R"
 		case .calculate:
-			return "a" // ?
+			return "a"
 		case .reload:
-			return "d" // ?
+			return "="
 		}
 	}
 }

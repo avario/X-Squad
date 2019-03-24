@@ -11,6 +11,10 @@ import Foundation
 import CloudKit
 import Zip
 
+extension Notification.Name {
+	static let dataStoreShowImagesDidChange = Notification.Name("dataStoreShowImagesDidChange")
+}
+
 class DataStore {
 	
 	static let shared = DataStore()
@@ -46,11 +50,30 @@ class DataStore {
 		set { UserDefaults.standard.set(newValue, forKey: "downloadedDataPath") }
 	}
 	
+	static var showImages: Bool {
+		get {
+			let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+			return UserDefaults.standard.bool(forKey: "showImages\(appVersion)")
+		}
+		set {
+			let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+			UserDefaults.standard.set(newValue, forKey: "showImages\(appVersion)")
+			
+			DispatchQueue.main.async {
+				NotificationCenter.default.post(name: .dataStoreShowImagesDidChange, object: nil)
+			}
+		}
+	}
+	
 	func updateIfNeeded() {
 		let container = CKContainer.default()
 		let database = container.publicCloudDatabase
 		
-		let predicate = NSPredicate(format: "modificationDate > %@", argumentArray: [DataStore.lastUpdateDate])
+		let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+		
+		let predicate = NSPredicate(
+			format: "(modificationDate > %@) AND (version == %@)",
+			argumentArray: [DataStore.lastUpdateDate, appVersion])
 		let query = CKQuery(recordType: "Data", predicate: predicate)
 		query.sortDescriptors = [NSSortDescriptor(key: "modificationDate", ascending: false)]
 		database.perform(query, inZoneWith: nil) { (records, error) in
@@ -81,6 +104,10 @@ class DataStore {
 				self.upgrades = try DataStore.loadUpgrades(from: dataPath)
 				
 				CardSearch.shared.updateSearchIndices()
+				
+				if let showImages = mostRecentRecord["showImages"] as? NSNumber {
+					DataStore.showImages = showImages.boolValue
+				}
 			} catch {
 				print(error)
 			}
