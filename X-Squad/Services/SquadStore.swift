@@ -75,7 +75,7 @@ class SquadStore {
 	}
 	
 	public func delete(squad: Squad, syncWithCloud: Bool = true) {
-		guard let index = squads.index(of: squad) else {
+		guard let index = squads.firstIndex(of: squad) else {
 			return
 		}
 		squads.remove(at: index)

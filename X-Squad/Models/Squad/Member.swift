@@ -267,7 +267,7 @@ extension Squad {
 				
 				return upgrade.frontSide.slots.reduce(availablelots) {
 					var availablelots = $0
-					if let index = availablelots.index(of: $1) {
+					if let index = availablelots.firstIndex(of: $1) {
 						availablelots.remove(at: index)
 					}
 					return availablelots
@@ -275,7 +275,7 @@ extension Squad {
 			}
 			
 			for slot in upgrade.frontSide.slots {
-				guard let index = availablelots.index(of: slot) else {
+				guard let index = availablelots.firstIndex(of: slot) else {
 					return .slotsNotAvailable
 				}
 				availablelots.remove(at: index)

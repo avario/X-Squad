@@ -90,7 +90,7 @@ class DataStore {
 			}
 			
 			do {
-				let data = try Data(contentsOf: mostRecentData.fileURL)
+				let data = try Data(contentsOf: mostRecentData.fileURL!)
 				let fileURL = FileManager.default.temporaryDirectory.appendingPathComponent("data.zip")
 				try data.write(to: fileURL)
 				

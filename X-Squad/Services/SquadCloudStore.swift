@@ -55,9 +55,9 @@ class SquadCloudStore {
 					predicate: NSPredicate(value: true),
 					subscriptionID: "SquadsSubscription",
 					options: [
-						.firesOnRecordCreation,
-						.firesOnRecordUpdate,
-						.firesOnRecordDeletion])
+						CKQuerySubscription.Options.firesOnRecordCreation,
+						CKQuerySubscription.Options.firesOnRecordUpdate,
+						CKQuerySubscription.Options.firesOnRecordDeletion])
 				
 				let info = CKQuerySubscription.NotificationInfo()
 				info.shouldSendContentAvailable = true
@@ -81,7 +81,7 @@ class SquadCloudStore {
 	
 	// This is called when the device receives a remote notification from iCloud.
 	public func handleNotification(userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-		let notification = CKQueryNotification(fromRemoteNotificationDictionary: userInfo)
+		let notification = CKQueryNotification(fromRemoteNotificationDictionary: userInfo)!
 		
 		guard let recordID = notification.recordID else {
 			completionHandler(.failed)
