@@ -50,18 +50,45 @@ extension Squad {
 		}
 		
 		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
-			let upgradeSlots = self.pilot.slots ?? []
+			
+			enum UpgradePriority: Int {
+				case configuration
+				case talent, force
+				case crew, gunner
+				case astromech, tech, sensor, illicit, tacticalRelay
+				case cannon, turret, torpedo, missile, device
+				case modification, title
+			}
+			
+			func priority(for upgradeType: Upgrade.UpgradeType) -> UpgradePriority {
+				switch upgradeType {
+				case .talent: return .talent
+				case .sensor: return .sensor
+				case .cannon: return .cannon
+				case .turret: return .turret
+				case .torpedo: return .torpedo
+				case .missile: return .missile
+				case .crew: return .crew
+				case .astromech: return .astromech
+				case .device: return .device
+				case .illicit: return .illicit
+				case .modification: return .modification
+				case .title: return .title
+				case .gunner: return .gunner
+				case .force: return .force
+				case .configuration: return .configuration
+				case .tech: return .tech
+				case .tacticalRelay: return .tacticalRelay
+				}
+			}
 
-			let lhsType = lhs.frontSide.type
-			let rhsType = rhs.frontSide.type
+			let lhsPriority = priority(for: lhs.frontSide.type)
+			let rhsPriority = priority(for: rhs.frontSide.type)
 
-			let lhsIndex = upgradeSlots.firstIndex(of: lhsType) ?? 999
-			let rhsIndex = upgradeSlots.firstIndex(of: rhsType) ?? 999
-
-			if lhsIndex == rhsIndex {
+			if lhsPriority == rhsPriority {
 				return lhs.name < rhs.name
 			} else {
-				return lhsIndex < rhsIndex
+				return lhsPriority.rawValue < rhsPriority.rawValue
 			}
 		}
 		
