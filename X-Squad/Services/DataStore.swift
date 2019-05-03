@@ -11,10 +11,6 @@ import Foundation
 import CloudKit
 import Zip
 
-extension Notification.Name {
-	static let dataStoreShowImagesDidChange = Notification.Name("dataStoreShowImagesDidChange")
-}
-
 class DataStore {
 	
 	static let shared = DataStore()
@@ -48,21 +44,6 @@ class DataStore {
 	static var downloadedDataPath: URL? {
 		get { return UserDefaults.standard.url(forKey: "downloadedDataPath") }
 		set { UserDefaults.standard.set(newValue, forKey: "downloadedDataPath") }
-	}
-	
-	static var showImages: Bool {
-		get {
-			let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-			return UserDefaults.standard.bool(forKey: "showImages\(appVersion)")
-		}
-		set {
-			let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-			UserDefaults.standard.set(newValue, forKey: "showImages\(appVersion)")
-			
-			DispatchQueue.main.async {
-				NotificationCenter.default.post(name: .dataStoreShowImagesDidChange, object: nil)
-			}
-		}
 	}
 	
 	func updateIfNeeded() {
@@ -104,10 +85,6 @@ class DataStore {
 				self.upgrades = try DataStore.loadUpgrades(from: dataPath)
 				
 				CardSearch.shared.updateSearchIndices()
-				
-				if let showImages = mostRecentRecord["showImages"] as? NSNumber {
-					DataStore.showImages = showImages.boolValue
-				}
 			} catch {
 				print(error)
 			}

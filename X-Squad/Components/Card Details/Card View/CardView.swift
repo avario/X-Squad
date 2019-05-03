@@ -44,9 +44,20 @@ class CardView: UIView {
 		case back
 	}
 	
+	static let showImages: Bool = Date() > Bundle.main.infoDictionary!["ShowImagesAfter"] as! Date
+	
 	var side: Side = .front {
 		didSet {
-			updateImage()
+			if CardView.showImages {
+				switch side {
+				case.front:
+					imageView.kf.setImage(with: card?.frontImage)
+				case .back:
+					imageView.kf.setImage(with: card?.backImage)
+				}
+			} else {
+				imageView.image = card?.placeholderImage
+			}
 		}
 	}
 	
@@ -92,25 +103,10 @@ class CardView: UIView {
 		imageView.centerYAnchor.constraint(equalTo: cardContainer.centerYAnchor).isActive = true
 		imageView.widthAnchor.constraint(equalTo: cardContainer.widthAnchor, multiplier: 1.008).isActive = true
 		imageView.heightAnchor.constraint(equalTo: cardContainer.heightAnchor, multiplier: 1.008).isActive = true
-		
-		NotificationCenter.default.addObserver(self, selector: #selector(updateImage), name: .dataStoreShowImagesDidChange, object: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
-	}
-	
-	@objc func updateImage() {
-		if DataStore.showImages {
-			switch side {
-			case.front:
-				imageView.kf.setImage(with: card?.frontImage)
-			case .back:
-				imageView.kf.setImage(with: card?.backImage)
-			}
-		} else {
-			imageView.image = card?.placeholderImage
-		}
 	}
 	
 	static func all(in view: UIView) -> [CardView] {
