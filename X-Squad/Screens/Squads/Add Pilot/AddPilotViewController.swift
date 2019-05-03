@@ -37,19 +37,24 @@ class AddPilotViewController: CardsCollectionViewController {
 		transitioningDelegate = self
 		modalPresentationStyle = .overCurrentContext
 		
-		// The ships are sorted by how many pilots they have, then by name.
-		let ships = DataStore.shared.ships.filter({ $0.faction == squad.faction }).sorted {
+		let ships = DataStore.shared.ships
+			.filter { $0.faction == squad.faction && $0.pilots.filter({ $0.isReleased }).isEmpty == false }
+			.sorted {
+			let releasedPilots0 = $0.pilots.filter({ $0.isReleased })
+			let releasedPilots1 = $1.pilots.filter({ $0.isReleased })
+			
 			let pilotCount0: Int
 			let pilotCount1: Int
 			
 			if squad.isHyperspaceOnly {
-				pilotCount0 = $0.pilots.filter({ $0.hyperspace == true }).count
-				pilotCount1 = $1.pilots.filter({ $0.hyperspace == true }).count
+				pilotCount0 = releasedPilots0.filter({ $0.hyperspace == true }).count
+				pilotCount1 = releasedPilots1.filter({ $0.hyperspace == true }).count
 			} else {
-				pilotCount0 = $0.pilots.count
-				pilotCount1 = $1.pilots.count
+				pilotCount0 = releasedPilots0.count
+				pilotCount1 = releasedPilots1.count
 			}
 			
+			// The ships are sorted by how many pilots they have, then by name.
 			if pilotCount0 == pilotCount1 {
 				return $0.name < $1.name
 			} else {
@@ -60,7 +65,7 @@ class AddPilotViewController: CardsCollectionViewController {
 		// Pilots are sorted into sections by their ship.
 		for ship in ships {
 			// Within a ship section, pilots are sorted according to PS and cost.
-			let sortedPilots = ship.pilots.sorted(by: Squad.rankPilots)
+			let sortedPilots = ship.pilots.filter({ $0.isReleased }).sorted(by: Squad.rankPilots)
 			
 			let header: CardSection.Header
 			if let characterCode = ship.characterCode {
