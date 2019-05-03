@@ -215,6 +215,16 @@ extension Ship {
 			return "C"
 		case "scavengedyt1300":
 			return "Y"
+		case "belbullab22starfighter":
+			return "["
+		case "sithinfiltrator":
+			return "]"
+		case "vultureclassdroidfighter":
+			return "_"
+		case "delta7aethersprite":
+			return "\\"
+		case "v19torrentstarfighter":
+			return "^"
 		default:
 			return nil
 		}
