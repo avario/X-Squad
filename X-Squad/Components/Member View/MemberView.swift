@@ -110,7 +110,7 @@ class MemberView: UIView, CardDetailsCollectionViewControllerDataSource, CardDet
 			}
 			self.upgradeButtons.removeAll()
 			
-			for upgrade in member.allSlots {
+			for upgrade in member.allSlots.sorted(by: { $0.priority.rawValue < $1.priority.rawValue }) {
 				let upgradeButton = UpgradeButton(frame: CGRect(origin: .zero, size: CGSize(width: upgradeButtonSize, height: upgradeButtonSize)))
 				upgradeButton.upgradeType = upgrade
 				

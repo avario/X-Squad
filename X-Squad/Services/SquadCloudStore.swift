@@ -116,6 +116,8 @@ class SquadCloudStore {
 			
 			SquadStore.shared.delete(squad: squad, syncWithCloud: false)
 			completionHandler(.noData)
+		@unknown default:
+			completionHandler(.noData)
 		}
 	}
 	

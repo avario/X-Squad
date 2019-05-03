@@ -354,6 +354,36 @@ class Upgrade: Codable {
 		case configuration = "Configuration"
 		case tech = "Tech"
 		case tacticalRelay = "Tactical Relay"
+		
+		enum Priority: Int {
+			case talent, force
+			case crew, gunner
+			case astromech, tech, sensor, illicit, tacticalRelay
+			case cannon, turret, torpedo, missile, device
+			case modification, title, configuration
+		}
+		
+		var priority: Priority {
+			switch self {
+			case .talent:			return .talent
+			case .sensor:			return .sensor
+			case .cannon:			return .cannon
+			case .turret:			return .turret
+			case .torpedo:			return .torpedo
+			case .missile:			return .missile
+			case .crew:				return .crew
+			case .astromech:		return .astromech
+			case .device:			return .device
+			case .illicit:			return .illicit
+			case .modification:		return .modification
+			case .title:			return .title
+			case .gunner:			return .gunner
+			case .force:			return .force
+			case .configuration:	return .configuration
+			case .tech:				return .tech
+			case .tacticalRelay:	return .tacticalRelay
+			}
+		}
 	}
 }
 

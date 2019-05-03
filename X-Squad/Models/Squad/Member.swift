@@ -50,45 +50,10 @@ extension Squad {
 		}
 		
 		lazy var upgradeSort: (Upgrade, Upgrade) -> Bool = { (lhs, rhs) -> Bool in
-			
-			enum UpgradePriority: Int {
-				case configuration
-				case talent, force
-				case crew, gunner
-				case astromech, tech, sensor, illicit, tacticalRelay
-				case cannon, turret, torpedo, missile, device
-				case modification, title
-			}
-			
-			func priority(for upgradeType: Upgrade.UpgradeType) -> UpgradePriority {
-				switch upgradeType {
-				case .talent: return .talent
-				case .sensor: return .sensor
-				case .cannon: return .cannon
-				case .turret: return .turret
-				case .torpedo: return .torpedo
-				case .missile: return .missile
-				case .crew: return .crew
-				case .astromech: return .astromech
-				case .device: return .device
-				case .illicit: return .illicit
-				case .modification: return .modification
-				case .title: return .title
-				case .gunner: return .gunner
-				case .force: return .force
-				case .configuration: return .configuration
-				case .tech: return .tech
-				case .tacticalRelay: return .tacticalRelay
-				}
-			}
-
-			let lhsPriority = priority(for: lhs.frontSide.type)
-			let rhsPriority = priority(for: rhs.frontSide.type)
-
-			if lhsPriority == rhsPriority {
+			if lhs.frontSide.type.priority == rhs.frontSide.type.priority {
 				return lhs.name < rhs.name
 			} else {
-				return lhsPriority.rawValue < rhsPriority.rawValue
+				return lhs.frontSide.type.priority.rawValue < rhs.frontSide.type.priority.rawValue
 			}
 		}
 		
